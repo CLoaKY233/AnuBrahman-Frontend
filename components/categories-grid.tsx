@@ -38,7 +38,7 @@ export default function CategoriesGrid() {
 
       {/* Categories Grid - Slim Cards */}
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-        {categories.map((category, index) => (
+        {categories.map((category) => (
           <article
             key={category.title}
             className="group relative h-48 cursor-pointer"

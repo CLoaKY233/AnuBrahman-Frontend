@@ -4,28 +4,32 @@ async function getPasted(): Promise<string> {
       // Cache a bit to avoid re-fetching constantly while editing
       cache: "force-cache",
       next: { revalidate: 60 },
-    })
-    if (!res.ok) return ""
-    return await res.text()
-  } catch (_e) {
-    return ""
+    });
+    if (!res.ok) return "";
+    return await res.text();
+  } catch {
+    return "";
   }
 }
 
 export default async function ContentSection() {
-  const text = (await getPasted()) || ""
+  const text = (await getPasted()) || "";
   const parts = text
     .split(/\n\s*\n/g)
     .map((p) => p.trim())
-    .filter(Boolean)
+    .filter(Boolean);
 
   if (!parts.length) {
     return (
       <section className="rounded-sm border border-white/10 bg-white/5 p-6 backdrop-blur-md">
-        <h2 className="text-white text-lg font-semibold">About the Newsletter</h2>
-        <p className="mt-2 text-white/70">Content will appear here shortly. We’re fetching your latest copy.</p>
+        <h2 className="text-white text-lg font-semibold">
+          About the Newsletter
+        </h2>
+        <p className="mt-2 text-white/70">
+          Content will appear here shortly. We’re fetching your latest copy.
+        </p>
       </section>
-    )
+    );
   }
 
   return (
@@ -37,5 +41,5 @@ export default async function ContentSection() {
         ))}
       </div>
     </section>
-  )
+  );
 }

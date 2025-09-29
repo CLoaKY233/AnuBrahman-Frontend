@@ -4,7 +4,6 @@ import FeaturedCarousel from "@/components/featured-carousel";
 import MetricsStrip from "@/components/metrics-strip";
 import CategoriesGrid from "@/components/categories-grid";
 import Testimonials from "@/components/testimonials";
-import Image from "next/image";
 
 export default function HomePage() {
   return (

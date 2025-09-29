@@ -76,7 +76,7 @@ const TestimonialCard = ({
         {/* Quote content */}
         <div className="relative space-y-4">
           <p className="text-sm font-light leading-relaxed text-zinc-300 transition-colors duration-300 group-hover:text-zinc-200">
-            "{body}"
+            &ldquo;{body}&rdquo;
           </p>
 
           {/* User info */}

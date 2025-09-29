@@ -18,7 +18,7 @@ export default function MetricsStrip() {
 
       {/* Metrics Grid - Slimmer Design */}
       <div className="grid grid-cols-2 gap-6 md:grid-cols-4 lg:gap-8">
-        {metrics.map((metric, index) => (
+        {metrics.map((metric) => (
           <div key={metric.label} className="group relative">
             {/* Card Background */}
             <div className="relative h-24 rounded-xl border border-white/10 bg-gradient-to-b from-white/5 to-transparent backdrop-blur-2xl transition-all duration-500 hover:border-purple-500/30 hover:from-purple-500/5 hover:to-transparent hover:scale-105">
