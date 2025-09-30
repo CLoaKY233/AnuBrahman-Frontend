@@ -1,9 +1,9 @@
-import NavFrosted from "@/components/nav-frosted";
-import SubscribeForm from "@/components/subscribe-form";
-import FeaturedCarousel from "@/components/featured-carousel";
-import MetricsStrip from "@/components/metrics-strip";
-import CategoriesGrid from "@/components/categories-grid";
-import Testimonials from "@/components/testimonials";
+import NavFrosted from '@/components/nav-frosted';
+import SubscribeForm from '@/components/subscribe-form';
+import FeaturedCarousel from '@/components/featured-carousel';
+import MetricsStrip from '@/components/metrics-strip';
+import CategoriesGrid from '@/components/categories-grid';
+import Testimonials from '@/components/testimonials';
 
 export default function HomePage() {
   return (
@@ -38,9 +38,8 @@ export default function HomePage() {
 
             {/* Description */}
             <p className="text-base text-zinc-400 max-w-2xl leading-relaxed font-light">
-              A comprehensive platform for space science enthusiasts and
-              professionals, providing cutting-edge insights into aerospace
-              innovation and cosmic discovery.
+              A comprehensive platform for space science enthusiasts and professionals, providing
+              cutting-edge insights into aerospace innovation and cosmic discovery.
             </p>
 
             {/* Premium CTA Buttons */}
@@ -49,9 +48,7 @@ export default function HomePage() {
                 type="button"
                 className="group relative overflow-hidden rounded-lg border border-purple-500/30 bg-gradient-to-r from-purple-600/90 to-purple-500/90 px-8 py-3.5 text-sm font-medium text-white transition-all duration-500 hover:shadow-lg hover:shadow-purple-500/25 hover:scale-105 active:scale-95"
               >
-                <span className="relative z-10 tracking-wider uppercase">
-                  Explore Articles
-                </span>
+                <span className="relative z-10 tracking-wider uppercase">Explore Articles</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-purple-400 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
               </button>
 
@@ -95,8 +92,8 @@ export default function HomePage() {
                 Stay Ahead of the Cosmos
               </h2>
               <p className="text-base text-zinc-400 font-light leading-relaxed">
-                Subscribe for cutting-edge articles, cosmic discoveries, and
-                exclusive insights delivered to your inbox.
+                Subscribe for cutting-edge articles, cosmic discoveries, and exclusive insights
+                delivered to your inbox.
               </p>
               <div className="pt-4">
                 <SubscribeForm />
@@ -115,16 +112,14 @@ export default function HomePage() {
               Ready to Explore the Cosmos?
             </h2>
             <p className="text-base text-zinc-400 font-light max-w-xl mx-auto leading-relaxed">
-              Begin your journey into aerospace education and connect with
-              passionate space exploration enthusiasts.
+              Begin your journey into aerospace education and connect with passionate space
+              exploration enthusiasts.
             </p>
             <button
               type="button"
               className="inline-flex items-center rounded-lg border border-purple-500/40 bg-gradient-to-r from-purple-600/90 to-purple-500/90 px-8 py-3.5 text-sm font-medium text-white transition-all duration-500 hover:shadow-lg hover:shadow-purple-500/25 hover:scale-105 active:scale-95"
             >
-              <span className="tracking-wider uppercase">
-                Start Your Journey
-              </span>
+              <span className="tracking-wider uppercase">Start Your Journey</span>
             </button>
           </div>
         </div>

@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import type React from "react";
-import { useState } from "react";
+import type React from 'react';
+import { useState } from 'react';
 
 export default function SubscribeForm() {
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -40,9 +40,7 @@ export default function SubscribeForm() {
             </svg>
           </div>
 
-          <h3 className="text-sm font-light text-white mb-1.5">
-            Welcome aboard!
-          </h3>
+          <h3 className="text-sm font-light text-white mb-1.5">Welcome aboard!</h3>
           <p className="text-xs font-light text-zinc-300 leading-relaxed">
             Check your inbox for cosmic updates and exclusive insights.
           </p>

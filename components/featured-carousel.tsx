@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import Image from "next/image";
+import Image from 'next/image';
 import {
   Carousel,
   CarouselContent,
@@ -8,56 +8,56 @@ import {
   CarouselNext,
   CarouselPrevious,
   type CarouselApi,
-} from "@/components/ui/carousel";
-import { useEffect, useState } from "react";
-import { cn } from "@/lib/utils";
+} from '@/components/ui/carousel';
+import { useEffect, useState } from 'react';
+import { cn } from '@/lib/utils';
 
 const slides = [
   {
-    title: "The PROBA Mission: Small Satellites, Big Impact",
-    category: "Indian AeroSpace",
-    author: "Editor",
-    date: "5/8/2025",
-    read: "15 min read",
-    img: "/images/proba-mission.jpg",
+    title: 'The PROBA Mission: Small Satellites, Big Impact',
+    category: 'Indian AeroSpace',
+    author: 'Editor',
+    date: '5/8/2025',
+    read: '15 min read',
+    img: '/images/proba-mission.jpg',
     alt: "Two small satellites flying in precise formation near the Sun's corona",
-    accent: "from-blue-500/20 to-purple-500/20",
+    accent: 'from-blue-500/20 to-purple-500/20',
   },
   {
-    title: "The Fermi Paradox: The Silence of the Cosmos",
-    category: "Astrophysics",
-    author: "Editor",
-    read: "25 min",
-    img: "/images/fermi-paradox.jpg",
-    alt: "Vast silent cosmos with scanning signals across a starfield",
-    accent: "from-purple-500/20 to-pink-500/20",
+    title: 'The Fermi Paradox: The Silence of the Cosmos',
+    category: 'Astrophysics',
+    author: 'Editor',
+    read: '25 min',
+    img: '/images/fermi-paradox.jpg',
+    alt: 'Vast silent cosmos with scanning signals across a starfield',
+    accent: 'from-purple-500/20 to-pink-500/20',
   },
   {
     title: "Don't Get Left in the Dark, Shed Some Light on Dark Energy",
-    category: "Astrophysics",
-    author: "Editor",
-    read: "15 min",
-    img: "/images/dark-energy.jpg",
-    alt: "Dark energy visualization with cosmic web filaments",
-    accent: "from-indigo-500/20 to-blue-500/20",
+    category: 'Astrophysics',
+    author: 'Editor',
+    read: '15 min',
+    img: '/images/dark-energy.jpg',
+    alt: 'Dark energy visualization with cosmic web filaments',
+    accent: 'from-indigo-500/20 to-blue-500/20',
   },
   {
-    title: "Black Holes: Where Time Stands Still and Space Bends",
-    category: "Astrophysics",
-    author: "Editor",
-    read: "10 min",
-    img: "/images/black-holes.jpg",
-    alt: "Minimal black hole with accretion disk",
-    accent: "from-purple-500/20 to-indigo-500/20",
+    title: 'Black Holes: Where Time Stands Still and Space Bends',
+    category: 'Astrophysics',
+    author: 'Editor',
+    read: '10 min',
+    img: '/images/black-holes.jpg',
+    alt: 'Minimal black hole with accretion disk',
+    accent: 'from-purple-500/20 to-indigo-500/20',
   },
   {
-    title: "Death of a Giant: The Explosive Physics Behind Supernovae",
-    category: "Astronomy",
-    author: "Editor",
-    read: "18 min",
-    img: "/images/supernova.jpg",
-    alt: "Expanding supernova shockwave in space",
-    accent: "from-pink-500/20 to-purple-500/20",
+    title: 'Death of a Giant: The Explosive Physics Behind Supernovae',
+    category: 'Astronomy',
+    author: 'Editor',
+    read: '18 min',
+    img: '/images/supernova.jpg',
+    alt: 'Expanding supernova shockwave in space',
+    accent: 'from-pink-500/20 to-purple-500/20',
   },
 ];
 
@@ -76,10 +76,10 @@ export default function FeaturedCarousel() {
       setCurrent(api.selectedScrollSnap());
     };
 
-    api.on("select", onSelect);
+    api.on('select', onSelect);
 
     return () => {
-      api.off("select", onSelect);
+      api.off('select', onSelect);
     };
   }, [api]);
 
@@ -91,8 +91,7 @@ export default function FeaturedCarousel() {
           Featured Articles
         </h2>
         <p className="text-sm sm:text-base font-light text-zinc-400 max-w-2xl mx-auto leading-relaxed px-4">
-          Discover our most impactful and cutting-edge content in space science
-          and technology.
+          Discover our most impactful and cutting-edge content in space science and technology.
         </p>
         <div className="mx-auto w-16 h-px bg-gradient-to-r from-transparent via-purple-400/50 to-transparent mt-4 sm:mt-6" />
       </div>
@@ -102,7 +101,7 @@ export default function FeaturedCarousel() {
         className="relative mx-auto max-w-[90rem] px-2 sm:px-4 md:px-8 lg:px-16"
         opts={{
           loop: true,
-          align: "center",
+          align: 'center',
         }}
       >
         <div className="relative [mask-image:linear-gradient(to_right,transparent,black_5%,black_95%,transparent)] sm:[mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
@@ -116,8 +115,8 @@ export default function FeaturedCarousel() {
                 >
                   <div
                     className={cn(
-                      "h-full w-full transition-all duration-500 ease-in-out",
-                      isActive ? "opacity-100" : "opacity-50 sm:scale-90",
+                      'h-full w-full transition-all duration-500 ease-in-out',
+                      isActive ? 'opacity-100' : 'opacity-50 sm:scale-90'
                     )}
                   >
                     <article className="group relative h-80 sm:h-96 cursor-pointer">
@@ -125,7 +124,7 @@ export default function FeaturedCarousel() {
                         {/* Background Image */}
                         <div className="absolute inset-0">
                           <Image
-                            src={slide.img || "/placeholder.svg"}
+                            src={slide.img || '/placeholder.svg'}
                             alt={slide.alt}
                             fill
                             priority={index < 3}
@@ -161,12 +160,8 @@ export default function FeaturedCarousel() {
                               <span className="truncate">{slide.author}</span>
                               {slide.date && (
                                 <>
-                                  <span className="hidden xs:inline flex-shrink-0">
-                                    •
-                                  </span>
-                                  <span className="hidden xs:inline truncate">
-                                    {slide.date}
-                                  </span>
+                                  <span className="hidden xs:inline flex-shrink-0">•</span>
+                                  <span className="hidden xs:inline truncate">{slide.date}</span>
                                 </>
                               )}
                             </div>
@@ -208,8 +203,8 @@ export default function FeaturedCarousel() {
             type="button"
             onClick={() => api?.scrollTo(index)}
             className={cn(
-              "h-1.5 rounded-full transition-all duration-300",
-              index === current ? "w-8 bg-purple-500" : "w-1.5 bg-white/30",
+              'h-1.5 rounded-full transition-all duration-300',
+              index === current ? 'w-8 bg-purple-500' : 'w-1.5 bg-white/30'
             )}
             aria-label={`Go to slide ${index + 1}`}
           />

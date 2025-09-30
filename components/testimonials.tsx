@@ -1,50 +1,50 @@
-"use client";
+'use client';
 
-import { Marquee } from "@/components/ui/marquee";
-import Image from "next/image";
+import { Marquee } from '@/components/ui/marquee';
+import Image from 'next/image';
 
 const testimonials = [
   {
-    name: "Dr. Keerti Raju Kanada",
-    username: "@keerti_aerospace",
-    body: "Anubrahman has transformed how I approach aerospace engineering. The depth of technical content combined with cutting-edge research insights makes it essential reading for any serious professional in our field.",
-    img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
-    role: "Aerospace Engineer",
+    name: 'Dr. Keerti Raju Kanada',
+    username: '@keerti_aerospace',
+    body: 'Anubrahman has transformed how I approach aerospace engineering. The depth of technical content combined with cutting-edge research insights makes it essential reading for any serious professional in our field.',
+    img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face',
+    role: 'Aerospace Engineer',
   },
   {
-    name: "Vaishnavi Nair",
-    username: "@vaishnavcosmos",
-    body: "As a graduate student, Anubrahman bridges the gap between academic theory and real-world applications. Every edition fuels my curiosity about space exploration and astrophysics breakthroughs.",
-    img: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&h=150&fit=crop&crop=face",
-    role: "Graduate Student",
+    name: 'Vaishnavi Nair',
+    username: '@vaishnavcosmos',
+    body: 'As a graduate student, Anubrahman bridges the gap between academic theory and real-world applications. Every edition fuels my curiosity about space exploration and astrophysics breakthroughs.',
+    img: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&h=150&fit=crop&crop=face',
+    role: 'Graduate Student',
   },
   {
-    name: "Aaron Alva",
-    username: "@aaron_stellar",
-    body: "The way complex space missions are broken down into digestible, fascinating stories is incredible. Anubrahman makes astrophysics accessible without losing the scientific rigor.",
-    img: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
-    role: "Research Scientist",
+    name: 'Aaron Alva',
+    username: '@aaron_stellar',
+    body: 'The way complex space missions are broken down into digestible, fascinating stories is incredible. Anubrahman makes astrophysics accessible without losing the scientific rigor.',
+    img: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
+    role: 'Research Scientist',
   },
   {
-    name: "Jimit Ritesh Pathak",
-    username: "@jimit_aero",
+    name: 'Jimit Ritesh Pathak',
+    username: '@jimit_aero',
     body: "From propulsion systems to orbital mechanics, Anubrahman covers it all with remarkable clarity. It's become my go-to resource for staying updated with aerospace innovations.",
-    img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face",
-    role: "Propulsion Specialist",
+    img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face',
+    role: 'Propulsion Specialist',
   },
   {
-    name: "Dr. Priya Sharma",
-    username: "@priya_astro",
-    body: "The interdisciplinary approach connecting aerospace engineering with pure astrophysics research is what sets Anubrahman apart. Brilliant technical journalism.",
-    img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face",
-    role: "Astrophysicist",
+    name: 'Dr. Priya Sharma',
+    username: '@priya_astro',
+    body: 'The interdisciplinary approach connecting aerospace engineering with pure astrophysics research is what sets Anubrahman apart. Brilliant technical journalism.',
+    img: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face',
+    role: 'Astrophysicist',
   },
   {
-    name: "Arjun Spacetech",
-    username: "@arjun_cosmos",
-    body: "Working in the space industry, I need reliable sources for technical updates. Anubrahman delivers cutting-edge content that directly impacts my professional development.",
-    img: "https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=150&h=150&fit=crop&crop=face",
-    role: "Space Industry",
+    name: 'Arjun Spacetech',
+    username: '@arjun_cosmos',
+    body: 'Working in the space industry, I need reliable sources for technical updates. Anubrahman delivers cutting-edge content that directly impacts my professional development.',
+    img: 'https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=150&h=150&fit=crop&crop=face',
+    role: 'Space Industry',
   },
 ];
 
@@ -97,7 +97,7 @@ const TestimonialCard = ({
               <div className="absolute -inset-1 bg-gradient-to-br from-purple-500/40 via-purple-600/20 to-transparent rounded-full opacity-0 blur-md transition-opacity duration-500 group-hover:opacity-100" />
               <div className="relative">
                 <Image
-                  src={img || "/placeholder.svg"}
+                  src={img || '/placeholder.svg'}
                   alt={name}
                   width={48}
                   height={48}
@@ -155,8 +155,8 @@ export default function Testimonials() {
           </h2>
 
           <p className="text-sm sm:text-base lg:text-lg font-light text-zinc-400 max-w-2xl mx-auto leading-relaxed px-4">
-            From aerospace students to industry professionals, discover how
-            ANUBRAHMAN is shaping the future of space science education.
+            From aerospace students to industry professionals, discover how ANUBRAHMAN is shaping
+            the future of space science education.
           </p>
 
           <div className="mx-auto w-24 h-px bg-gradient-to-r from-transparent via-purple-400/50 to-transparent mt-6 sm:mt-8" />
@@ -167,9 +167,9 @@ export default function Testimonials() {
             className="flex h-[500px] sm:h-[600px] lg:h-[700px] w-full flex-row gap-4 sm:gap-6 overflow-hidden"
             style={{
               maskImage:
-                "linear-gradient(180deg, transparent 0%, black 10%, black 90%, transparent 100%)",
+                'linear-gradient(180deg, transparent 0%, black 10%, black 90%, transparent 100%)',
               WebkitMaskImage:
-                "linear-gradient(180deg, transparent 0%, black 10%, black 90%, transparent 100%)",
+                'linear-gradient(180deg, transparent 0%, black 10%, black 90%, transparent 100%)',
             }}
           >
             <Marquee pauseOnHover vertical className="[--duration:25s] flex-1">
@@ -178,21 +178,13 @@ export default function Testimonials() {
               ))}
             </Marquee>
 
-            <Marquee
-              pauseOnHover
-              vertical
-              className="[--duration:30s] hidden sm:flex flex-1"
-            >
+            <Marquee pauseOnHover vertical className="[--duration:30s] hidden sm:flex flex-1">
               {[...secondColumn, ...secondColumn].map((testimonial, index) => (
                 <TestimonialCard key={`col2-${index}`} {...testimonial} />
               ))}
             </Marquee>
 
-            <Marquee
-              pauseOnHover
-              vertical
-              className="[--duration:28s] hidden lg:flex flex-1"
-            >
+            <Marquee pauseOnHover vertical className="[--duration:28s] hidden lg:flex flex-1">
               {[...thirdColumn, ...thirdColumn].map((testimonial, index) => (
                 <TestimonialCard key={`col3-${index}`} {...testimonial} />
               ))}
@@ -218,9 +210,7 @@ export default function Testimonials() {
                   d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
                 />
               </svg>
-              <span className="tracking-widest uppercase">
-                Share Your Experience
-              </span>
+              <span className="tracking-widest uppercase">Share Your Experience</span>
             </span>
           </button>
         </div>

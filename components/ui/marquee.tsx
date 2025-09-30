@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { cn } from "@/lib/utils";
-import { ReactNode } from "react";
+import { cn } from '@/lib/utils';
+import { ReactNode } from 'react';
 
 interface MarqueeProps {
   className?: string;
@@ -21,40 +21,26 @@ export function Marquee({
 }: MarqueeProps) {
   return (
     <div
-      className={cn(
-        "group flex overflow-hidden",
-        vertical ? "flex-col" : "flex-row",
-        className,
-      )}
-      style={{ "--gap": "1rem" } as React.CSSProperties}
+      className={cn('group flex overflow-hidden', vertical ? 'flex-col' : 'flex-row', className)}
+      style={{ '--gap': '1rem' } as React.CSSProperties}
       {...props}
     >
       <div
         className={cn(
-          "flex shrink-0 gap-4",
-          vertical
-            ? "flex-col animate-marquee-vertical"
-            : "flex-row animate-marquee",
-          pauseOnHover && "group-hover:[animation-play-state:paused]",
-          reverse &&
-            (vertical
-              ? "animate-marquee-vertical-reverse"
-              : "animate-marquee-reverse"),
+          'flex shrink-0 gap-4',
+          vertical ? 'flex-col animate-marquee-vertical' : 'flex-row animate-marquee',
+          pauseOnHover && 'group-hover:[animation-play-state:paused]',
+          reverse && (vertical ? 'animate-marquee-vertical-reverse' : 'animate-marquee-reverse')
         )}
       >
         {children}
       </div>
       <div
         className={cn(
-          "flex shrink-0 gap-4",
-          vertical
-            ? "flex-col animate-marquee-vertical"
-            : "flex-row animate-marquee",
-          pauseOnHover && "group-hover:[animation-play-state:paused]",
-          reverse &&
-            (vertical
-              ? "animate-marquee-vertical-reverse"
-              : "animate-marquee-reverse"),
+          'flex shrink-0 gap-4',
+          vertical ? 'flex-col animate-marquee-vertical' : 'flex-row animate-marquee',
+          pauseOnHover && 'group-hover:[animation-play-state:paused]',
+          reverse && (vertical ? 'animate-marquee-vertical-reverse' : 'animate-marquee-reverse')
         )}
         aria-hidden="true"
       >

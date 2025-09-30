@@ -1,8 +1,8 @@
 const metrics = [
-  { value: "20+", label: "Team Members" },
-  { value: "14+", label: "Published Editions" },
-  { value: "300+", label: "Topics Covered" },
-  { value: "10k+", label: "Reader Engagement" },
+  { value: '20+', label: 'Team Members' },
+  { value: '14+', label: 'Published Editions' },
+  { value: '300+', label: 'Topics Covered' },
+  { value: '10k+', label: 'Reader Engagement' },
 ];
 
 export default function MetricsStrip() {

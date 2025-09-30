@@ -1,17 +1,17 @@
-"use client"
+'use client';
 
-import { Menu, X, Mail, Users, FileText, Info } from "lucide-react"
-import { useState } from "react"
+import { Menu, X, Mail, Users, FileText, Info } from 'lucide-react';
+import { useState } from 'react';
 
 const navItems = [
-  { key: "newsletter", label: "Newsletter", icon: Mail },
-  { key: "team", label: "Team", icon: Users },
-  { key: "blog", label: "Blog", icon: FileText },
-  { key: "about", label: "About", icon: Info },
-]
+  { key: 'newsletter', label: 'Newsletter', icon: Mail },
+  { key: 'team', label: 'Team', icon: Users },
+  { key: 'blog', label: 'Blog', icon: FileText },
+  { key: 'about', label: 'About', icon: Info },
+];
 
 export default function NavFrosted() {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
     <>
@@ -66,14 +66,17 @@ export default function NavFrosted() {
       {isMobileMenuOpen && (
         <div className="fixed inset-0 z-[100] md:hidden">
           {/* Backdrop with blur */}
-          <div className="absolute inset-0 bg-black/60 backdrop-blur-xl" onClick={() => setIsMobileMenuOpen(false)} />
+          <div
+            className="absolute inset-0 bg-black/60 backdrop-blur-xl"
+            onClick={() => setIsMobileMenuOpen(false)}
+          />
 
           <div className="absolute inset-y-0 right-0 w-full max-w-xs">
             {/* Animated slide-in panel with frosted glass */}
             <div
               className="relative h-full bg-gradient-to-br from-black/95 via-purple-950/30 to-black/95 backdrop-blur-3xl border-l border-white/10 shadow-2xl shadow-purple-500/10"
               style={{
-                animation: "slideInRight 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+                animation: 'slideInRight 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
               }}
             >
               {/* Ambient glow effects */}
@@ -84,8 +87,12 @@ export default function NavFrosted() {
               <div className="relative h-full flex flex-col">
                 <div className="flex items-center justify-between px-6 pt-6 pb-4 border-b border-white/5">
                   <div className="flex flex-col">
-                    <span className="text-base font-light tracking-[0.3em] text-white">ANUBRAHMAN</span>
-                    <span className="text-[10px] text-zinc-500 tracking-wider mt-0.5">NAVIGATION</span>
+                    <span className="text-base font-light tracking-[0.3em] text-white">
+                      ANUBRAHMAN
+                    </span>
+                    <span className="text-[10px] text-zinc-500 tracking-wider mt-0.5">
+                      NAVIGATION
+                    </span>
                   </div>
                   <button
                     type="button"
@@ -99,7 +106,7 @@ export default function NavFrosted() {
 
                 <div className="flex-1 px-5 py-6 space-y-2 overflow-y-auto">
                   {navItems.map((item, index) => {
-                    const Icon = item.icon
+                    const Icon = item.icon;
                     return (
                       <button
                         key={item.key}
@@ -128,11 +135,16 @@ export default function NavFrosted() {
                             viewBox="0 0 24 24"
                             stroke="currentColor"
                           >
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M9 5l7 7-7 7"
+                            />
                           </svg>
                         </div>
                       </button>
-                    )
+                    );
                   })}
                 </div>
 
@@ -181,5 +193,5 @@ export default function NavFrosted() {
         }
       `}</style>
     </>
-  )
+  );
 }

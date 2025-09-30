@@ -1,23 +1,23 @@
 const categories = [
   {
-    title: "Student Collaborations",
-    desc: "Explore articles written by and for the next generation of aerospace leaders.",
-    gradient: "from-blue-500/10 to-purple-500/10",
+    title: 'Student Collaborations',
+    desc: 'Explore articles written by and for the next generation of aerospace leaders.',
+    gradient: 'from-blue-500/10 to-purple-500/10',
   },
   {
-    title: "Special Series",
-    desc: "Deep dives into pivotal topics, from mission histories to future technologies.",
-    gradient: "from-purple-500/10 to-pink-500/10",
+    title: 'Special Series',
+    desc: 'Deep dives into pivotal topics, from mission histories to future technologies.',
+    gradient: 'from-purple-500/10 to-pink-500/10',
   },
   {
-    title: "Astronomy",
-    desc: "Journey through the cosmos with insights into celestial events and discoveries.",
-    gradient: "from-indigo-500/10 to-blue-500/10",
+    title: 'Astronomy',
+    desc: 'Journey through the cosmos with insights into celestial events and discoveries.',
+    gradient: 'from-indigo-500/10 to-blue-500/10',
   },
   {
-    title: "Astrophysics",
-    desc: "Uncover the fundamental laws that govern the universe, from dark matter to black holes.",
-    gradient: "from-purple-500/10 to-indigo-500/10",
+    title: 'Astrophysics',
+    desc: 'Uncover the fundamental laws that govern the universe, from dark matter to black holes.',
+    gradient: 'from-purple-500/10 to-indigo-500/10',
   },
 ];
 
@@ -30,8 +30,8 @@ export default function CategoriesGrid() {
           Explore Our Universe
         </h2>
         <p className="text-base font-light text-zinc-400 max-w-2xl mx-auto leading-relaxed">
-          Dive into a curated collection of knowledge across multiple domains of
-          space science and aerospace technology.
+          Dive into a curated collection of knowledge across multiple domains of space science and
+          aerospace technology.
         </p>
         <div className="mx-auto w-16 h-px bg-gradient-to-r from-transparent via-purple-400/50 to-transparent mt-6" />
       </div>
@@ -39,10 +39,7 @@ export default function CategoriesGrid() {
       {/* Categories Grid - Slim Cards */}
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
         {categories.map((category) => (
-          <article
-            key={category.title}
-            className="group relative h-48 cursor-pointer"
-          >
+          <article key={category.title} className="group relative h-48 cursor-pointer">
             {/* Card Background */}
             <div
               className={`relative h-full rounded-2xl border border-white/10 bg-gradient-to-br ${category.gradient} backdrop-blur-2xl overflow-hidden transition-all duration-500 hover:border-purple-500/30 hover:scale-105`}
