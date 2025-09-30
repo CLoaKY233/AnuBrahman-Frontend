@@ -7,9 +7,29 @@ import "./globals.css";
 import { Suspense } from "react";
 
 export const metadata: Metadata = {
-  title: "ANUBRAHMAN - Aerospace & Astrophysics Innovation",
-  description: "Engineering infinity: from Core to Cosmos",
-  generator: "v0.app",
+  title: "AnuBrahman - Aerospace & Astrophysics Innovation",
+  description:
+    "Engineering infinity: from Core to Cosmos. A comprehensive platform for space science enthusiasts and professionals.",
+  authors: [{ name: "Lay Sheth", url: "https://github.com/cloaky233" }],
+  creator: "Lay Sheth",
+  keywords: [
+    "aerospace",
+    "astrophysics",
+    "space science",
+    "astronomy",
+    "innovation",
+  ],
+  openGraph: {
+    type: "website",
+    title: "AnuBrahman - Aerospace & Astrophysics Innovation",
+    description: "Engineering infinity: from Core to Cosmos",
+    siteName: "AnuBrahman",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "AnuBrahman - Aerospace & Astrophysics Innovation",
+    description: "Engineering infinity: from Core to Cosmos",
+  },
 };
 
 export default function RootLayout({
@@ -22,11 +42,6 @@ export default function RootLayout({
       <body
         className={`font-sans ${GeistSans.variable} ${GeistMono.variable} relative min-h-screen`}
       >
-        {/* ================================================
-            PREMIUM MATTE BLACK BACKGROUND SYSTEM
-            Layered design for depth, luxury, and elegance
-            ================================================ */}
-
         {/* LAYER 1: Pure Matte Black Foundation */}
         <div className="fixed inset-0 -z-50 bg-black" aria-hidden="true" />
 
