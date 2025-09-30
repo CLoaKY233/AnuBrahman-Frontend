@@ -120,12 +120,67 @@
         @apply border-border outline-ring/50;
     }
     body {
-        @apply bg-background text-foreground;
+        @apply bg-black text-foreground;
     }
 }
 
-/* Add this to your globals.css - REPLACE the existing marquee animations */
+/* ===========================================
+   PREMIUM MATTE BACKGROUND SYSTEM
+   =========================================== */
 
+/* SVG Noise Filter - Embedded for Performance */
+.premium-noise-texture {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* Ambient Glow Pulse Animation */
+@keyframes ambient-glow-pulse {
+    0%,
+    100% {
+        opacity: 0.4;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.6;
+        transform: scale(1.05);
+    }
+}
+
+@keyframes ambient-glow-pulse-delayed {
+    0%,
+    100% {
+        opacity: 0.3;
+        transform: scale(1) translateY(0);
+    }
+    50% {
+        opacity: 0.5;
+        transform: scale(1.08) translateY(-10px);
+    }
+}
+
+@keyframes float-slow {
+    0%,
+    100% {
+        transform: translateY(0px) translateX(0px);
+    }
+    50% {
+        transform: translateY(-20px) translateX(10px);
+    }
+}
+
+.animate-ambient-pulse {
+    animation: ambient-glow-pulse 15s ease-in-out infinite;
+}
+
+.animate-ambient-pulse-delayed {
+    animation: ambient-glow-pulse-delayed 18s ease-in-out infinite 2s;
+}
+
+.animate-float-slow {
+    animation: float-slow 20s ease-in-out infinite;
+}
+
+/* Marquee animations (existing) */
 @keyframes marquee {
     from {
         transform: translateX(0);

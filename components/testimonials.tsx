@@ -13,7 +13,7 @@ const testimonials = [
   },
   {
     name: "Vaishnavi Nair",
-    username: "@vaishnavi_cosmos",
+    username: "@vaishnavcosmos",
     body: "As a graduate student, Anubrahman bridges the gap between academic theory and real-world applications. Every edition fuels my curiosity about space exploration and astrophysics breakthroughs.",
     img: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&h=150&fit=crop&crop=face",
     role: "Graduate Student",
@@ -68,15 +68,15 @@ const TestimonialCard = ({
 }) => {
   return (
     <div className="group relative w-80 mb-6">
-      {/* Card */}
-      <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-white/5 to-transparent backdrop-blur-2xl p-6 transition-all duration-500 hover:border-purple-500/30 hover:from-purple-500/5">
-        {/* Subtle glow effect */}
-        <div className="absolute inset-0 bg-gradient-to-r from-purple-500/0 via-purple-500/5 to-purple-500/0 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+      {/* Card with ultra-transparent background */}
+      <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-xl p-6 transition-all duration-500 hover:border-purple-500/30 hover:bg-white/[0.04]">
+        {/* Subtle inner glow effect on hover */}
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-500/[0.03] via-transparent to-purple-400/[0.02] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
 
         {/* Quote content */}
         <div className="relative space-y-4">
           <p className="text-sm font-light leading-relaxed text-zinc-300 transition-colors duration-300 group-hover:text-zinc-200">
-            &ldquo;{body}&rdquo;
+            &ldquo{body}&rdquo
           </p>
 
           {/* User info */}
@@ -111,8 +111,8 @@ const TestimonialCard = ({
         </div>
       </div>
 
-      {/* Hover glow */}
-      <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-purple-500/0 via-purple-500/10 to-purple-500/0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 -z-10 blur-xl" />
+      {/* External hover glow - very subtle */}
+      <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-purple-500/0 via-purple-500/[0.08] to-purple-500/0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 -z-10 blur-xl" />
     </div>
   );
 };
@@ -120,14 +120,10 @@ const TestimonialCard = ({
 export default function Testimonials() {
   return (
     <section className="relative py-20">
-      {/* Background effects */}
-      <div className="absolute inset-0 -z-10 opacity-60">
-        <div className="absolute inset-0 bg-gradient-to-b from-purple-500/5 via-transparent to-purple-500/5" />
-      </div>
-
       <div className="mx-auto max-w-6xl px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-16">
+          {/* Status Badge */}
           <div className="inline-flex items-center rounded-full border border-purple-500/20 bg-purple-500/10 backdrop-blur-xl px-4 py-2 mb-6">
             <div className="w-2 h-2 bg-purple-400 rounded-full mr-2 animate-pulse" />
             <span className="text-xs font-light tracking-wider text-purple-300 uppercase">
@@ -138,21 +134,32 @@ export default function Testimonials() {
           <h2 className="text-2xl md:text-3xl font-light tracking-tight text-white mb-4">
             What Our Cosmic Community Says
           </h2>
+
           <p className="text-base font-light text-zinc-400 max-w-2xl mx-auto leading-relaxed">
             From aerospace students to industry professionals, discover how
             ANUBRAHMAN is shaping the future of space science education.
           </p>
+
           <div className="mx-auto w-16 h-px bg-gradient-to-r from-transparent via-purple-400/50 to-transparent mt-6" />
         </div>
 
-        {/* Testimonials Marquee */}
-        <div className="relative overflow-hidden">
-          {/* Fade edges */}
-          <div className="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-black via-black/80 to-transparent z-10 pointer-events-none" />
-          <div className="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-black via-black/80 to-transparent z-10 pointer-events-none" />
-
-          {/* Testimonials Grid */}
-          <div className="flex h-[600px] w-full flex-row gap-6 [mask-image:linear-gradient(to_bottom,transparent,black_10%,black_90%,transparent)]">
+        {/* Testimonials Marquee Container with Proper Masking */}
+        <div className="relative">
+          {/*
+            CRITICAL: Vertical mask-image gradient for fade effect
+            - Cards fade OUT at top (0% to 15%)
+            - Cards fully visible in middle (15% to 85%)
+            - Cards fade OUT at bottom (85% to 100%)
+          */}
+          <div
+            className="flex h-[600px] w-full flex-row gap-6 overflow-hidden"
+            style={{
+              maskImage:
+                "linear-gradient(180deg, transparent 0%, black 15%, black 85%, transparent 100%)",
+              WebkitMaskImage:
+                "linear-gradient(180deg, transparent 0%, black 15%, black 85%, transparent 100%)",
+            }}
+          >
             {/* First column */}
             <Marquee pauseOnHover vertical className="[--duration:20s]">
               {[...firstColumn, ...firstColumn].map((testimonial, index) => (
@@ -187,7 +194,7 @@ export default function Testimonials() {
 
         {/* CTA */}
         <div className="flex justify-center mt-16">
-          <button className="group relative overflow-hidden rounded-2xl border border-purple-500/30 bg-gradient-to-r from-purple-600/20 to-purple-500/20 backdrop-blur-xl px-8 py-4 text-sm font-light text-white transition-all duration-500 hover:border-purple-500/50 hover:from-purple-600/30 hover:to-purple-500/30 hover:scale-105 active:scale-95">
+          <button className="group relative overflow-hidden rounded-2xl border border-purple-500/30 bg-purple-600/20 backdrop-blur-xl px-8 py-4 text-sm font-light text-white transition-all duration-500 hover:border-purple-500/50 hover:bg-purple-600/30 hover:scale-105 active:scale-95">
             {/* Button background effect */}
             <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-purple-400/10 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
 
@@ -206,7 +213,6 @@ export default function Testimonials() {
                   d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
                 />
               </svg>
-
               <span className="tracking-wider uppercase">
                 Share Your Experience
               </span>
@@ -214,10 +220,6 @@ export default function Testimonials() {
           </button>
         </div>
       </div>
-
-      {/* Background accents */}
-      <div className="absolute top-20 left-0 w-64 h-32 bg-purple-500/5 rounded-full blur-3xl -z-10" />
-      <div className="absolute bottom-20 right-0 w-48 h-24 bg-blue-500/5 rounded-full blur-3xl -z-10" />
     </section>
   );
 }

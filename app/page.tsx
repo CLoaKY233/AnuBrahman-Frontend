@@ -7,36 +7,9 @@ import Testimonials from "@/components/testimonials";
 
 export default function HomePage() {
   return (
-    <main className="relative min-h-screen overflow-x-hidden bg-black text-white selection:bg-purple-500/30">
-      {/* Premium Background System */}
-      <div className="fixed inset-0 -z-30">
-        {/* Base matte black gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-black via-zinc-950 to-black" />
-
-        {/* Dark purple gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-tr from-purple-950/20 via-transparent to-black" />
-        <div className="absolute inset-0 bg-gradient-to-bl from-purple-900/10 via-transparent to-transparent" />
-
-        {/* Subtle texture overlay */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.05)_1px,transparent_0)] bg-[size:40px_40px] opacity-40" />
-
-        {/* Dynamic ambient glow */}
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-[100px] animate-pulse" />
-        <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-purple-400/5 rounded-full blur-[80px] animate-pulse delay-1000" />
-      </div>
-
+    <main className="relative min-h-screen overflow-x-hidden text-white selection:bg-purple-500/30">
       {/* Premium Floating Navbar */}
       <NavFrosted />
-
-      {/* Refined Grid Accents */}
-      <div
-        aria-hidden="true"
-        className="fixed inset-0 -z-20 pointer-events-none"
-      >
-        <div className="absolute top-40 left-16 w-px h-32 bg-gradient-to-b from-transparent via-white/20 to-transparent" />
-        <div className="absolute bottom-40 right-20 w-20 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-6 h-6 border border-white/10 rotate-45" />
-      </div>
 
       {/* Main Content Container */}
       <div className="relative mx-auto max-w-6xl px-6 lg:px-8">
@@ -44,7 +17,7 @@ export default function HomePage() {
         <section className="relative pt-32 pb-20 md:pt-40 md:pb-28">
           <div className="flex flex-col items-center text-center max-w-4xl mx-auto space-y-8">
             {/* Status Badge */}
-            <div className="inline-flex items-center rounded-full border border-white/10 bg-white/5 backdrop-blur-xl px-4 py-2">
+            <div className="inline-flex items-center rounded-full border border-white/10 bg-white/5 backdrop-blur-2xl px-4 py-2">
               <div className="w-2 h-2 bg-purple-400 rounded-full mr-2 animate-pulse" />
               <span className="text-xs font-medium tracking-wider text-zinc-300 uppercase">
                 Aerospace • Astrophysics • Innovation
@@ -84,7 +57,7 @@ export default function HomePage() {
 
               <button
                 type="button"
-                className="group relative rounded-lg border border-white/20 bg-white/5 backdrop-blur-xl px-8 py-3.5 text-sm font-medium text-zinc-200 transition-all duration-500 hover:bg-white/10 hover:border-purple-500/30 hover:text-white hover:scale-105 active:scale-95"
+                className="group relative rounded-lg border border-white/20 bg-white/5 backdrop-blur-2xl px-8 py-3.5 text-sm font-medium text-zinc-200 transition-all duration-500 hover:bg-white/10 hover:border-purple-500/30 hover:text-white hover:scale-105 active:scale-95"
               >
                 <span className="tracking-wider uppercase">Join Community</span>
               </button>
@@ -135,7 +108,7 @@ export default function HomePage() {
 
       {/* Premium CTA Section */}
       <section className="relative mx-auto max-w-6xl px-6 py-20 lg:px-8">
-        <div className="relative rounded-2xl border border-white/10 bg-gradient-to-br from-purple-950/20 via-black/40 to-black/60 backdrop-blur-xl overflow-hidden">
+        <div className="relative rounded-2xl border border-white/10 bg-gradient-to-br from-purple-950/20 via-black/40 to-black/60 backdrop-blur-2xl overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-purple-500/5 to-transparent" />
           <div className="relative p-12 text-center space-y-6">
             <h2 className="text-2xl md:text-3xl font-light tracking-tight text-white">
