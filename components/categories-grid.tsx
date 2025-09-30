@@ -39,7 +39,7 @@ export default function CategoriesGrid() {
       {/* Categories Grid - Slim Cards */}
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
         {categories.map((category) => (
-          <article key={category.title} className="group relative h-48 cursor-pointer">
+          <article key={category.title} className="group relative h-48">
             {/* Card Background */}
             <div
               className={`relative h-full rounded-2xl border border-white/10 bg-gradient-to-br ${category.gradient} backdrop-blur-2xl overflow-hidden transition-all duration-500 hover:border-purple-500/30 hover:scale-105`}

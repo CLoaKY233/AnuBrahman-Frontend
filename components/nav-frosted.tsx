@@ -1,7 +1,7 @@
 'use client';
 
 import { Menu, X, Mail, Users, FileText, Info } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 const navItems = [
   { key: 'newsletter', label: 'Newsletter', icon: Mail },
@@ -12,6 +12,90 @@ const navItems = [
 
 export default function NavFrosted() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const previousFocusRef = useRef<HTMLElement | null>(null);
+
+  // Close menu handler
+  const closeMenu = () => {
+    setIsMobileMenuOpen(false);
+  };
+
+  // Handle Escape key
+  useEffect(() => {
+    if (!isMobileMenuOpen) return;
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        closeMenu();
+      }
+    };
+
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, [isMobileMenuOpen]);
+
+  // Handle focus trap
+  useEffect(() => {
+    if (!isMobileMenuOpen || !dialogRef.current) return;
+
+    // Store previously focused element
+    previousFocusRef.current = document.activeElement as HTMLElement;
+
+    // Get all focusable elements
+    const focusableElements = dialogRef.current.querySelectorAll<HTMLElement>(
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    );
+    const firstFocusable = focusableElements[0];
+    const lastFocusable = focusableElements[focusableElements.length - 1];
+
+    // Focus first element (close button)
+    closeButtonRef.current?.focus();
+
+    const handleTab = (event: KeyboardEvent) => {
+      if (event.key !== 'Tab') return;
+
+      if (event.shiftKey) {
+        // Shift + Tab
+        if (document.activeElement === firstFocusable) {
+          event.preventDefault();
+          lastFocusable?.focus();
+        }
+      } else {
+        // Tab
+        if (document.activeElement === lastFocusable) {
+          event.preventDefault();
+          firstFocusable?.focus();
+        }
+      }
+    };
+
+    document.addEventListener('keydown', handleTab);
+
+    return () => {
+      document.removeEventListener('keydown', handleTab);
+      // Restore focus to previously focused element
+      previousFocusRef.current?.focus();
+    };
+  }, [isMobileMenuOpen]);
+
+  // Handle scroll lock
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      // Save current scroll position
+      const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+      document.body.style.overflow = 'hidden';
+      document.body.style.paddingRight = `${scrollbarWidth}px`;
+    } else {
+      document.body.style.overflow = '';
+      document.body.style.paddingRight = '';
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+      document.body.style.paddingRight = '';
+    };
+  }, [isMobileMenuOpen]);
 
   return (
     <>
@@ -55,6 +139,8 @@ export default function NavFrosted() {
               type="button"
               onClick={() => setIsMobileMenuOpen(true)}
               aria-label="Open navigation menu"
+              aria-expanded={isMobileMenuOpen}
+              aria-controls="mobile-menu"
               className="md:hidden inline-flex items-center justify-center rounded-lg p-2 text-zinc-300 transition-all duration-300 hover:text-white hover:bg-white/10 hover:scale-110 active:scale-95"
             >
               <Menu className="h-5 w-5" />
@@ -68,10 +154,18 @@ export default function NavFrosted() {
           {/* Backdrop with blur */}
           <div
             className="absolute inset-0 bg-black/60 backdrop-blur-xl"
-            onClick={() => setIsMobileMenuOpen(false)}
+            onClick={closeMenu}
+            aria-hidden="true"
           />
 
-          <div className="absolute inset-y-0 right-0 w-full max-w-xs">
+          <div
+            ref={dialogRef}
+            id="mobile-menu"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Mobile navigation menu"
+            className="absolute inset-y-0 right-0 w-full max-w-xs"
+          >
             {/* Animated slide-in panel with frosted glass */}
             <div
               className="relative h-full bg-gradient-to-br from-black/95 via-purple-950/30 to-black/95 backdrop-blur-3xl border-l border-white/10 shadow-2xl shadow-purple-500/10"
@@ -95,8 +189,9 @@ export default function NavFrosted() {
                     </span>
                   </div>
                   <button
+                    ref={closeButtonRef}
                     type="button"
-                    onClick={() => setIsMobileMenuOpen(false)}
+                    onClick={closeMenu}
                     aria-label="Close navigation menu"
                     className="inline-flex items-center justify-center rounded-lg p-1.5 text-zinc-400 transition-all duration-300 hover:text-white hover:bg-white/10 hover:rotate-90 active:scale-90"
                   >
@@ -111,7 +206,7 @@ export default function NavFrosted() {
                       <button
                         key={item.key}
                         type="button"
-                        onClick={() => setIsMobileMenuOpen(false)}
+                        onClick={closeMenu}
                         className="group relative w-full flex items-center space-x-3 rounded-lg border border-white/5 bg-white/[0.02] backdrop-blur-2xl px-4 py-3 text-left transition-all duration-500 hover:border-purple-500/30 hover:bg-gradient-to-r hover:from-purple-600/15 hover:to-purple-500/5 hover:scale-[1.01] hover:shadow-md hover:shadow-purple-500/5 active:scale-[0.99]"
                         style={{
                           animation: `fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) ${index * 0.1}s both`,
@@ -134,6 +229,7 @@ export default function NavFrosted() {
                             fill="none"
                             viewBox="0 0 24 24"
                             stroke="currentColor"
+                            aria-hidden="true"
                           >
                             <path
                               strokeLinecap="round"
@@ -151,7 +247,7 @@ export default function NavFrosted() {
                 <div className="px-5 pb-6 pt-3 border-t border-white/5 space-y-3">
                   <button
                     type="button"
-                    onClick={() => setIsMobileMenuOpen(false)}
+                    onClick={closeMenu}
                     className="w-full relative overflow-hidden rounded-lg border border-purple-500/30 bg-gradient-to-r from-purple-600/90 to-purple-500/90 px-5 py-3 text-xs font-medium text-white transition-all duration-500 hover:shadow-lg hover:shadow-purple-500/25 hover:scale-[1.01] active:scale-[0.99]"
                   >
                     <span className="relative z-10 tracking-wider uppercase">Subscribe Now</span>
@@ -169,7 +265,7 @@ export default function NavFrosted() {
         </div>
       )}
 
-      <style jsx>{`
+      <style jsx global>{`
         @keyframes slideInRight {
           from {
             transform: translateX(100%);
