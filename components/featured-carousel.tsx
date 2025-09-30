@@ -7,7 +7,10 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
+  type CarouselApi,
 } from "@/components/ui/carousel";
+import { useEffect, useState } from "react";
+import { cn } from "@/lib/utils"; // Make sure you have this utility function
 
 const slides = [
   {
@@ -59,8 +62,29 @@ const slides = [
 ];
 
 export default function FeaturedCarousel() {
+  const [api, setApi] = useState<CarouselApi>();
+  const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    if (!api) {
+      return;
+    }
+
+    setCurrent(api.selectedScrollSnap());
+
+    const onSelect = () => {
+      setCurrent(api.selectedScrollSnap());
+    };
+
+    api.on("select", onSelect);
+
+    return () => {
+      api.off("select", onSelect);
+    };
+  }, [api]);
+
   return (
-    <section className="relative">
+    <section className="relative py-12">
       {/* Section Header */}
       <div className="text-center mb-16">
         <h2 className="text-2xl md:text-3xl font-light tracking-tight text-white mb-4">
@@ -73,110 +97,103 @@ export default function FeaturedCarousel() {
         <div className="mx-auto w-16 h-px bg-gradient-to-r from-transparent via-purple-400/50 to-transparent mt-6" />
       </div>
 
-      {/* Carousel Container */}
-      <div className="relative">
-        {/* Edge fade effects */}
-        <div className="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-black via-black/50 to-transparent z-10 pointer-events-none" />
-        <div className="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-black via-black/50 to-transparent z-10 pointer-events-none" />
-
-        <Carousel
-          className="relative mx-auto max-w-7xl"
-          opts={{
-            loop: true,
-            align: "start",
-            skipSnaps: false,
-            dragFree: true,
-          }}
-        >
-          <CarouselContent className="-ml-6 [--slide-spacing:1.5rem]">
-            {slides.map((slide, index) => (
-              <CarouselItem
-                key={slide.title}
-                className="pl-6 md:basis-1/2 lg:basis-1/3"
-              >
-                <article className="group relative h-80 cursor-pointer">
-                  {/* Card Container */}
-                  <div className="relative h-full overflow-hidden rounded-2xl border border-white/10 bg-black/40 backdrop-blur-xl transition-all duration-700 hover:border-purple-500/30 hover:scale-105">
-                    {/* Background Image */}
-                    <div className="absolute inset-0">
-                      <Image
-                        src={
-                          slide.img || "/placeholder.svg?height=400&width=600"
-                        }
-                        alt={slide.alt}
-                        fill
-                        priority={index < 2}
-                        className="object-cover opacity-60 transition-all duration-700 group-hover:opacity-80 group-hover:scale-110"
-                      />
-                      {/* Gradient overlay */}
-                      <div
-                        className={`absolute inset-0 bg-gradient-to-t ${slide.accent} via-black/60 to-black/80`}
-                      />
-                    </div>
-
-                    {/* Content */}
-                    <div className="relative z-10 flex h-full flex-col justify-between p-6">
-                      {/* Category badge */}
-                      <div className="flex justify-between items-start mb-4">
-                        <span className="inline-block rounded-full border border-purple-400/30 bg-purple-500/20 backdrop-blur-sm px-3 py-1 text-xs font-light tracking-wider text-purple-300 uppercase">
-                          {slide.category}
-                        </span>
-
-                        {/* Reading time */}
-                        <span className="text-xs font-light text-zinc-400">
-                          {slide.read}
-                        </span>
-                      </div>
-
-                      {/* Article title */}
-                      <div className="flex-1 flex items-end">
-                        <h3 className="text-lg font-light leading-snug text-white transition-colors duration-300 group-hover:text-purple-100 line-clamp-3">
-                          {slide.title}
-                        </h3>
-                      </div>
-
-                      {/* Meta information */}
-                      <div className="flex items-center justify-between pt-4 border-t border-white/10">
-                        <div className="flex items-center space-x-2 text-xs font-light text-zinc-400">
-                          <span>{slide.author}</span>
-                          {slide.date && (
-                            <>
-                              <span>•</span>
-                              <span>{slide.date}</span>
-                            </>
-                          )}
+      <Carousel
+        setApi={setApi}
+        className="relative mx-auto max-w-[90rem] px-4 sm:px-6 md:px-16" // The Carousel now wraps everything
+        opts={{
+          loop: true,
+          align: "center",
+        }}
+      >
+        <div className="relative [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
+          <CarouselContent className="-ml-8 py-12">
+            {slides.map((slide, index) => {
+              const isActive = index === current;
+              return (
+                <CarouselItem
+                  key={slide.title}
+                  className="pl-8 basis-[90%] md:basis-1/2 lg:basis-1/3"
+                >
+                  <div
+                    className={cn(
+                      "h-full w-full transition-all duration-500 ease-in-out",
+                      isActive ? "opacity-100" : "opacity-50 scale-90",
+                    )}
+                  >
+                    <article className="group relative h-96 cursor-pointer">
+                      <div className="relative h-full overflow-hidden rounded-2xl border border-white/10 bg-black/40 backdrop-blur-xl transition-all duration-500 hover:border-purple-500/50 hover:shadow-2xl hover:shadow-purple-950/50">
+                        {/* Background Image */}
+                        <div className="absolute inset-0">
+                          <Image
+                            src={slide.img || "/placeholder.svg"}
+                            alt={slide.alt}
+                            fill
+                            priority={index < 3}
+                            className="object-cover opacity-60 transition-all duration-700 group-hover:opacity-75 group-hover:scale-110"
+                          />
+                          <div
+                            className={`absolute inset-0 bg-gradient-to-t ${slide.accent} via-black/60 to-black/80`}
+                          />
                         </div>
 
-                        {/* Read more arrow */}
-                        <svg
-                          className="w-4 h-4 text-white/40 transition-all duration-300 group-hover:text-purple-400 group-hover:translate-x-1"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={1.5}
-                            d="M9 5l7 7-7 7"
-                          />
-                        </svg>
+                        {/* Content */}
+                        <div className="relative z-10 flex h-full flex-col justify-between p-6">
+                          <div className="flex justify-between items-start mb-4">
+                            <span className="inline-block rounded-full border border-purple-400/30 bg-purple-500/20 backdrop-blur-sm px-3 py-1 text-xs font-light tracking-wider text-purple-300 uppercase">
+                              {slide.category}
+                            </span>
+                            <span className="text-xs font-light text-zinc-400">
+                              {slide.read}
+                            </span>
+                          </div>
+                          <div className="flex-1 flex items-end">
+                            <h3 className="text-lg font-light leading-snug text-white transition-colors duration-300 group-hover:text-purple-100 line-clamp-3">
+                              {slide.title}
+                            </h3>
+                          </div>
+                          <div className="flex items-center justify-between pt-4 border-t border-white/10">
+                            <div className="flex items-center space-x-2 text-xs font-light text-zinc-400">
+                              <span>{slide.author}</span>
+                              {slide.date && (
+                                <>
+                                  <span>•</span>
+                                  <span>{slide.date}</span>
+                                </>
+                              )}
+                            </div>
+                            <svg
+                              className="w-4 h-4 text-white/40 transition-all duration-300 group-hover:text-purple-400 group-hover:translate-x-1"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={1.5}
+                                d="M9 5l7 7-7 7"
+                              />
+                            </svg>
+                          </div>
+                        </div>
+                        <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-purple-500/0 via-purple-500/10 to-purple-500/0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 -z-10 blur-2xl" />
                       </div>
-                    </div>
-
-                    {/* Hover glow */}
-                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-purple-500/0 via-purple-500/10 to-purple-500/0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 -z-10 blur-xl" />
+                    </article>
                   </div>
-                </article>
-              </CarouselItem>
-            ))}
+                </CarouselItem>
+              );
+            })}
           </CarouselContent>
+        </div>
 
-          {/* Navigation Buttons */}
-          <CarouselPrevious className="left-4 top-1/2 -translate-y-1/2 h-10 w-10 rounded-xl border border-white/20 bg-black/40 text-white backdrop-blur-xl transition-all duration-300 hover:border-purple-500/30 hover:bg-purple-500/20" />
-          <CarouselNext className="right-4 top-1/2 -translate-y-1/2 h-10 w-10 rounded-xl border border-white/20 bg-black/40 text-white backdrop-blur-xl transition-all duration-300 hover:border-purple-500/30 hover:bg-purple-500/20" />
-        </Carousel>
-      </div>
+        {/*
+          CORRECTED PLACEMENT:
+          The navigation buttons are now direct children of the <Carousel /> component,
+          allowing them to correctly access the carousel's context and function as intended.
+        */}
+        <CarouselPrevious className="absolute left-0 top-1/2 -translate-y-1/2 h-12 w-12 rounded-full border border-white/10 bg-black/50 text-white backdrop-blur-lg transition-all duration-300 hover:border-purple-500/30 hover:bg-purple-900/50 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-black disabled:opacity-0" />
+        <CarouselNext className="absolute right-0 top-1/2 -translate-y-1/2 h-12 w-12 rounded-full border border-white/10 bg-black/50 text-white backdrop-blur-lg transition-all duration-300 hover:border-purple-500/30 hover:bg-purple-900/50 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-black disabled:opacity-0" />
+      </Carousel>
 
       {/* Background accent */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-32 bg-purple-500/5 rounded-full blur-3xl -z-10" />
