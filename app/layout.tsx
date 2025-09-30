@@ -1,34 +1,28 @@
-import type React from "react";
-import type { Metadata } from "next";
-import { GeistSans } from "geist/font/sans";
-import { GeistMono } from "geist/font/mono";
-import { Analytics } from "@vercel/analytics/next";
-import "./globals.css";
-import { Suspense } from "react";
+import type React from 'react';
+import type { Metadata } from 'next';
+import { GeistSans } from 'geist/font/sans';
+import { GeistMono } from 'geist/font/mono';
+import { Analytics } from '@vercel/analytics/next';
+import './globals.css';
+import { Suspense } from 'react';
 
 export const metadata: Metadata = {
-  title: "AnuBrahman - Aerospace & Astrophysics Innovation",
+  title: 'AnuBrahman - Aerospace & Astrophysics Innovation',
   description:
-    "Engineering infinity: from Core to Cosmos. A comprehensive platform for space science enthusiasts and professionals.",
-  authors: [{ name: "Lay Sheth", url: "https://github.com/cloaky233" }],
-  creator: "Lay Sheth",
-  keywords: [
-    "aerospace",
-    "astrophysics",
-    "space science",
-    "astronomy",
-    "innovation",
-  ],
+    'Engineering infinity: from Core to Cosmos. A comprehensive platform for space science enthusiasts and professionals.',
+  authors: [{ name: 'Lay Sheth', url: 'https://github.com/cloaky233' }],
+  creator: 'Lay Sheth',
+  keywords: ['aerospace', 'astrophysics', 'space science', 'astronomy', 'innovation'],
   openGraph: {
-    type: "website",
-    title: "AnuBrahman - Aerospace & Astrophysics Innovation",
-    description: "Engineering infinity: from Core to Cosmos",
-    siteName: "AnuBrahman",
+    type: 'website',
+    title: 'AnuBrahman - Aerospace & Astrophysics Innovation',
+    description: 'Engineering infinity: from Core to Cosmos',
+    siteName: 'AnuBrahman',
   },
   twitter: {
-    card: "summary_large_image",
-    title: "AnuBrahman - Aerospace & Astrophysics Innovation",
-    description: "Engineering infinity: from Core to Cosmos",
+    card: 'summary_large_image',
+    title: 'AnuBrahman - Aerospace & Astrophysics Innovation',
+    description: 'Engineering infinity: from Core to Cosmos',
   },
 };
 
@@ -70,10 +64,7 @@ export default function RootLayout({
         </div>
 
         {/* LAYER 5: Animated Ambient Lighting Effects */}
-        <div
-          className="fixed inset-0 -z-46 overflow-hidden pointer-events-none"
-          aria-hidden="true"
-        >
+        <div className="fixed inset-0 -z-46 overflow-hidden pointer-events-none" aria-hidden="true">
           {/* Pulsing glow - top area */}
           <div className="absolute top-1/4 left-1/3 w-96 h-96 bg-purple-500/[0.08] rounded-full blur-[100px] animate-ambient-pulse" />
 
@@ -91,10 +82,7 @@ export default function RootLayout({
         />
 
         {/* LAYER 7: Decorative Geometric Accents */}
-        <div
-          className="fixed inset-0 -z-44 pointer-events-none"
-          aria-hidden="true"
-        >
+        <div className="fixed inset-0 -z-44 pointer-events-none" aria-hidden="true">
           {/* Top-left vertical line */}
           <div className="absolute top-32 left-12 w-px h-40 bg-gradient-to-b from-transparent via-white/[0.08] to-transparent" />
 
