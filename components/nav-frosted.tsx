@@ -1,13 +1,13 @@
 'use client';
-
+import Link from 'next/link';
 import { Menu, X, Mail, Users, FileText, Info } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 
 const navItems = [
-  { key: 'newsletter', label: 'Newsletter', icon: Mail },
-  { key: 'team', label: 'Team', icon: Users },
-  { key: 'blog', label: 'Blog', icon: FileText },
-  { key: 'about', label: 'About', icon: Info },
+  { key: 'newsletter', label: 'Newsletter', icon: Mail, href: '/' },
+  { key: 'team', label: 'Team', icon: Users, href: '/' },
+  { key: 'blog', label: 'Blog', icon: FileText, href: '/' },
+  { key: 'about', label: 'About', icon: Info, href: '/about' },
 ];
 
 export default function NavFrosted() {
@@ -116,14 +116,14 @@ export default function NavFrosted() {
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-1">
               {navItems.map((item) => (
-                <button
+                <Link
                   key={item.key}
-                  type="button"
+                  href={item.href}
                   className="group relative rounded-lg px-4 py-2 text-sm font-light text-zinc-300 transition-all duration-300 hover:text-white hover:bg-white/5"
                 >
                   <span className="relative z-10 tracking-wide uppercase">{item.label}</span>
                   <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-purple-500/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                </button>
+                </Link>
               ))}
             </div>
 
@@ -203,9 +203,9 @@ export default function NavFrosted() {
                   {navItems.map((item, index) => {
                     const Icon = item.icon;
                     return (
-                      <button
+                      <Link
                         key={item.key}
-                        type="button"
+                        href={item.href}
                         onClick={closeMenu}
                         className="group relative w-full flex items-center space-x-3 rounded-lg border border-white/5 bg-white/[0.02] backdrop-blur-2xl px-4 py-3 text-left transition-all duration-500 hover:border-purple-500/30 hover:bg-gradient-to-r hover:from-purple-600/15 hover:to-purple-500/5 hover:scale-[1.01] hover:shadow-md hover:shadow-purple-500/5 active:scale-[0.99]"
                         style={{
@@ -239,7 +239,7 @@ export default function NavFrosted() {
                             />
                           </svg>
                         </div>
-                      </button>
+                      </Link>
                     );
                   })}
                 </div>
