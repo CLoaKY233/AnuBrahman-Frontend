@@ -5,118 +5,111 @@ const journeySteps = [
     year: '2021',
     title: 'Newsletter Launch',
     description:
-      'Started as a small newsletter focusing on space technology articles for a niche audience of aerospace enthusiasts.',
+      'Started as a small newsletter focusing on space technology and aerospace passion.',
   },
   {
     year: '2022',
-    title: 'First Edition Release',
-    description:
-      'Published our first comprehensive magazine edition, featuring articles from industry experts and academics.',
+    title: 'First Edition',
+    description: 'Published comprehensive magazine featuring expert insights and research.',
   },
   {
     year: '2023',
     title: 'Community Growth',
-    description:
-      'Expanded to include a community forum and regular webinars connecting readers with aerospace professionals.',
+    description: 'Expanded reach with forums and webinars connecting aerospace enthusiasts.',
   },
   {
     year: '2024',
     title: 'Digital Platform',
-    description:
-      'Launched our comprehensive digital platform with expanded resources, references, and interactive content.',
+    description: 'Launched interactive platform with expanded resources and engagement.',
   },
   {
     year: '2025',
-    title: 'Industry Partnerships',
-    description:
-      'Established formal partnerships with key aerospace organizations to provide exclusive insights to our readers.',
+    title: 'Partnerships',
+    description: 'Established collaborations with aerospace organizations for exclusive content.',
   },
 ];
 
 export default function JourneyTimeline() {
   return (
-    <div className="relative">
-      {/* Section Header */}
+    <section className="relative py-16">
       <div className="text-center mb-16">
         <h2 className="text-2xl md:text-3xl font-light tracking-tight text-white mb-4">
           Our Journey
         </h2>
-        <p className="text-base text-zinc-400 font-light max-w-2xl mx-auto leading-relaxed">
+        <p className="text-base font-light text-zinc-400 max-w-2xl mx-auto leading-relaxed">
           From initial idea to growing student-led aerospace platform
         </p>
         <div className="mx-auto w-16 h-px bg-gradient-to-r from-transparent via-purple-400/50 to-transparent mt-6" />
       </div>
 
-      {/* Timeline Container */}
-      <div className="relative">
-        {/* Vertical Line - Desktop */}
-        <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-purple-500/20 via-purple-400/40 to-purple-500/20 -translate-x-1/2" />
+      {/* Mobile: Vertical Timeline */}
+      <div className="relative md:hidden max-w-md mx-auto">
+        {/* Vertical Line */}
+        <div className="absolute left-6 top-0 bottom-0 w-px bg-gradient-to-b from-purple-500/20 via-purple-400/40 to-purple-500/20" />
 
         {/* Timeline Items */}
-        <div className="space-y-12 md:space-y-16">
-          {journeySteps.map((step, index) => {
-            const isEven = index % 2 === 0;
-            return (
-              <div
-                key={step.year}
-                className="relative grid md:grid-cols-2 gap-8 md:gap-12 items-center"
-              >
-                {/* Left Side - Desktop */}
-                <div
-                  className={`${isEven ? 'md:text-right' : 'md:order-2 md:text-left'} space-y-3`}
-                >
-                  <div
-                    className={`inline-block rounded-full border border-purple-500/30 bg-gradient-to-r from-purple-600/20 to-purple-500/10 backdrop-blur-xl px-4 py-1.5 ${
-                      isEven ? 'md:float-right' : 'md:float-left'
-                    }`}
-                  >
-                    <span className="text-sm font-light tracking-widest text-purple-300 uppercase">
-                      {step.year}
-                    </span>
-                  </div>
-                  <div className="clear-both" />
-                  <h3 className="text-xl md:text-2xl font-light text-white">{step.title}</h3>
-                  <p className="text-sm text-zinc-400 leading-relaxed font-light">
-                    {step.description}
-                  </p>
-                </div>
-
-                {/* Center Node */}
-                <div className="hidden md:block absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-                  <div className="relative">
-                    {/* Outer glow ring */}
-                    <div className="absolute inset-0 w-6 h-6 rounded-full bg-purple-500/20 blur-md animate-pulse" />
-                    {/* Middle ring */}
-                    <div className="relative w-6 h-6 rounded-full border-2 border-purple-500/50 bg-black flex items-center justify-center">
-                      {/* Inner dot */}
-                      <div className="w-2.5 h-2.5 rounded-full bg-gradient-to-br from-purple-400 to-purple-600" />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Right Side - Desktop (Empty for layout) */}
-                <div className={`hidden md:block ${isEven ? 'md:order-2' : ''}`} />
-
-                {/* Mobile Timeline Indicator */}
-                <div className="md:hidden absolute -left-4 top-0">
-                  <div className="relative">
-                    <div className="absolute inset-0 w-4 h-4 rounded-full bg-purple-500/20 blur-sm animate-pulse" />
-                    <div className="relative w-4 h-4 rounded-full border-2 border-purple-500/50 bg-black flex items-center justify-center">
-                      <div className="w-1.5 h-1.5 rounded-full bg-gradient-to-br from-purple-400 to-purple-600" />
-                    </div>
-                  </div>
+        <div className="space-y-12">
+          {journeySteps.map((item) => (
+            <div key={item.year} className="relative flex items-start gap-6 group">
+              {/* Node */}
+              <div className="relative z-10 flex-shrink-0">
+                <div className="w-12 h-12 rounded-full border border-purple-500/30 bg-gradient-to-br from-purple-500/20 to-black/80 backdrop-blur-2xl flex items-center justify-center transition-all duration-500 group-hover:border-purple-400/60 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-purple-500/30">
+                  <span className="text-xs font-light text-purple-300 transition-colors duration-300 group-hover:text-purple-200">
+                    {item.year}
+                  </span>
                 </div>
               </div>
-            );
-          })}
-        </div>
 
-        {/* Mobile Vertical Line */}
-        <div className="md:hidden absolute -left-4 top-2 bottom-2 w-px bg-gradient-to-b from-purple-500/20 via-purple-400/40 to-purple-500/20 translate-x-[7px]" />
+              {/* Content */}
+              <div className="flex-1 pt-2 space-y-2">
+                <h4 className="text-sm font-light tracking-widest text-white uppercase transition-colors duration-300 group-hover:text-purple-200">
+                  {item.title}
+                </h4>
+                <p className="text-xs font-light text-zinc-500 leading-relaxed transition-colors duration-300 group-hover:text-zinc-400">
+                  {item.description}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
 
-      {/* Background accent */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl -z-10" />
-    </div>
+      {/* Desktop: Horizontal Timeline */}
+      <div className="hidden md:block relative max-w-5xl mx-auto">
+        {/* Horizontal Line */}
+        <div className="absolute top-20 left-0 right-0 h-px bg-gradient-to-r from-purple-500/20 via-purple-400/40 to-purple-500/20" />
+
+        {/* Timeline Items */}
+        <div className="relative grid grid-cols-5 gap-8">
+          {journeySteps.map((item) => (
+            <div key={item.year} className="group relative flex flex-col items-center">
+              {/* Content - All positioned above the timeline */}
+              <div className="mb-8 text-center space-y-3 h-24 flex flex-col justify-end">
+                <h4 className="text-xs font-light tracking-widest text-white uppercase transition-colors duration-300 group-hover:text-purple-200">
+                  {item.title}
+                </h4>
+                <p className="text-xs font-light text-zinc-500 leading-relaxed transition-colors duration-300 group-hover:text-zinc-400">
+                  {item.description}
+                </p>
+              </div>
+
+              {/* Connecting Line */}
+              <div className="w-px h-8 bg-gradient-to-b from-purple-400/40 to-transparent transition-all duration-300 group-hover:from-purple-400/80" />
+
+              {/* Node */}
+              <div className="relative z-10">
+                <div className="w-16 h-16 rounded-full border border-purple-500/30 bg-gradient-to-br from-purple-500/20 to-black/80 backdrop-blur-2xl flex items-center justify-center transition-all duration-500 group-hover:border-purple-400/60 group-hover:scale-110 group-hover:shadow-xl group-hover:shadow-purple-500/30">
+                  <span className="text-sm font-light text-purple-300 transition-colors duration-300 group-hover:text-purple-200">
+                    {item.year}
+                  </span>
+                </div>
+                {/* Outer glow ring */}
+                <div className="absolute inset-0 rounded-full border border-purple-400/0 transition-all duration-500 group-hover:border-purple-400/20 group-hover:scale-125" />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
