@@ -82,7 +82,7 @@ const components = {
     </TableCell>
   ),
   th: ({ children }: { children?: React.ReactNode }) => (
-    <TableHead className="font-bold  border-r border-border last:border-r-0 first:rounded-tl-md last:rounded-tr-md">
+    <TableHead className="font-bold border-r border-border last:border-r-0 first:rounded-tl-md last:rounded-tr-md">
       {children}
     </TableHead>
   ),
