@@ -17,7 +17,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "build": "bun run run cache:posts && next build",
+    "build": "bun run cache:posts && next build",
     "dev": "bun --bun run cache:posts && next dev",
     "lint": "bun run next lint",
     "start": "bun run next start",
