@@ -1,7 +1,7 @@
-import { fetchPublishedPosts, getPostFromNotion } from "@/lib/notion";
-import fs from "fs";
-import path from "path";
-import { notion } from "../lib/notion";
+import { fetchPublishedPosts, getPostFromNotion } from '@/lib/notion';
+import fs from 'fs';
+import path from 'path';
+import { notion } from '../lib/notion';
 
 // async function debugNotion() {
 //   console.log("Testing Notion connection...");
@@ -23,7 +23,7 @@ import { notion } from "../lib/notion";
 
 async function cachePosts() {
   try {
-    console.log("Fetching posts from Notion...");
+    console.log('Fetching posts from Notion...');
     const posts = await fetchPublishedPosts();
 
     const allPosts = [];
@@ -35,12 +35,12 @@ async function cachePosts() {
       }
     }
 
-    const cachePath = path.join(process.cwd(), "posts-cache.json");
+    const cachePath = path.join(process.cwd(), 'posts-cache.json');
     fs.writeFileSync(cachePath, JSON.stringify(allPosts, null, 2));
 
     console.log(`Successfully cached ${allPosts.length} posts.`);
   } catch (error) {
-    console.error("Error caching posts:", error);
+    console.error('Error caching posts:', error);
     process.exit(1);
   }
 }
