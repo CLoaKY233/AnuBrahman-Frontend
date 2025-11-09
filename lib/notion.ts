@@ -1,13 +1,14 @@
-import { PageObjectResponse } from '@notionhq/client/build/src/api-endpoints';
+import {
+  PageObjectResponse,
+  DatabaseObjectResponse,
+} from '@notionhq/client/build/src/api-endpoints';
 import { Client } from '@notionhq/client';
 import { NotionToMarkdown } from 'notion-to-md';
 import fs from 'fs';
 import path from 'path';
 
-// Bun automatically loads .env files, so no need for dotenv
 export const notion = new Client({
   auth: process.env.NOTION_TOKEN,
-  // Specify API version to use the new dataSources API
   notionVersion: '2025-09-03',
 });
 
@@ -26,23 +27,71 @@ export interface Post {
   category?: string;
 }
 
-export async function getDatabaseStructure() {
-  // databases.retrieve still works for getting database metadata
-  const database = await notion.databases.retrieve({
-    database_id: process.env.NOTION_DATABASE_ID!,
-  });
-  console.log('returned');
-  return database;
+interface NotionTitleProperty {
+  title: Array<{ plain_text: string }>;
 }
 
-// FIX: Removed getWordCount from this file. It's now in lib/utils.ts.
+interface NotionRichTextProperty {
+  rich_text: Array<{ plain_text: string }>;
+}
+
+interface NotionSelectProperty {
+  select: { name: string } | null;
+}
+
+interface NotionMultiSelectProperty {
+  multi_select: Array<{ name: string }>;
+}
+
+interface NotionDateProperty {
+  date: { start: string; end?: string } | null;
+}
+
+interface NotionPeopleProperty {
+  people: Array<{ name: string; id: string }>;
+}
+
+interface NotionUrlProperty {
+  url: string | null;
+}
+
+interface NotionPageProperties {
+  Title?: NotionTitleProperty;
+  Slug?: NotionRichTextProperty;
+  'Cover Image'?: NotionUrlProperty;
+  'Featured Image'?: NotionUrlProperty;
+  'Published Date'?: NotionDateProperty;
+  Author?: NotionPeopleProperty;
+  Category?: NotionSelectProperty;
+  Tags?: NotionMultiSelectProperty;
+  Status?: NotionSelectProperty;
+}
+
+type DatabaseWithOptionalDataSources = Omit<DatabaseObjectResponse, 'data_sources'> & {
+  data_sources?: DatabaseObjectResponse['data_sources'];
+};
+
+export async function getDatabaseStructure() {
+  if (!process.env.NOTION_DATABASE_ID) {
+    throw new Error('NOTION_DATABASE_ID is not set');
+  }
+
+  const database = await notion.databases.retrieve({
+    database_id: process.env.NOTION_DATABASE_ID,
+  });
+  return database;
+}
 
 export function getPostsFromCache(): Post[] {
   const cachePath = path.join(process.cwd(), 'posts-cache.json');
   if (fs.existsSync(cachePath)) {
     try {
       const cache = fs.readFileSync(cachePath, 'utf-8');
-      return JSON.parse(cache);
+      const posts = JSON.parse(cache) as Post[];
+      return posts.filter(
+        (post) =>
+          post.id && post.title && post.slug && post.description && post.date && post.content
+      );
     } catch (error) {
       console.error('Error reading posts cache:', error);
       return [];
@@ -52,19 +101,20 @@ export function getPostsFromCache(): Post[] {
 }
 
 export async function fetchPublishedPosts() {
-  // Get the database to extract data source ID
+  if (!process.env.NOTION_DATABASE_ID) {
+    throw new Error('NOTION_DATABASE_ID is not set');
+  }
+
   const database = await notion.databases.retrieve({
-    database_id: process.env.NOTION_DATABASE_ID!,
+    database_id: process.env.NOTION_DATABASE_ID,
   });
 
-  // Extract the first data source ID
-  const dataSourceId = (database as any).data_sources?.[0]?.id;
+  const dataSourceId = (database as DatabaseWithOptionalDataSources).data_sources?.[0]?.id;
 
   if (!dataSourceId) {
     throw new Error('No data source found in database');
   }
 
-  // Query using data source ID
   const response = await notion.dataSources.query({
     data_source_id: dataSourceId,
     filter: {
@@ -108,32 +158,47 @@ export async function getPostFromNotion(pageId: string): Promise<Post | null> {
     const firstParagraph = paragraphs[0] || '';
     const description = firstParagraph.slice(0, 160) + (firstParagraph.length > 160 ? '...' : '');
 
-    const properties = page.properties as any;
+    const properties = page.properties as NotionPageProperties;
+
+    // Extract title with fallback
+    const titleText = properties.Title?.title[0]?.plain_text || 'Untitled';
+
+    // Generate slug from title if not explicitly set
+    const slug =
+      properties.Slug?.rich_text[0]?.plain_text ||
+      titleText
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '');
+
+    // Extract cover image with multiple fallbacks
+    let coverImage: string | undefined;
+    if (page.cover?.type === 'external') {
+      coverImage = page.cover.external.url;
+    } else if (page.cover?.type === 'file') {
+      coverImage = page.cover.file.url;
+    } else if (properties['Cover Image']?.url) {
+      coverImage = properties['Cover Image'].url;
+    } else if (properties['Featured Image']?.url) {
+      coverImage = properties['Featured Image'].url;
+    }
+
     const post: Post = {
       id: page.id,
-      title: properties.Title.title[0]?.plain_text || 'Untitled',
-      slug:
-        properties.Title.title[0]?.plain_text
-          .toLowerCase()
-          .replace(/[^a-z0-9]+/g, '-')
-          .replace(/^-+|-+$/g, '') || 'untitled',
-      coverImage:
-        page.cover?.type === 'external'
-          ? page.cover.external.url
-          : page.cover?.type === 'file'
-            ? page.cover.file.url
-            : properties['Featured Image']?.url || undefined,
+      title: titleText,
+      slug,
+      coverImage,
       description,
       date: properties['Published Date']?.date?.start || new Date().toISOString(),
       content: contentString,
       author: properties.Author?.people[0]?.name,
-      tags: properties.Tags?.multi_select?.map((tag: any) => tag.name) || [],
+      tags: properties.Tags?.multi_select?.map((tag) => tag.name) || [],
       category: properties.Category?.select?.name,
     };
 
     return post;
   } catch (error) {
-    console.error('Error getting post:', error);
+    console.error(`Error getting post from Notion (${pageId}):`, error);
     return null;
   }
 }

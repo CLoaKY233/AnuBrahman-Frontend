@@ -5,7 +5,7 @@ import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import ReactMarkdown from 'react-markdown';
 import { Badge } from '@/components/ui/badge';
-import { calculateReadingTime, getWordCount } from '@/lib/utils'; // FIX: Import getWordCount
+import { calculateReadingTime, getWordCount } from '@/lib/utils';
 import { components } from '@/components/mdx-component';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
@@ -28,25 +28,30 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
     };
   }
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://your-site.com';
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
+  if (!siteUrl) {
+    console.warn('NEXT_PUBLIC_SITE_URL is not configured');
+  }
+
+  const baseUrl = siteUrl || 'https://anubrahman.com';
 
   return {
     title: post.title,
-    description: post.description, // FIX: Changed excerpt to description
+    description: post.description,
     alternates: {
-      canonical: `${siteUrl}/blog/${post.slug}`,
+      canonical: `${baseUrl}/blog/${post.slug}`,
     },
     openGraph: {
       title: post.title,
-      description: post.description, // FIX: Changed excerpt to description
+      description: post.description,
       type: 'article',
-      url: `${siteUrl}/blog/${post.slug}`,
+      url: `${baseUrl}/blog/${post.slug}`,
       publishedTime: new Date(post.date).toISOString(),
       authors: post.author ? [post.author] : [],
       tags: post.tags,
       images: [
         {
-          url: post.coverImage || `${siteUrl}/opengraph-image.png`, // FIX: Changed image to coverImage
+          url: post.coverImage || `${baseUrl}/opengraph-image.png`,
           width: 1200,
           height: 630,
           alt: post.title,
@@ -56,10 +61,10 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
     twitter: {
       card: 'summary_large_image',
       title: post.title,
-      description: post.description, // FIX: Changed excerpt to description
+      description: post.description,
       images: [
         {
-          url: post.coverImage || `${siteUrl}/opengraph-image.png`, // FIX: Changed image to coverImage
+          url: post.coverImage || `${baseUrl}/opengraph-image.png`,
           alt: post.title,
         },
       ],
@@ -83,22 +88,24 @@ export default async function PostPage({ params }: PostPageProps) {
     notFound();
   }
 
-  // FIX: Used the full content for a more accurate reading time
+  // Calculate reading time from full content
   const wordCount = post.content ? getWordCount(post.content) : 0;
   const readingTime = calculateReadingTime(wordCount);
+
+  // Ensure environment variable is set for build-time metadata
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
   if (!siteUrl) {
-    throw new Error(
-      'NEXT_PUBLIC_SITE_URL is not configured. Set it in your deployment environment.'
-    );
+    console.warn('NEXT_PUBLIC_SITE_URL is not configured for JSON-LD schema');
   }
+
+  const baseUrl = siteUrl || 'https://anubrahman.com';
 
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
     headline: post.title,
-    description: post.description, // FIX: Changed excerpt to description
-    image: post.coverImage || `${siteUrl}/opengraph-image.png`, // FIX: Changed image to coverImage
+    description: post.description,
+    image: post.coverImage || `${baseUrl}/opengraph-image.png`,
     datePublished: new Date(post.date).toISOString(),
     author: {
       '@type': 'Person',
@@ -109,17 +116,14 @@ export default async function PostPage({ params }: PostPageProps) {
       name: 'AnuBrahman',
       logo: {
         '@type': 'ImageObject',
-        url: `${siteUrl}/logo.png`,
+        url: `${baseUrl}/logo.png`,
       },
     },
     mainEntityOfPage: {
       '@type': 'WebPage',
-      '@id': `${siteUrl}/blog/${post.slug}`,
+      '@id': `${baseUrl}/blog/${post.slug}`,
     },
   };
-
-  // FIX: Replaced hardcoded markdown with the actual post content
-  const markdownContent = post.content;
 
   return (
     <>
@@ -127,9 +131,7 @@ export default async function PostPage({ params }: PostPageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <main className="relative min-h-screen overflow-x-hidden text-white selection:bg-purple-500/30">
-        <NavFrosted />
-
+      <article className="space-y-8 sm:space-y-12">
         <div className="relative mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <div className="relative pt-24 pb-8">
             <Link
@@ -144,7 +146,7 @@ export default async function PostPage({ params }: PostPageProps) {
           <article className="space-y-8 sm:space-y-12">
             <header className="space-y-4 sm:space-y-6">
               <div>
-                {post.category && ( // FIX: Added check for category
+                {post.category && (
                   <Badge className="bg-purple-500/80 hover:bg-purple-600 text-white border-0 px-3 py-1 text-xs font-medium tracking-wide uppercase">
                     {post.category}
                   </Badge>
@@ -157,7 +159,6 @@ export default async function PostPage({ params }: PostPageProps) {
 
               <p className="text-base sm:text-lg text-zinc-300 leading-relaxed max-w-3xl">
                 {post.description}
-                {/* FIX: Changed excerpt to description */}
               </p>
 
               <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 pt-4 sm:pt-6 border-t border-white/10">
@@ -195,10 +196,10 @@ export default async function PostPage({ params }: PostPageProps) {
               </div>
             </header>
 
-            {post.coverImage && ( // FIX: Changed image to coverImage
+            {post.coverImage && (
               <div className="relative w-full aspect-video rounded-xl sm:rounded-2xl overflow-hidden border border-white/10 shadow-2xl shadow-black/50">
                 <Image
-                  src={post.coverImage || '/placeholder.svg'} // FIX: Changed image to coverImage
+                  src={post.coverImage}
                   alt={post.title}
                   fill
                   className="object-cover"
@@ -230,7 +231,7 @@ export default async function PostPage({ params }: PostPageProps) {
                   remarkPlugins={[remarkGfm]}
                   rehypePlugins={[rehypeRaw]}
                 >
-                  {markdownContent}
+                  {post.content}
                 </ReactMarkdown>
               </div>
             </div>
@@ -246,7 +247,6 @@ export default async function PostPage({ params }: PostPageProps) {
                 <div className="flex-1 min-w-0">
                   <h4 className="font-semibold text-white mb-1">{post.author || 'Guest Author'}</h4>
                   <p className="text-sm text-zinc-400 leading-relaxed">
-                    {/* FIX: Handled optional category */}
                     {post.author || 'An author'} is a passionate researcher and writer in the fields
                     of {post.category?.toLowerCase() || 'science'} and space science. With years of
                     experience and expertise, they bring unique insights to complex topics in
@@ -272,15 +272,7 @@ export default async function PostPage({ params }: PostPageProps) {
             </section>
           </article>
         </div>
-
-        <footer className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-8 sm:pb-12 mt-16 sm:mt-24">
-          <div className="border-t border-white/10 pt-6 sm:pt-8 text-center">
-            <p className="text-xs text-zinc-500 tracking-wide">
-              © {new Date().getFullYear()} ANUBRAHMAN — All rights reserved.
-            </p>
-          </div>
-        </footer>
-      </main>
+      </article>
     </>
   );
 }

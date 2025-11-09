@@ -1,6 +1,8 @@
+'use client';
+
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
-import type React from 'react';
+import React from 'react';
 import {
   Table,
   TableBody,
@@ -16,7 +18,7 @@ const components = {
   ),
   p: ({ children }: { children?: React.ReactNode }) => <p className="mb-4">{children}</p>,
   a: ({ children, href }: { children?: React.ReactNode; href?: string }) => (
-    <a href={href} className="text-blue-500">
+    <a href={href} className="text-blue-500 hover:underline">
       {children}
     </a>
   ),
@@ -37,8 +39,23 @@ const components = {
     return <pre className={cn('bg-transparent p-0', className)} {...props} />;
   },
 
+  // Fixed: Properly handle blob URLs with cleanup
   img: ({ src, alt }: { src?: string | Blob; alt?: string }) => {
-    const imageUrl = src ? (typeof src === 'string' ? src : URL.createObjectURL(src)) : '';
+    const imageUrl = React.useMemo(() => {
+      if (!src) return '';
+      return typeof src === 'string' ? src : URL.createObjectURL(src);
+    }, [src]);
+
+    React.useEffect(() => {
+      return () => {
+        if (imageUrl && typeof src !== 'string' && imageUrl.startsWith('blob:')) {
+          URL.revokeObjectURL(imageUrl);
+        }
+      };
+    }, [imageUrl, src]);
+
+    if (!imageUrl) return null;
+
     return (
       <Image
         src={imageUrl}
@@ -49,23 +66,24 @@ const components = {
       />
     );
   },
+
   h2: ({ children }: { children?: React.ReactNode }) => (
-    <h2 className="mb-2 font-bold text-2xl">{children}</h2>
+    <h2 className="mb-3 mt-6 font-bold text-2xl">{children}</h2>
   ),
   h3: ({ children }: { children?: React.ReactNode }) => (
-    <h3 className="mb-1 font-bold text-xl">{children}</h3>
+    <h3 className="mb-2 mt-4 font-bold text-xl">{children}</h3>
   ),
   h4: ({ children }: { children?: React.ReactNode }) => (
-    <h4 className="mb-1 font-bold text-lg">{children}</h4>
+    <h4 className="mb-2 mt-4 font-bold text-lg">{children}</h4>
   ),
   h5: ({ children }: { children?: React.ReactNode }) => (
-    <h5 className="mb-1 font-bold text-base">{children}</h5>
+    <h5 className="mb-2 mt-3 font-bold text-base">{children}</h5>
   ),
   h6: ({ children }: { children?: React.ReactNode }) => (
-    <h6 className="mb-1 font-bold text-sm">{children}</h6>
+    <h6 className="mb-2 mt-3 font-bold text-sm">{children}</h6>
   ),
   table: ({ children }: { children?: React.ReactNode }) => (
-    <Table className="rounded-md">{children}</Table>
+    <Table className="my-4 rounded-md border border-border">{children}</Table>
   ),
   thead: ({ children }: { children?: React.ReactNode }) => (
     <TableHeader className="bg-muted first:rounded-t-md">{children}</TableHeader>
@@ -82,7 +100,7 @@ const components = {
     </TableCell>
   ),
   th: ({ children }: { children?: React.ReactNode }) => (
-    <TableHead className="font-bold border-r border-border last:border-r-0 first:rounded-tl-md last:rounded-tr-md">
+    <TableHead className="border-r border-border last:border-r-0 first:rounded-tl-md last:rounded-tr-md font-bold">
       {children}
     </TableHead>
   ),
