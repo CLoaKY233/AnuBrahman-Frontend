@@ -1,20 +1,66 @@
 'use client';
-
-import { Menu, X, Mail, Users, FileText, Info } from 'lucide-react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { Menu, X, Mail, Users, FileText, Info, Home } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 
 const navItems = [
-  { key: 'newsletter', label: 'Newsletter', icon: Mail },
-  { key: 'team', label: 'Team', icon: Users },
-  { key: 'blog', label: 'Blog', icon: FileText },
-  { key: 'about', label: 'About', icon: Info },
+  { key: 'home', label: 'Home', icon: Home, href: '/' },
+  { key: 'newsletter', label: 'Newsletter', icon: Mail, href: '/newsletter' },
+  { key: 'team', label: 'Team', icon: Users, href: '/team' },
+  { key: 'blog', label: 'Blog', icon: FileText, href: '/blog' },
+  { key: 'about', label: 'About', icon: Info, href: '/about' },
 ];
 
 export default function NavFrosted() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
   const dialogRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const previousFocusRef = useRef<HTMLElement | null>(null);
+
+  const textRefs = useRef<(HTMLSpanElement | null)[]>([]);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [underlineStyle, setUnderlineStyle] = useState({ left: 0, width: 0, opacity: 0 });
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
+  useEffect(() => {
+    const updateUnderline = () => {
+      const activeIndex = navItems.findIndex((item) => item.href === pathname);
+      const targetIndex = hoveredIndex !== null ? hoveredIndex : activeIndex;
+
+      if (targetIndex !== -1 && textRefs.current[targetIndex] && containerRef.current) {
+        const textElement = textRefs.current[targetIndex];
+        const container = containerRef.current;
+
+        if (textElement) {
+          const containerRect = container.getBoundingClientRect();
+          const textRect = textElement.getBoundingClientRect();
+
+          // Calculate position relative to container
+          const left = textRect.left - containerRect.left;
+          const width = textRect.width;
+
+          setUnderlineStyle({
+            left,
+            width,
+            opacity: 1,
+          });
+        }
+      } else {
+        setUnderlineStyle((prev) => ({ ...prev, opacity: 0 }));
+      }
+    };
+
+    // Use requestAnimationFrame to ensure DOM is ready
+    requestAnimationFrame(() => {
+      updateUnderline();
+    });
+
+    // Update on window resize
+    window.addEventListener('resize', updateUnderline);
+    return () => window.removeEventListener('resize', updateUnderline);
+  }, [pathname, hoveredIndex]);
 
   // Close menu handler
   const closeMenu = () => {
@@ -114,17 +160,39 @@ export default function NavFrosted() {
             </div>
 
             {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-1">
-              {navItems.map((item) => (
-                <button
-                  key={item.key}
-                  type="button"
-                  className="group relative rounded-lg px-4 py-2 text-sm font-light text-zinc-300 transition-all duration-300 hover:text-white hover:bg-white/5"
-                >
-                  <span className="relative z-10 tracking-wide uppercase">{item.label}</span>
-                  <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-purple-500/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                </button>
-              ))}
+            <div ref={containerRef} className="hidden md:flex items-center relative">
+              {navItems.map((item, index) => {
+                const isActive = pathname === item.href;
+                return (
+                  <Link
+                    key={item.key}
+                    href={item.href}
+                    onMouseEnter={() => setHoveredIndex(index)}
+                    onMouseLeave={() => setHoveredIndex(null)}
+                    className={`relative px-4 py-2 text-sm font-light transition-colors duration-300 ${
+                      isActive ? 'text-white' : 'text-zinc-400 hover:text-zinc-200'
+                    }`}
+                  >
+                    <span
+                      ref={(el) => {
+                        textRefs.current[index] = el;
+                      }}
+                      className="relative z-10 tracking-wide uppercase"
+                    >
+                      {item.label}
+                    </span>
+                  </Link>
+                );
+              })}
+
+              <div
+                className="absolute bottom-0 h-px bg-white/60 rounded-full transition-all duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)]"
+                style={{
+                  left: `${underlineStyle.left}px`,
+                  width: `${underlineStyle.width}px`,
+                  opacity: underlineStyle.opacity,
+                }}
+              />
             </div>
 
             {/* Subscribe Button */}
@@ -202,28 +270,51 @@ export default function NavFrosted() {
                 <div className="flex-1 px-5 py-6 space-y-2 overflow-y-auto">
                   {navItems.map((item, index) => {
                     const Icon = item.icon;
+                    const isActive = pathname === item.href;
                     return (
-                      <button
+                      <Link
                         key={item.key}
-                        type="button"
+                        href={item.href}
                         onClick={closeMenu}
-                        className="group relative w-full flex items-center space-x-3 rounded-lg border border-white/5 bg-white/[0.02] backdrop-blur-2xl px-4 py-3 text-left transition-all duration-500 hover:border-purple-500/30 hover:bg-gradient-to-r hover:from-purple-600/15 hover:to-purple-500/5 hover:scale-[1.01] hover:shadow-md hover:shadow-purple-500/5 active:scale-[0.99]"
+                        className={`group relative w-full flex items-center space-x-3 rounded-lg border backdrop-blur-2xl px-4 py-3 text-left transition-all duration-500 hover:border-purple-500/30 hover:bg-gradient-to-r hover:from-purple-600/15 hover:to-purple-500/5 hover:scale-[1.01] hover:shadow-md hover:shadow-purple-500/5 active:scale-[0.99] ${
+                          isActive
+                            ? 'border-purple-500/30 bg-gradient-to-r from-purple-600/20 to-purple-500/10'
+                            : 'border-white/5 bg-white/[0.02]'
+                        }`}
                         style={{
                           animation: `fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) ${index * 0.1}s both`,
                         }}
                       >
-                        <div className="relative flex items-center justify-center w-8 h-8 rounded-md bg-gradient-to-br from-purple-600/20 to-purple-500/10 border border-purple-500/20 transition-all duration-500 group-hover:scale-105 group-hover:shadow-md group-hover:shadow-purple-500/20">
-                          <Icon className="h-4 w-4 text-purple-300 transition-colors duration-500 group-hover:text-white" />
+                        <div
+                          className={`relative flex items-center justify-center w-8 h-8 rounded-md bg-gradient-to-br border transition-all duration-500 group-hover:scale-105 group-hover:shadow-md group-hover:shadow-purple-500/20 ${
+                            isActive
+                              ? 'from-purple-600/30 to-purple-500/20 border-purple-500/40'
+                              : 'from-purple-600/20 to-purple-500/10 border-purple-500/20'
+                          }`}
+                        >
+                          <Icon
+                            className={`h-4 w-4 transition-colors duration-500 group-hover:text-white ${
+                              isActive ? 'text-white' : 'text-purple-300'
+                            }`}
+                          />
                         </div>
 
                         <div className="flex-1">
-                          <span className="block text-sm font-light text-zinc-300 tracking-wide uppercase transition-colors duration-500 group-hover:text-white">
+                          <span
+                            className={`block text-sm font-light tracking-wide uppercase transition-colors duration-500 group-hover:text-white ${
+                              isActive ? 'text-white' : 'text-zinc-300'
+                            }`}
+                          >
                             {item.label}
                           </span>
                         </div>
 
                         {/* Arrow indicator */}
-                        <div className="opacity-0 transition-all duration-500 group-hover:opacity-100 group-hover:translate-x-0.5">
+                        <div
+                          className={`transition-all duration-500 group-hover:opacity-100 group-hover:translate-x-0.5 ${
+                            isActive ? 'opacity-100' : 'opacity-0'
+                          }`}
+                        >
                           <svg
                             className="w-3.5 h-3.5 text-purple-400"
                             fill="none"
@@ -239,7 +330,7 @@ export default function NavFrosted() {
                             />
                           </svg>
                         </div>
-                      </button>
+                      </Link>
                     );
                   })}
                 </div>
