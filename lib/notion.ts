@@ -25,6 +25,7 @@ export interface Post {
   author?: string;
   tags?: string[];
   category?: string;
+  featured?: boolean;
 }
 
 interface NotionTitleProperty {
@@ -55,6 +56,10 @@ interface NotionUrlProperty {
   url: string | null;
 }
 
+interface NotionCheckboxProperty {
+  checkbox: boolean;
+}
+
 interface NotionPageProperties {
   Title?: NotionTitleProperty;
   Slug?: NotionRichTextProperty;
@@ -65,6 +70,7 @@ interface NotionPageProperties {
   Category?: NotionSelectProperty;
   Tags?: NotionMultiSelectProperty;
   Status?: NotionSelectProperty;
+  Featured?: NotionCheckboxProperty;
 }
 
 type DatabaseWithOptionalDataSources = Omit<DatabaseObjectResponse, 'data_sources'> & {
@@ -98,6 +104,34 @@ export function getPostsFromCache(): Post[] {
     }
   }
   return [];
+}
+
+/**
+ * Get featured posts from cache
+ * @param limit Maximum number of featured posts to return (default: 5)
+ * @returns Array of featured posts, sorted by date (newest first)
+ * @throws Error if fewer than 3 featured posts are available
+ */
+export function getFeaturedPostsFromCache(limit: number = 5): Post[] {
+  try {
+    const posts = getPostsFromCache();
+    
+    // Filter only featured posts
+    const featuredPosts = posts.filter((post) => post.featured === true);
+
+    // Failsafe: Log warning if fewer than 3 featured posts
+    if (featuredPosts.length < 3) {
+      console.warn(
+        `⚠️ Found only ${featuredPosts.length} featured posts. Consider marking at least 3-5 posts as featured in Notion for better homepage display.`
+      );
+    }
+
+    // Sort by date (newest first) and limit results
+    return featuredPosts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0, limit);
+  } catch (error) {
+    console.error('Error getting featured posts:', error);
+    return [];
+  }
 }
 
 export async function fetchPublishedPosts() {
@@ -183,6 +217,9 @@ export async function getPostFromNotion(pageId: string): Promise<Post | null> {
       coverImage = properties['Featured Image'].url;
     }
 
+    // Extract featured checkbox (default to false if not set)
+    const featured = properties.Featured?.checkbox ?? false;
+
     const post: Post = {
       id: page.id,
       title: titleText,
@@ -194,6 +231,7 @@ export async function getPostFromNotion(pageId: string): Promise<Post | null> {
       author: properties.Author?.people[0]?.name,
       tags: properties.Tags?.multi_select?.map((tag) => tag.name) || [],
       category: properties.Category?.select?.name,
+      featured,
     };
 
     return post;

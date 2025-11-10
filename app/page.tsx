@@ -4,8 +4,12 @@ import FeaturedCarousel from '@/components/featured-carousel';
 import MetricsStrip from '@/components/metrics-strip';
 import CategoriesGrid from '@/components/categories-grid';
 import Testimonials from '@/components/testimonials';
+import { getFeaturedPostsFromCache } from '@/lib/notion';
 
 export default function HomePage() {
+  // Fetch featured posts at build time
+  const featuredPosts = getFeaturedPostsFromCache(5);
+
   return (
     <main className="relative min-h-screen overflow-x-hidden text-white selection:bg-purple-500/30">
       {/* Premium Floating Navbar */}
@@ -67,9 +71,9 @@ export default function HomePage() {
           <MetricsStrip />
         </section>
 
-        {/* Featured Content */}
+        {/* Featured Content - Now powered by Notion */}
         <section className="relative py-16">
-          <FeaturedCarousel />
+          <FeaturedCarousel featuredPosts={featuredPosts} />
         </section>
 
         {/* Categories Grid */}
