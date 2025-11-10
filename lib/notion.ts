@@ -115,7 +115,7 @@ export function getPostsFromCache(): Post[] {
 export function getFeaturedPostsFromCache(limit: number = 5): Post[] {
   try {
     const posts = getPostsFromCache();
-    
+
     // Filter only featured posts
     const featuredPosts = posts.filter((post) => post.featured === true);
 
@@ -127,7 +127,9 @@ export function getFeaturedPostsFromCache(limit: number = 5): Post[] {
     }
 
     // Sort by date (newest first) and limit results
-    return featuredPosts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0, limit);
+    return featuredPosts
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      .slice(0, limit);
   } catch (error) {
     console.error('Error getting featured posts:', error);
     return [];

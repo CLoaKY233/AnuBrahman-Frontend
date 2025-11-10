@@ -9,7 +9,6 @@ import { calculateReadingTime, getWordCount } from '@/lib/utils';
 import { components } from '@/components/mdx-component';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
-import NavFrosted from '@/components/nav-frosted';
 import { ArrowLeft, Calendar, Clock, User } from 'lucide-react';
 import Link from 'next/link';
 
