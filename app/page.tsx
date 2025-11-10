@@ -1,5 +1,5 @@
 import NavFrosted from '@/components/nav-frosted';
-import SubscribeForm from '@/components/subscribe-form';
+import SubscribeForm from '@/components/disabled-sub';
 import FeaturedCarousel from '@/components/featured-carousel';
 import MetricsStrip from '@/components/metrics-strip';
 import CategoriesGrid from '@/components/categories-grid';

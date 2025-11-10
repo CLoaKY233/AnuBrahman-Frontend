@@ -283,7 +283,7 @@ export default function BlogClientContent({ posts }: BlogClientContentProps) {
       </section>
 
       {/* Newsletter CTA */}
-      <section className="relative my-12 sm:my-16 lg:my-20 px-4 sm:px-0">
+      {/*<section className="relative my-12 sm:my-16 lg:my-20 px-4 sm:px-0">
         <div className="relative rounded-2xl sm:rounded-3xl border border-white/10 bg-gradient-to-br from-purple-950/20 via-black/40 to-black/60 backdrop-blur-xl overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-purple-500/5 to-transparent" />
           <div className="relative p-8 sm:p-12 md:p-16 text-center space-y-4 sm:space-y-6 z-10">
@@ -302,7 +302,7 @@ export default function BlogClientContent({ posts }: BlogClientContentProps) {
             </button>
           </div>
         </div>
-      </section>
+      </section>*/}
     </div>
   );
 }

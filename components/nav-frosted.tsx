@@ -6,9 +6,9 @@ import { useState, useEffect, useRef } from 'react';
 
 const navItems = [
   { key: 'home', label: 'Home', icon: Home, href: '/' },
+  { key: 'blog', label: 'Blog', icon: FileText, href: '/blog' },
   { key: 'newsletter', label: 'Newsletter', icon: Mail, href: '/newsletter' },
   { key: 'team', label: 'Team', icon: Users, href: '/team' },
-  { key: 'blog', label: 'Blog', icon: FileText, href: '/blog' },
   { key: 'about', label: 'About', icon: Info, href: '/about' },
 ];
 
@@ -196,13 +196,32 @@ export default function NavFrosted() {
             </div>
 
             {/* Subscribe Button */}
-            <button
+            {/*<button
               type="button"
               className="hidden sm:inline-flex items-center rounded-lg border border-purple-500/30 bg-gradient-to-r from-purple-600/80 to-purple-500/80 px-4 py-2 text-xs font-medium text-white transition-all duration-300 hover:shadow-md hover:shadow-purple-500/20 hover:scale-105 active:scale-95"
             >
               <span className="tracking-wider uppercase">Subscribe</span>
+            </button>*/}
+            <button
+              type="button"
+              className="hidden sm:inline-flex items-center rounded-lg border border-purple-500/30 bg-gradient-to-r from-purple-600/80 to-purple-500/80 px-4 py-2 text-xs font-medium text-white transition-all duration-300 hover:shadow-md hover:shadow-purple-500/20 hover:scale-105 active:scale-95 opacity-50 cursor-not-allowed"
+              disabled
+            >
+              <svg
+                className="w-3.5 h-3.5 mr-2"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                />
+              </svg>
+              <span className="tracking-wider uppercase">Subscribe</span>
             </button>
-
             <button
               type="button"
               onClick={() => setIsMobileMenuOpen(true)}
@@ -336,13 +355,36 @@ export default function NavFrosted() {
                 </div>
 
                 <div className="px-5 pb-6 pt-3 border-t border-white/5 space-y-3">
-                  <button
+                  {/*<button
                     type="button"
                     onClick={closeMenu}
                     className="w-full relative overflow-hidden rounded-lg border border-purple-500/30 bg-gradient-to-r from-purple-600/90 to-purple-500/90 px-5 py-3 text-xs font-medium text-white transition-all duration-500 hover:shadow-lg hover:shadow-purple-500/25 hover:scale-[1.01] active:scale-[0.99]"
                   >
                     <span className="relative z-10 tracking-wider uppercase">Subscribe Now</span>
                     <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-purple-400 opacity-0 transition-opacity duration-500 hover:opacity-100" />
+                  </button>*/}
+                  <button
+                    type="button"
+                    onClick={closeMenu}
+                    className="w-full relative overflow-hidden rounded-lg border border-purple-500/30 bg-gradient-to-r from-purple-600/90 to-purple-500/90 px-5 py-3 text-xs font-medium text-white transition-all duration-500 opacity-50 cursor-not-allowed"
+                    disabled
+                  >
+                    <div className="relative z-10 flex items-center justify-center">
+                      <svg
+                        className="w-4 h-4 mr-2"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                        />
+                      </svg>
+                      <span className="tracking-wider uppercase">Subscribe Now</span>
+                    </div>
                   </button>
 
                   {/* Tagline */}
