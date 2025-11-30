@@ -237,7 +237,7 @@ export default async function PostPage({ params }: PostPageProps) {
 
             <div className="border-t border-white/10 pt-8 sm:pt-12" />
 
-            <section className="space-y-4">
+            {/*<section className="space-y-4">
               <h3 className="text-lg sm:text-xl font-semibold text-white">About the Author</h3>
               <div className="flex gap-4 sm:gap-6 p-4 sm:p-6 rounded-lg sm:rounded-xl bg-white/5 border border-white/10">
                 <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center flex-shrink-0">
@@ -253,7 +253,7 @@ export default async function PostPage({ params }: PostPageProps) {
                   </p>
                 </div>
               </div>
-            </section>
+            </section>*/}
 
             <section className="space-y-4 sm:space-y-6 pt-8 sm:pt-12 border-t border-white/10">
               <h3 className="text-lg sm:text-xl font-semibold text-white">Continue Reading</h3>
