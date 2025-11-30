@@ -28,7 +28,7 @@ export default function SubscribeForm() {
 
           {/* CTA Button */}
           <Link
-            href="/blogs"
+            href="/blog"
             className="group/btn relative inline-flex items-center justify-center space-x-2 px-6 py-3 bg-gradient-to-r from-purple-600 to-purple-500 rounded-lg text-xs sm:text-sm font-light text-white transition-all duration-300 hover:from-purple-500 hover:to-purple-400 overflow-hidden"
           >
             <span className="relative z-10 flex items-center space-x-2 tracking-wide uppercase">
