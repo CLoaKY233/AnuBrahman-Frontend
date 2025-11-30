@@ -10,7 +10,7 @@ export default function ComingSoon() {
       {/* Animated Background Effects */}
       <div className="fixed inset-0 -z-40">
         {/* Base gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-black via-purple-950/20 to-black" />
+        <div className="absolute inset-0 bg-linear-to-br from-black via-purple-950/20 to-black" />
 
         {/* Animated orbs - more vibrant for "coming soon" */}
         <div className="absolute top-1/4 left-1/3 w-[300px] sm:w-[400px] md:w-[500px] h-[300px] sm:h-[400px] md:h-[500px] bg-purple-500/15 rounded-full blur-[100px] sm:blur-[120px] md:blur-[140px] animate-ambient-pulse" />
@@ -18,7 +18,7 @@ export default function ComingSoon() {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-56 sm:w-72 md:w-80 h-56 sm:h-72 md:h-80 bg-purple-600/8 rounded-full blur-[60px] sm:blur-[80px] md:blur-[100px] animate-float-slow" />
 
         {/* Grid pattern */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(168,85,247,0.08)_1px,transparent_0)] bg-[size:32px_32px] sm:bg-[size:36px_36px] md:bg-[size:40px_40px] opacity-50" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(168,85,247,0.08)_1px,transparent_0)] bg-size-[32px_32px] sm:bg-size-[36px_36px] md:bg-size-[40px_40px] opacity-50" />
 
         {/* Noise texture */}
         <div className="absolute inset-0 premium-noise-texture opacity-[0.02] mix-blend-overlay" />
@@ -50,7 +50,7 @@ export default function ComingSoon() {
             <div className="absolute inset-0 rounded-full border border-purple-400/20 animate-pulse" />
 
             {/* Icon container */}
-            <div className="relative rounded-full bg-gradient-to-br from-purple-500/20 to-purple-600/30 border border-purple-400/40 p-4 sm:p-6 backdrop-blur-xl">
+            <div className="relative rounded-full bg-linear-to-br from-purple-500/20 to-purple-600/30 border border-purple-400/40 p-4 sm:p-6 backdrop-blur-xl">
               <Rocket
                 className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-purple-300"
                 strokeWidth={1.5}
@@ -69,7 +69,7 @@ export default function ComingSoon() {
 
         {/* Main Message */}
         <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light tracking-tight text-white mb-4 sm:mb-6 px-2">
-          <span className="bg-gradient-to-r from-white via-purple-100 to-white bg-clip-text text-transparent">
+          <span className="bg-linear-to-r from-white via-purple-100 to-white bg-clip-text text-transparent">
             Work In Progress
           </span>
         </h1>
@@ -81,15 +81,15 @@ export default function ComingSoon() {
 
         {/* Cosmic Divider */}
         <div className="flex items-center justify-center gap-3 sm:gap-4 mb-8 sm:mb-12">
-          <div className="h-px w-16 sm:w-20 bg-gradient-to-r from-transparent via-purple-500/50 to-transparent" />
+          <div className="h-px w-16 sm:w-20 bg-linear-to-r from-transparent via-purple-500/50 to-transparent" />
           <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-purple-400/60 animate-pulse" />
-          <div className="h-px w-16 sm:w-20 bg-gradient-to-l from-transparent via-purple-500/50 to-transparent" />
+          <div className="h-px w-16 sm:w-20 bg-linear-to-l from-transparent via-purple-500/50 to-transparent" />
         </div>
 
         {/* Info Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mb-8 sm:mb-12 max-w-2xl mx-auto px-4">
           <div className="relative group">
-            <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-transparent rounded-lg blur-xl transition-all duration-500 group-hover:blur-2xl" />
+            <div className="absolute inset-0 bg-linear-to-br from-purple-500/10 to-transparent rounded-lg blur-xl transition-all duration-500 group-hover:blur-2xl" />
             <div className="relative rounded-lg border border-white/10 bg-white/5 backdrop-blur-xl p-4 sm:p-6 transition-all duration-500 hover:border-purple-500/30 hover:bg-white/10">
               <div className="text-2xl sm:text-3xl font-light text-white mb-1 sm:mb-2">01</div>
               <div className="text-xs sm:text-sm text-zinc-400 font-light">Planning Phase</div>
@@ -97,7 +97,7 @@ export default function ComingSoon() {
           </div>
 
           <div className="relative group">
-            <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-transparent rounded-lg blur-xl transition-all duration-500 group-hover:blur-2xl" />
+            <div className="absolute inset-0 bg-linear-to-br from-purple-500/10 to-transparent rounded-lg blur-xl transition-all duration-500 group-hover:blur-2xl" />
             <div className="relative rounded-lg border border-purple-500/30 bg-purple-500/10 backdrop-blur-xl p-4 sm:p-6 transition-all duration-500 hover:border-purple-500/50 hover:bg-purple-500/20">
               <div className="text-2xl sm:text-3xl font-light text-white mb-1 sm:mb-2">02</div>
               <div className="text-xs sm:text-sm text-purple-300 font-medium">Development</div>
@@ -105,7 +105,7 @@ export default function ComingSoon() {
           </div>
 
           <div className="relative group">
-            <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-transparent rounded-lg blur-xl transition-all duration-500 group-hover:blur-2xl" />
+            <div className="absolute inset-0 bg-linear-to-br from-purple-500/5 to-transparent rounded-lg blur-xl transition-all duration-500 group-hover:blur-2xl" />
             <div className="relative rounded-lg border border-white/10 bg-white/5 backdrop-blur-xl p-4 sm:p-6 opacity-50 transition-all duration-500 hover:border-purple-500/20 hover:bg-white/10">
               <div className="text-2xl sm:text-3xl font-light text-white mb-1 sm:mb-2">03</div>
               <div className="text-xs sm:text-sm text-zinc-500 font-light">Launch Ready</div>
@@ -117,10 +117,10 @@ export default function ComingSoon() {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-12 sm:mb-16 px-4">
           <Link
             href="/"
-            className="w-full sm:w-auto group relative overflow-hidden rounded-lg border border-purple-500/30 bg-gradient-to-r from-purple-600/90 to-purple-500/90 px-6 sm:px-8 py-3 sm:py-3.5 text-xs sm:text-sm font-medium text-white transition-all duration-500 hover:shadow-lg hover:shadow-purple-500/25 hover:scale-105 active:scale-95"
+            className="w-full sm:w-auto group relative overflow-hidden rounded-lg border border-purple-500/30 bg-linear-to-r from-purple-600/90 to-purple-500/90 px-6 sm:px-8 py-3 sm:py-3.5 text-xs sm:text-sm font-medium text-white transition-all duration-500 hover:shadow-lg hover:shadow-purple-500/25 hover:scale-105 active:scale-95"
           >
             <span className="relative z-10 tracking-wider uppercase">Return Home</span>
-            <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-purple-400 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+            <div className="absolute inset-0 bg-linear-to-r from-purple-500 to-purple-400 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
           </Link>
 
           <Link
@@ -150,13 +150,13 @@ export default function ComingSoon() {
         <div className="hidden sm:block absolute bottom-6 sm:bottom-8 right-6 sm:right-8 w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 border-r-2 border-b-2 border-purple-500/30" />
 
         {/* Floating lines - hidden on mobile */}
-        <div className="hidden md:block absolute top-1/4 left-8 md:left-12 w-px h-32 md:h-40 bg-gradient-to-b from-transparent via-purple-400/20 to-transparent" />
-        <div className="hidden md:block absolute bottom-1/4 right-8 md:right-12 w-px h-32 md:h-40 bg-gradient-to-t from-transparent via-purple-400/20 to-transparent" />
+        <div className="hidden md:block absolute top-1/4 left-8 md:left-12 w-px h-32 md:h-40 bg-linear-to-b from-transparent via-purple-400/20 to-transparent" />
+        <div className="hidden md:block absolute bottom-1/4 right-8 md:right-12 w-px h-32 md:h-40 bg-linear-to-t from-transparent via-purple-400/20 to-transparent" />
 
         {/* Center crosshair - hidden on mobile */}
         <div className="hidden lg:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-          <div className="w-20 md:w-24 h-px bg-gradient-to-r from-transparent via-purple-500/20 to-transparent" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-px h-20 md:h-24 bg-gradient-to-b from-transparent via-purple-500/20 to-transparent" />
+          <div className="w-20 md:w-24 h-px bg-linear-to-r from-transparent via-purple-500/20 to-transparent" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-px h-20 md:h-24 bg-linear-to-b from-transparent via-purple-500/20 to-transparent" />
         </div>
       </div>
     </main>

@@ -68,12 +68,12 @@ const TestimonialCard = ({
 }) => {
   return (
     <div className="group relative w-full max-w-sm mx-auto mb-4 sm:mb-6">
-      <div className="absolute -inset-0.5 bg-gradient-to-br from-purple-600/20 via-purple-900/10 to-transparent rounded-3xl opacity-0 blur-xl transition-all duration-700 group-hover:opacity-100 group-hover:-inset-1" />
+      <div className="absolute -inset-0.5 bg-linear-to-br from-purple-600/20 via-purple-900/10 to-transparent rounded-3xl opacity-0 blur-xl transition-all duration-700 group-hover:opacity-100 group-hover:-inset-1" />
 
-      <div className="relative overflow-hidden rounded-3xl border border-white/[0.08] bg-gradient-to-br from-white/[0.03] via-black/40 to-black/60 backdrop-blur-2xl transition-all duration-700 group-hover:border-purple-500/30 group-hover:bg-gradient-to-br group-hover:from-white/[0.06] group-hover:via-purple-950/20 group-hover:to-black/70">
-        <div className="absolute inset-0 bg-gradient-to-br from-purple-500/[0.02] via-transparent to-purple-900/[0.03] opacity-0 transition-opacity duration-700 group-hover:opacity-100" />
+      <div className="relative overflow-hidden rounded-3xl border border-white/8 bg-linear-to-br from-white/3 via-black/40 to-black/60 backdrop-blur-2xl transition-all duration-700 group-hover:border-purple-500/30 group-hover:bg-linear-to-br group-hover:from-white/6 group-hover:via-purple-950/20 group-hover:to-black/70">
+        <div className="absolute inset-0 bg-linear-to-br from-purple-500/2 via-transparent to-purple-900/3 opacity-0 transition-opacity duration-700 group-hover:opacity-100" />
 
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-purple-400/[0.03] to-transparent translate-x-[-100%] transition-transform duration-1000 group-hover:translate-x-[100%]" />
+        <div className="absolute inset-0 bg-linear-to-r from-transparent via-purple-400/3 to-transparent -translate-x-full transition-transform duration-1000 group-hover:translate-x-full" />
 
         <div className="relative p-6 sm:p-8 space-y-5">
           <div className="flex items-start justify-between">
@@ -90,11 +90,11 @@ const TestimonialCard = ({
             {body}
           </p>
 
-          <div className="w-12 h-px bg-gradient-to-r from-purple-500/50 via-purple-400/30 to-transparent" />
+          <div className="w-12 h-px bg-linear-to-r from-purple-500/50 via-purple-400/30 to-transparent" />
 
           <div className="flex items-center gap-4">
-            <div className="relative flex-shrink-0">
-              <div className="absolute -inset-1 bg-gradient-to-br from-purple-500/40 via-purple-600/20 to-transparent rounded-full opacity-0 blur-md transition-opacity duration-500 group-hover:opacity-100" />
+            <div className="relative shrink-0">
+              <div className="absolute -inset-1 bg-linear-to-br from-purple-500/40 via-purple-600/20 to-transparent rounded-full opacity-0 blur-md transition-opacity duration-500 group-hover:opacity-100" />
               <div className="relative">
                 {/*<Image
                   src={img || '/placeholder.svg'}
@@ -103,12 +103,12 @@ const TestimonialCard = ({
                   height={48}
                   className="h-12 w-12 rounded-full border-2 border-white/10 object-cover transition-all duration-500 group-hover:border-purple-400/40"
                 />*/}
-                <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-purple-500/20 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                <div className="absolute inset-0 rounded-full bg-linear-to-tr from-purple-500/20 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
               </div>
             </div>
 
             <div className="flex-1 min-w-0">
-              <h4 className="text-sm sm:text-base font-medium text-white transition-all duration-500 group-hover:bg-gradient-to-r group-hover:from-white group-hover:via-purple-100 group-hover:to-white group-hover:bg-clip-text group-hover:text-transparent truncate">
+              <h4 className="text-sm sm:text-base font-medium text-white transition-all duration-500 group-hover:bg-linear-to-r group-hover:from-white group-hover:via-purple-100 group-hover:to-white group-hover:bg-clip-text group-hover:text-transparent truncate">
                 {name}
               </h4>
 
@@ -125,7 +125,7 @@ const TestimonialCard = ({
           </div>
         </div>
 
-        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-purple-500/20 to-transparent opacity-0 transition-opacity duration-700 group-hover:opacity-100" />
+        <div className="absolute bottom-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-purple-500/20 to-transparent opacity-0 transition-opacity duration-700 group-hover:opacity-100" />
       </div>
     </div>
   );
@@ -141,7 +141,7 @@ export default function Testimonials() {
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12 sm:mb-16 lg:mb-20">
-          <div className="inline-flex items-center rounded-full border border-purple-500/20 bg-gradient-to-r from-purple-600/10 via-purple-500/5 to-purple-600/10 backdrop-blur-xl px-5 py-2.5 mb-6 sm:mb-8 shadow-lg shadow-purple-500/5">
+          <div className="inline-flex items-center rounded-full border border-purple-500/20 bg-linear-to-r from-purple-600/10 via-purple-500/5 to-purple-600/10 backdrop-blur-xl px-5 py-2.5 mb-6 sm:mb-8 shadow-lg shadow-purple-500/5">
             <div className="w-2 h-2 bg-purple-400 rounded-full mr-3 animate-pulse shadow-lg shadow-purple-400/50" />
             <span className="text-xs sm:text-sm font-light tracking-widest text-purple-300 uppercase">
               Community Voices
@@ -149,7 +149,7 @@ export default function Testimonials() {
           </div>
 
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light tracking-tight mb-4 sm:mb-6">
-            <span className="bg-gradient-to-r from-white via-purple-100 to-white bg-clip-text text-transparent">
+            <span className="bg-linear-to-r from-white via-purple-100 to-white bg-clip-text text-transparent">
               What Our Cosmic Community Says
             </span>
           </h2>
@@ -159,7 +159,7 @@ export default function Testimonials() {
             the future of space science education.
           </p>
 
-          <div className="mx-auto w-24 h-px bg-gradient-to-r from-transparent via-purple-400/50 to-transparent mt-6 sm:mt-8" />
+          <div className="mx-auto w-24 h-px bg-linear-to-r from-transparent via-purple-400/50 to-transparent mt-6 sm:mt-8" />
         </div>
 
         <div className="relative">
@@ -193,8 +193,8 @@ export default function Testimonials() {
         </div>
 
         <div className="flex justify-center mt-12 sm:mt-16 lg:mt-20">
-          <button className="group relative overflow-hidden rounded-2xl border border-purple-500/30 bg-gradient-to-r from-purple-600/20 via-purple-500/10 to-purple-600/20 backdrop-blur-xl px-8 sm:px-10 py-4 sm:py-5 text-sm sm:text-base font-light text-white transition-all duration-700 hover:border-purple-500/50 hover:bg-gradient-to-r hover:from-purple-600/30 hover:via-purple-500/20 hover:to-purple-600/30 hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/20 active:scale-95">
-            <div className="absolute inset-0 bg-gradient-to-r from-purple-500/0 via-purple-400/10 to-purple-500/0 translate-x-[-100%] transition-transform duration-1000 group-hover:translate-x-[100%]" />
+          <button className="group relative overflow-hidden rounded-2xl border border-purple-500/30 bg-linear-to-r from-purple-600/20 via-purple-500/10 to-purple-600/20 backdrop-blur-xl px-8 sm:px-10 py-4 sm:py-5 text-sm sm:text-base font-light text-white transition-all duration-700 hover:border-purple-500/50 hover:bg-linear-to-r hover:from-purple-600/30 hover:via-purple-500/20 hover:to-purple-600/30 hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/20 active:scale-95">
+            <div className="absolute inset-0 bg-linear-to-r from-purple-500/0 via-purple-400/10 to-purple-500/0 -translate-x-full transition-transform duration-1000 group-hover:translate-x-full" />
 
             <span className="relative z-10 flex items-center gap-3">
               <svg

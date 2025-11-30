@@ -33,7 +33,7 @@ export default function CategoriesGrid() {
           Dive into a curated collection of knowledge across multiple domains of space science and
           aerospace technology.
         </p>
-        <div className="mx-auto w-16 h-px bg-gradient-to-r from-transparent via-purple-400/50 to-transparent mt-6" />
+        <div className="mx-auto w-16 h-px bg-linear-to-r from-transparent via-purple-400/50 to-transparent mt-6" />
       </div>
 
       {/* Categories Grid - Slim Cards */}
@@ -42,10 +42,10 @@ export default function CategoriesGrid() {
           <article key={category.title} className="group relative h-48">
             {/* Card Background */}
             <div
-              className={`relative h-full rounded-2xl border border-white/10 bg-gradient-to-br ${category.gradient} backdrop-blur-2xl overflow-hidden transition-all duration-500 hover:border-purple-500/30 hover:scale-105`}
+              className={`relative h-full rounded-2xl border border-white/10 bg-linear-to-br ${category.gradient} backdrop-blur-2xl overflow-hidden transition-all duration-500 hover:border-purple-500/30 hover:scale-105`}
             >
               {/* Subtle pattern overlay */}
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:20px_20px]" />
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-size-[20px_20px]" />
 
               {/* Content */}
               <div className="relative h-full flex flex-col justify-between p-6">
@@ -60,7 +60,7 @@ export default function CategoriesGrid() {
 
                 {/* Bottom accent */}
                 <div className="flex items-center justify-between">
-                  <div className="h-px w-8 bg-gradient-to-r from-white/20 to-transparent transition-all duration-300 group-hover:w-16 group-hover:from-purple-400/50" />
+                  <div className="h-px w-8 bg-linear-to-r from-white/20 to-transparent transition-all duration-300 group-hover:w-16 group-hover:from-purple-400/50" />
 
                   {/* Arrow indicator */}
                   <svg
@@ -81,7 +81,7 @@ export default function CategoriesGrid() {
             </div>
 
             {/* Hover glow effect */}
-            <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-purple-500/0 via-purple-500/5 to-purple-500/0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 -z-10 blur-xl" />
+            <div className="absolute inset-0 rounded-2xl bg-linear-to-r from-purple-500/0 via-purple-500/5 to-purple-500/0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 -z-10 blur-xl" />
           </article>
         ))}
       </div>

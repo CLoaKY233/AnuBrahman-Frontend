@@ -22,7 +22,7 @@ const BlogCard = memo(({ post }: { post: Post }) => {
   return (
     <Link href={`/blog/${post.slug}`}>
       <article
-        className="group relative h-[26rem] sm:h-[28rem] rounded-xl overflow-hidden border border-white/10 bg-black/40 backdrop-blur-sm transition-all duration-300 hover:border-white/20 hover:shadow-xl hover:shadow-black/50 cursor-pointer"
+        className="group relative h-104 sm:h-112 rounded-xl overflow-hidden border border-white/10 bg-black/40 backdrop-blur-sm transition-all duration-300 hover:border-white/20 hover:shadow-xl hover:shadow-black/50 cursor-pointer"
         role="article"
         aria-label={`Blog post: ${post.title}`}
       >
@@ -40,7 +40,7 @@ const BlogCard = memo(({ post }: { post: Post }) => {
             />
           )}
 
-          <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/40 to-black/80 transition-all duration-300 group-hover:from-black/50 group-hover:via-black/60 group-hover:to-black/80" />
+          <div className="absolute inset-0 bg-linear-to-b from-black/20 via-black/40 to-black/80 transition-all duration-300 group-hover:from-black/50 group-hover:via-black/60 group-hover:to-black/80" />
 
           {/* Category Badge */}
           {post.category && (
@@ -192,7 +192,7 @@ export default function BlogClientContent({ posts }: BlogClientContentProps) {
           </div>
 
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-none">
-            <span className="block bg-gradient-to-r from-white via-purple-200 to-white bg-clip-text text-transparent">
+            <span className="block bg-linear-to-r from-white via-purple-200 to-white bg-clip-text text-transparent">
               Cosmic Insights
             </span>
           </h1>
@@ -284,8 +284,8 @@ export default function BlogClientContent({ posts }: BlogClientContentProps) {
 
       {/* Newsletter CTA */}
       {/*<section className="relative my-12 sm:my-16 lg:my-20 px-4 sm:px-0">
-        <div className="relative rounded-2xl sm:rounded-3xl border border-white/10 bg-gradient-to-br from-purple-950/20 via-black/40 to-black/60 backdrop-blur-xl overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-purple-500/5 to-transparent" />
+        <div className="relative rounded-2xl sm:rounded-3xl border border-white/10 bg-linear-to-br from-purple-950/20 via-black/40 to-black/60 backdrop-blur-xl overflow-hidden">
+          <div className="absolute inset-0 bg-linear-to-r from-transparent via-purple-500/5 to-transparent" />
           <div className="relative p-8 sm:p-12 md:p-16 text-center space-y-4 sm:space-y-6 z-10">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-white">
               Never Miss an Article
@@ -296,7 +296,7 @@ export default function BlogClientContent({ posts }: BlogClientContentProps) {
             </p>
             <button
               type="button"
-              className="inline-flex items-center rounded-lg sm:rounded-xl border border-purple-400/50 bg-gradient-to-r from-purple-600 to-purple-500 px-6 sm:px-10 py-3 sm:py-4 text-xs sm:text-sm font-semibold text-white transition-all duration-200 hover:shadow-lg hover:shadow-purple-500/25 active:scale-95"
+              className="inline-flex items-center rounded-lg sm:rounded-xl border border-purple-400/50 bg-linear-to-r from-purple-600 to-purple-500 px-6 sm:px-10 py-3 sm:py-4 text-xs sm:text-sm font-semibold text-white transition-all duration-200 hover:shadow-lg hover:shadow-purple-500/25 active:scale-95"
             >
               <span className="tracking-wider uppercase">Subscribe Now</span>
             </button>

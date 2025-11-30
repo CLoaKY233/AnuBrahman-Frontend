@@ -33,7 +33,7 @@ function PlaceholderCard({ isActive }: { isActive: boolean }) {
           <div className="relative h-full overflow-hidden rounded-xl sm:rounded-2xl border border-white/10 bg-black/40 backdrop-blur-xl transition-all duration-500 hover:border-purple-500/50 hover:shadow-2xl hover:shadow-purple-950/50">
             {/* Background Pattern */}
             <div className="absolute inset-0">
-              <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-black/60 to-black/80" />
+              <div className="absolute inset-0 bg-linear-to-br from-purple-900/20 via-black/60 to-black/80" />
               <div className="absolute inset-0 opacity-10">
                 <div className="absolute top-1/4 left-1/4 w-32 h-32 border border-purple-500/30 rounded-full" />
                 <div className="absolute bottom-1/4 right-1/4 w-24 h-24 border border-purple-500/20 rounded-full" />
@@ -85,7 +85,7 @@ function PlaceholderCard({ isActive }: { isActive: boolean }) {
                 </svg>
               </div>
             </div>
-            <div className="absolute inset-0 rounded-xl sm:rounded-2xl bg-gradient-to-r from-purple-500/0 via-purple-500/10 to-purple-500/0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 -z-10 blur-2xl" />
+            <div className="absolute inset-0 rounded-xl sm:rounded-2xl bg-linear-to-r from-purple-500/0 via-purple-500/10 to-purple-500/0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 -z-10 blur-2xl" />
           </div>
         </article>
       </div>
@@ -143,11 +143,11 @@ export default function FeaturedCarousel({ featuredPosts }: FeaturedCarouselProp
           <p className="text-sm sm:text-base font-light text-zinc-400 max-w-2xl mx-auto leading-relaxed px-4">
             Discover our most impactful and cutting-edge content in space science and technology.
           </p>
-          <div className="mx-auto w-16 h-px bg-gradient-to-r from-transparent via-purple-400/50 to-transparent mt-4 sm:mt-6" />
+          <div className="mx-auto w-16 h-px bg-linear-to-r from-transparent via-purple-400/50 to-transparent mt-4 sm:mt-6" />
         </div>
 
         {/* Empty state */}
-        <div className="relative mx-auto max-w-[90rem] px-2 sm:px-4 md:px-8 lg:px-16">
+        <div className="relative mx-auto max-w-360 px-2 sm:px-4 md:px-8 lg:px-16">
           <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl p-12 sm:p-16 text-center">
             <div className="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-white/10 border border-white/20 mb-6">
               <svg
@@ -207,18 +207,18 @@ export default function FeaturedCarousel({ featuredPosts }: FeaturedCarouselProp
         <p className="text-sm sm:text-base font-light text-zinc-400 max-w-2xl mx-auto leading-relaxed px-4">
           Discover our most impactful and cutting-edge content in space science and technology.
         </p>
-        <div className="mx-auto w-16 h-px bg-gradient-to-r from-transparent via-purple-400/50 to-transparent mt-4 sm:mt-6" />
+        <div className="mx-auto w-16 h-px bg-linear-to-r from-transparent via-purple-400/50 to-transparent mt-4 sm:mt-6" />
       </div>
 
       <Carousel
         setApi={setApi}
-        className="relative mx-auto max-w-[90rem] px-2 sm:px-4 md:px-8 lg:px-16"
+        className="relative mx-auto max-w-360 px-2 sm:px-4 md:px-8 lg:px-16"
         opts={{
           loop: true,
           align: 'center',
         }}
       >
-        <div className="relative [mask-image:linear-gradient(to_right,transparent,black_5%,black_95%,transparent)] sm:[mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
+        <div className="relative mask-[linear-gradient(to_right,transparent,black_5%,black_95%,transparent)] sm:mask-[linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
           <CarouselContent className="-ml-2 sm:-ml-4 lg:-ml-8 py-6 sm:py-8 lg:py-12">
             {carouselItems.map((item, index) => {
               const isActive = index === current;
@@ -251,7 +251,7 @@ export default function FeaturedCarousel({ featuredPosts }: FeaturedCarouselProp
                                   className="object-cover opacity-60 transition-all duration-700 group-hover:opacity-75 group-hover:scale-110"
                                 />
                               )}
-                              <div className="absolute inset-0 bg-gradient-to-t from-purple-500/20 via-purple-400/10 to-black/80" />
+                              <div className="absolute inset-0 bg-linear-to-t from-purple-500/20 via-purple-400/10 to-black/80" />
                             </div>
 
                             {/* Content */}
@@ -270,7 +270,7 @@ export default function FeaturedCarousel({ featuredPosts }: FeaturedCarouselProp
                                     </span>
                                   )}
                                 </div>
-                                <span className="text-[10px] sm:text-xs font-light text-zinc-400 whitespace-nowrap flex-shrink-0">
+                                <span className="text-[10px] sm:text-xs font-light text-zinc-400 whitespace-nowrap shrink-0">
                                   {calculateReadingTime(
                                     item.post.content ? getWordCount(item.post.content) : 0
                                   )}
@@ -290,7 +290,7 @@ export default function FeaturedCarousel({ featuredPosts }: FeaturedCarouselProp
                                   <span className="truncate">
                                     {item.post.author || 'Guest Author'}
                                   </span>
-                                  <span className="hidden xs:inline flex-shrink-0">•</span>
+                                  <span className="hidden xs:inline shrink-0">•</span>
                                   <span className="hidden xs:inline truncate">
                                     {new Date(item.post.date).toLocaleDateString('en-US', {
                                       month: 'short',
@@ -299,7 +299,7 @@ export default function FeaturedCarousel({ featuredPosts }: FeaturedCarouselProp
                                   </span>
                                 </div>
                                 <svg
-                                  className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white/40 transition-all duration-300 group-hover:text-purple-400 group-hover:translate-x-1 flex-shrink-0"
+                                  className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white/40 transition-all duration-300 group-hover:text-purple-400 group-hover:translate-x-1 shrink-0"
                                   fill="none"
                                   stroke="currentColor"
                                   viewBox="0 0 24 24"
@@ -313,7 +313,7 @@ export default function FeaturedCarousel({ featuredPosts }: FeaturedCarouselProp
                                 </svg>
                               </div>
                             </div>
-                            <div className="absolute inset-0 rounded-xl sm:rounded-2xl bg-gradient-to-r from-purple-500/0 via-purple-500/10 to-purple-500/0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 -z-10 blur-2xl" />
+                            <div className="absolute inset-0 rounded-xl sm:rounded-2xl bg-linear-to-r from-purple-500/0 via-purple-500/10 to-purple-500/0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 -z-10 blur-2xl" />
                           </div>
                         </article>
                       </div>

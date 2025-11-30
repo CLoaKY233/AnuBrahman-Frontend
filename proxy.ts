@@ -1,16 +1,12 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-const COMING_SOON_PATHS = [
-  '/newsletter',
-  '/team',
-  '/about',
-  // Add any other routes you want to redirect
-];
+const COMING_SOON_PATHS = ['/newsletter', '/team', '/about'];
 
-export function middleware(req: NextRequest) {
+// CHANGED: Function name is now 'proxy'
+export function proxy(req: NextRequest) {
   const url = req.nextUrl.clone();
-  // Only intercept GET requests to pages
+
   if (
     req.method === 'GET' &&
     COMING_SOON_PATHS.some(

@@ -1,7 +1,8 @@
-import NavFrosted from '@/components/nav-frosted';
+import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
+import NavFrosted from '@/components/nav-frosted';
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Blog | AnuBrahman',
   description: 'Explore articles about space science, aerospace, and astrophysics.',
 };

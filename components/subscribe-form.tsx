@@ -22,7 +22,7 @@ export default function SubscribeForm() {
   if (submitted) {
     return (
       <div className="relative max-w-md mx-auto px-4">
-        <div className="rounded-xl border border-purple-500/30 bg-gradient-to-r from-purple-500/10 to-purple-400/10 backdrop-blur-xl p-5 text-center">
+        <div className="rounded-xl border border-purple-500/30 bg-linear-to-r from-purple-500/10 to-purple-400/10 backdrop-blur-xl p-5 text-center">
           {/* Success icon */}
           <div className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-purple-500/20 mb-3">
             <svg
@@ -53,7 +53,7 @@ export default function SubscribeForm() {
     <div className="relative max-w-md mx-auto px-4">
       <form onSubmit={onSubmit} className="relative group">
         {/* Background glow */}
-        <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-500/20 via-purple-400/10 to-purple-500/20 rounded-xl blur-sm opacity-0 group-focus-within:opacity-100 transition-opacity duration-500" />
+        <div className="absolute -inset-0.5 bg-linear-to-r from-purple-500/20 via-purple-400/10 to-purple-500/20 rounded-xl blur-sm opacity-0 group-focus-within:opacity-100 transition-opacity duration-500" />
 
         {/* Form container */}
         <div className="relative flex flex-col sm:flex-row rounded-xl border border-white/20 bg-black/40 backdrop-blur-xl overflow-hidden transition-all duration-300 focus-within:border-purple-500/40 focus-within:bg-black/60">
@@ -78,7 +78,7 @@ export default function SubscribeForm() {
           <button
             type="submit"
             disabled={isLoading || !email}
-            className="group/btn relative w-full sm:w-auto flex-shrink-0 px-6 py-3 bg-gradient-to-r from-purple-600 to-purple-500 text-xs sm:text-sm font-light text-white transition-all duration-300 hover:from-purple-500 hover:to-purple-400 disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden"
+            className="group/btn relative w-full sm:w-auto shrink-0 px-6 py-3 bg-linear-to-r from-purple-600 to-purple-500 text-xs sm:text-sm font-light text-white transition-all duration-300 hover:from-purple-500 hover:to-purple-400 disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden"
           >
             {/* Button content */}
             <span className="relative z-10 flex items-center justify-center space-x-1.5 tracking-wide uppercase">
@@ -108,12 +108,12 @@ export default function SubscribeForm() {
             </span>
 
             {/* Hover effect */}
-            <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-purple-300 opacity-0 transition-opacity duration-300 group-hover/btn:opacity-100" />
+            <div className="absolute inset-0 bg-linear-to-r from-purple-400 to-purple-300 opacity-0 transition-opacity duration-300 group-hover/btn:opacity-100" />
           </button>
         </div>
 
         {/* Bottom accent line */}
-        <div className="absolute -bottom-1.5 left-1/2 h-px w-12 -translate-x-1/2 bg-gradient-to-r from-transparent via-purple-400/30 to-transparent transition-all duration-500 group-focus-within:w-24 group-focus-within:via-purple-400/50" />
+        <div className="absolute -bottom-1.5 left-1/2 h-px w-12 -translate-x-1/2 bg-linear-to-r from-transparent via-purple-400/30 to-transparent transition-all duration-500 group-focus-within:w-24 group-focus-within:via-purple-400/50" />
       </form>
     </div>
   );
