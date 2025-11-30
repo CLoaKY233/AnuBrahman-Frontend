@@ -1,9 +1,9 @@
 import NavFrosted from '@/components/nav-frosted';
-import SubscribeForm from '@/components/disabled-sub';
-import FeaturedCarousel from '@/components/featured-carousel';
-import MetricsStrip from '@/components/metrics-strip';
-import CategoriesGrid from '@/components/categories-grid';
-import Testimonials from '@/components/testimonials';
+import SubscribeForm from '@/components/home/disabled-sub';
+import FeaturedCarousel from '@/components/home/featured-carousel';
+import MetricsStrip from '@/components/home/metrics-strip';
+import CategoriesGrid from '@/components/home/categories-grid';
+import Testimonials from '@/components/home/testimonials';
 import { getFeaturedPostsFromCache } from '@/lib/notion';
 
 export default function HomePage() {

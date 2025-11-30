@@ -6,7 +6,7 @@ import type { Metadata } from 'next';
 import ReactMarkdown from 'react-markdown';
 import { Badge } from '@/components/ui/badge';
 import { calculateReadingTime, getWordCount } from '@/lib/utils';
-import { components } from '@/components/mdx-component';
+import { components } from '@/components/blog/mdx-component';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
 import { ArrowLeft, Calendar, Clock, User } from 'lucide-react';
