@@ -14,7 +14,7 @@ Developed by **Lay Sheth** ([@cloaky233](https://github.com/cloaky233))
 
 ## Tech Stack
 
-- Next.js 15
+- Next.js 16
 - React 19
 - TypeScript
 - Tailwind CSS
