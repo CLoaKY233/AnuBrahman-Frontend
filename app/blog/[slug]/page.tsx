@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
   if (!siteUrl) {
-    console.warn('NEXT_PUBLIC_SITE_URL is not configured');
+    throw new Error('NEXT_PUBLIC_SITE_URL is not configured. Set it in .env.local');
   }
 
   const baseUrl = siteUrl || 'https://anubrahman.com';
