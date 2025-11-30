@@ -1,49 +1,49 @@
 'use client';
 
 import { Marquee } from '@/components/ui/marquee';
-import Image from 'next/image';
+// import Image from 'next/image';
 
 const testimonials = [
   {
     name: 'Dr. Keerti Raju Kanada',
     username: '@keerti_aerospace',
     body: 'Anubrahman has transformed how I approach aerospace engineering. The depth of technical content combined with cutting-edge research insights makes it essential reading for any serious professional in our field.',
-    img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face',
+    // img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face',
     role: 'Aerospace Engineer',
   },
   {
     name: 'Vaishnavi Nair',
     username: '@vaishnavcosmos',
     body: 'As a graduate student, Anubrahman bridges the gap between academic theory and real-world applications. Every edition fuels my curiosity about space exploration and astrophysics breakthroughs.',
-    img: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&h=150&fit=crop&crop=face',
+    // img: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&h=150&fit=crop&crop=face',
     role: 'Graduate Student',
   },
   {
     name: 'Aaron Alva',
     username: '@aaron_stellar',
     body: 'The way complex space missions are broken down into digestible, fascinating stories is incredible. Anubrahman makes astrophysics accessible without losing the scientific rigor.',
-    img: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
+    // img: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
     role: 'Research Scientist',
   },
   {
     name: 'Jimit Ritesh Pathak',
     username: '@jimit_aero',
     body: "From propulsion systems to orbital mechanics, Anubrahman covers it all with remarkable clarity. It's become my go-to resource for staying updated with aerospace innovations.",
-    img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face',
+    // img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face',
     role: 'Propulsion Specialist',
   },
   {
     name: 'Dr. Priya Sharma',
     username: '@priya_astro',
     body: 'The interdisciplinary approach connecting aerospace engineering with pure astrophysics research is what sets Anubrahman apart. Brilliant technical journalism.',
-    img: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face',
+    // img: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face',
     role: 'Astrophysicist',
   },
   {
     name: 'Arjun Spacetech',
     username: '@arjun_cosmos',
     body: 'Working in the space industry, I need reliable sources for technical updates. Anubrahman delivers cutting-edge content that directly impacts my professional development.',
-    img: 'https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=150&h=150&fit=crop&crop=face',
+    // img: 'https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=150&h=150&fit=crop&crop=face',
     role: 'Space Industry',
   },
 ];
@@ -54,13 +54,13 @@ const secondColumn = testimonials.slice(2, 4);
 const thirdColumn = testimonials.slice(4, 6);
 
 const TestimonialCard = ({
-  img,
+  // img,
   name,
   username,
   body,
   role,
 }: {
-  img: string;
+  // img: string;
   name: string;
   username: string;
   body: string;
@@ -96,13 +96,13 @@ const TestimonialCard = ({
             <div className="relative flex-shrink-0">
               <div className="absolute -inset-1 bg-gradient-to-br from-purple-500/40 via-purple-600/20 to-transparent rounded-full opacity-0 blur-md transition-opacity duration-500 group-hover:opacity-100" />
               <div className="relative">
-                <Image
+                {/*<Image
                   src={img || '/placeholder.svg'}
                   alt={name}
                   width={48}
                   height={48}
                   className="h-12 w-12 rounded-full border-2 border-white/10 object-cover transition-all duration-500 group-hover:border-purple-400/40"
-                />
+                />*/}
                 <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-purple-500/20 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
               </div>
             </div>
