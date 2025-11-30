@@ -1,0 +1,15 @@
+name: Daily Notion Sync and Deploy
+
+on:
+  schedule:
+    # Runs every day at 10:00 AM IST (4:30 AM UTC)
+    - cron: '30 4 * * *'
+  workflow_dispatch: # Allows manual triggering
+
+jobs:
+  trigger-deployment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Vercel Deploy Hook
+        run: |
+          curl -X POST https://api.vercel.com/v1/integrations/deploy/prj_hfHItaEbKOYIM6vbjaSHZQ5BislU/CXxrjqOce5
