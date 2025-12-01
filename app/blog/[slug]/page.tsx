@@ -6,7 +6,7 @@ import type { Metadata } from 'next';
 import ReactMarkdown from 'react-markdown';
 import { Badge } from '@/components/ui/badge';
 import { calculateReadingTime, getWordCount } from '@/lib/utils';
-import { components } from '@/components/mdx-component';
+import { components } from '@/components/blog/mdx-component';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
 import { ArrowLeft, Calendar, Clock, User } from 'lucide-react';
@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
   if (!siteUrl) {
-    console.warn('NEXT_PUBLIC_SITE_URL is not configured');
+    throw new Error('NEXT_PUBLIC_SITE_URL is not configured. Set it in .env.local');
   }
 
   const baseUrl = siteUrl || 'https://anubrahman.com';
@@ -162,7 +162,7 @@ export default async function PostPage({ params }: PostPageProps) {
 
               <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 pt-4 sm:pt-6 border-t border-white/10">
                 <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-linear-to-br from-purple-500 to-purple-600 flex items-center justify-center">
                     <User className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                   </div>
                   <div className="flex flex-col">
@@ -205,7 +205,7 @@ export default async function PostPage({ params }: PostPageProps) {
                   priority
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 896px"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-transparent" />
               </div>
             )}
 
@@ -240,7 +240,7 @@ export default async function PostPage({ params }: PostPageProps) {
             {/*<section className="space-y-4">
               <h3 className="text-lg sm:text-xl font-semibold text-white">About the Author</h3>
               <div className="flex gap-4 sm:gap-6 p-4 sm:p-6 rounded-lg sm:rounded-xl bg-white/5 border border-white/10">
-                <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center flex-shrink-0">
+                <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-linear-to-br from-purple-500 to-purple-600 flex items-center justify-center flex-shrink-0">
                   <User className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
                 </div>
                 <div className="flex-1 min-w-0">

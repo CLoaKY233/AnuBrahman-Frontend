@@ -13,7 +13,7 @@ export default function MetricsStrip() {
         <h2 className="text-2xl md:text-3xl font-light tracking-tight text-white mb-4">
           By the Numbers
         </h2>
-        <div className="mx-auto w-16 h-px bg-gradient-to-r from-transparent via-purple-400/50 to-transparent" />
+        <div className="mx-auto w-16 h-px bg-linear-to-r from-transparent via-purple-400/50 to-transparent" />
       </div>
 
       {/* Metrics Grid - Slimmer Design */}
@@ -21,9 +21,9 @@ export default function MetricsStrip() {
         {metrics.map((metric) => (
           <div key={metric.label} className="group relative">
             {/* Card Background */}
-            <div className="relative h-24 rounded-xl border border-white/10 bg-gradient-to-b from-white/5 to-transparent backdrop-blur-2xl transition-all duration-500 hover:border-purple-500/30 hover:from-purple-500/5 hover:to-transparent hover:scale-105">
+            <div className="relative h-24 rounded-xl border border-white/10 bg-linear-to-b from-white/5 to-transparent backdrop-blur-2xl transition-all duration-500 hover:border-purple-500/30 hover:from-purple-500/5 hover:to-transparent hover:scale-105">
               {/* Subtle glow on hover */}
-              <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-purple-500/0 via-purple-500/5 to-purple-500/0 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+              <div className="absolute inset-0 rounded-xl bg-linear-to-r from-purple-500/0 via-purple-500/5 to-purple-500/0 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
 
               {/* Content */}
               <div className="relative flex h-full flex-col items-center justify-center p-4 text-center">
@@ -37,7 +37,7 @@ export default function MetricsStrip() {
             </div>
 
             {/* Accent line */}
-            <div className="absolute -bottom-2 left-1/2 h-px w-8 -translate-x-1/2 bg-gradient-to-r from-transparent via-white/20 to-transparent transition-all duration-500 group-hover:w-12 group-hover:via-purple-400/50" />
+            <div className="absolute -bottom-2 left-1/2 h-px w-8 -translate-x-1/2 bg-linear-to-r from-transparent via-white/20 to-transparent transition-all duration-500 group-hover:w-12 group-hover:via-purple-400/50" />
           </div>
         ))}
       </div>

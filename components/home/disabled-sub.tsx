@@ -7,10 +7,10 @@ export default function SubscribeForm() {
     <div className="relative max-w-md mx-auto px-4">
       <div className="relative group">
         {/* Background glow */}
-        <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-500/20 via-purple-400/10 to-purple-500/20 rounded-xl blur-sm opacity-60" />
+        <div className="absolute -inset-0.5 bg-linear-to-r from-purple-500/20 via-purple-400/10 to-purple-500/20 rounded-xl blur-sm opacity-60" />
 
         {/* Container */}
-        <div className="relative rounded-xl border border-purple-500/30 bg-gradient-to-r from-purple-500/10 to-purple-400/10 backdrop-blur-xl p-6 text-center">
+        <div className="relative rounded-xl border border-purple-500/30 bg-linear-to-r from-purple-500/10 to-purple-400/10 backdrop-blur-xl p-6 text-center">
           {/* Beta badge */}
           <div className="inline-flex items-center justify-center px-3 py-1 rounded-full bg-purple-500/20 border border-purple-500/30 mb-4">
             <span className="text-xs font-light text-purple-300 uppercase tracking-wider">
@@ -29,7 +29,7 @@ export default function SubscribeForm() {
           {/* CTA Button */}
           <Link
             href="/blog"
-            className="group/btn relative inline-flex items-center justify-center space-x-2 px-6 py-3 bg-gradient-to-r from-purple-600 to-purple-500 rounded-lg text-xs sm:text-sm font-light text-white transition-all duration-300 hover:from-purple-500 hover:to-purple-400 overflow-hidden"
+            className="group/btn relative inline-flex items-center justify-center space-x-2 px-6 py-3 bg-linear-to-r from-purple-600 to-purple-500 rounded-lg text-xs sm:text-sm font-light text-white transition-all duration-300 hover:from-purple-500 hover:to-purple-400 overflow-hidden"
           >
             <span className="relative z-10 flex items-center space-x-2 tracking-wide uppercase">
               <span>Explore Blogs</span>
@@ -47,12 +47,12 @@ export default function SubscribeForm() {
                 />
               </svg>
             </span>
-            <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-purple-300 opacity-0 transition-opacity duration-300 group-hover/btn:opacity-100" />
+            <div className="absolute inset-0 bg-linear-to-r from-purple-400 to-purple-300 opacity-0 transition-opacity duration-300 group-hover/btn:opacity-100" />
           </Link>
         </div>
 
         {/* Bottom accent line */}
-        <div className="absolute -bottom-1.5 left-1/2 h-px w-24 -translate-x-1/2 bg-gradient-to-r from-transparent via-purple-400/50 to-transparent" />
+        <div className="absolute -bottom-1.5 left-1/2 h-px w-24 -translate-x-1/2 bg-linear-to-r from-transparent via-purple-400/50 to-transparent" />
       </div>
     </div>
   );

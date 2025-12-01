@@ -1,15 +1,24 @@
 'use client';
+
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Menu, X, Mail, Users, FileText, Info, Home } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
+import type { Route } from 'next';
 
-const navItems = [
+interface NavItem {
+  key: string;
+  label: string;
+  icon: any;
+  href: Route;
+}
+
+const navItems: NavItem[] = [
   { key: 'home', label: 'Home', icon: Home, href: '/' },
   { key: 'blog', label: 'Blog', icon: FileText, href: '/blog' },
-  { key: 'newsletter', label: 'Newsletter', icon: Mail, href: '/newsletter' },
-  { key: 'team', label: 'Team', icon: Users, href: '/team' },
-  { key: 'about', label: 'About', icon: Info, href: '/about' },
+  { key: 'newsletter', label: 'Newsletter', icon: Mail, href: '/newsletter' as unknown as Route },
+  { key: 'team', label: 'Team', icon: Users, href: '/team' as unknown as Route },
+  { key: 'about', label: 'About', icon: Info, href: '/about' as unknown as Route },
 ];
 
 export default function NavFrosted() {
@@ -36,14 +45,9 @@ export default function NavFrosted() {
         if (textElement) {
           const containerRect = container.getBoundingClientRect();
           const textRect = textElement.getBoundingClientRect();
-
-          // Calculate position relative to container
-          const left = textRect.left - containerRect.left;
-          const width = textRect.width;
-
           setUnderlineStyle({
-            left,
-            width,
+            left: textRect.left - containerRect.left,
+            width: textRect.width,
             opacity: 1,
           });
         }
@@ -52,31 +56,20 @@ export default function NavFrosted() {
       }
     };
 
-    // Use requestAnimationFrame to ensure DOM is ready
-    requestAnimationFrame(() => {
-      updateUnderline();
-    });
-
-    // Update on window resize
+    requestAnimationFrame(updateUnderline);
     window.addEventListener('resize', updateUnderline);
     return () => window.removeEventListener('resize', updateUnderline);
   }, [pathname, hoveredIndex]);
 
   // Close menu handler
-  const closeMenu = () => {
-    setIsMobileMenuOpen(false);
-  };
+  const closeMenu = () => setIsMobileMenuOpen(false);
 
   // Handle Escape key
   useEffect(() => {
     if (!isMobileMenuOpen) return;
-
     const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        closeMenu();
-      }
+      if (event.key === 'Escape') closeMenu();
     };
-
     document.addEventListener('keydown', handleEscape);
     return () => document.removeEventListener('keydown', handleEscape);
   }, [isMobileMenuOpen]);
@@ -84,31 +77,23 @@ export default function NavFrosted() {
   // Handle focus trap
   useEffect(() => {
     if (!isMobileMenuOpen || !dialogRef.current) return;
-
-    // Store previously focused element
     previousFocusRef.current = document.activeElement as HTMLElement;
-
-    // Get all focusable elements
     const focusableElements = dialogRef.current.querySelectorAll<HTMLElement>(
       'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
     );
     const firstFocusable = focusableElements[0];
     const lastFocusable = focusableElements[focusableElements.length - 1];
 
-    // Focus first element (close button)
     closeButtonRef.current?.focus();
 
     const handleTab = (event: KeyboardEvent) => {
       if (event.key !== 'Tab') return;
-
       if (event.shiftKey) {
-        // Shift + Tab
         if (document.activeElement === firstFocusable) {
           event.preventDefault();
           lastFocusable?.focus();
         }
       } else {
-        // Tab
         if (document.activeElement === lastFocusable) {
           event.preventDefault();
           firstFocusable?.focus();
@@ -117,10 +102,8 @@ export default function NavFrosted() {
     };
 
     document.addEventListener('keydown', handleTab);
-
     return () => {
       document.removeEventListener('keydown', handleTab);
-      // Restore focus to previously focused element
       previousFocusRef.current?.focus();
     };
   }, [isMobileMenuOpen]);
@@ -128,7 +111,6 @@ export default function NavFrosted() {
   // Handle scroll lock
   useEffect(() => {
     if (isMobileMenuOpen) {
-      // Save current scroll position
       const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
       document.body.style.overflow = 'hidden';
       document.body.style.paddingRight = `${scrollbarWidth}px`;
@@ -136,7 +118,6 @@ export default function NavFrosted() {
       document.body.style.overflow = '';
       document.body.style.paddingRight = '';
     }
-
     return () => {
       document.body.style.overflow = '';
       document.body.style.paddingRight = '';
@@ -150,16 +131,13 @@ export default function NavFrosted() {
           aria-label="Primary navigation"
           className="relative mx-auto max-w-6xl rounded-2xl border border-white/10 bg-black/40 backdrop-blur-3xl transition-all duration-500 hover:bg-black/50"
         >
-          {/* Subtle glow effect */}
-          <div className="absolute -inset-px rounded-2xl bg-gradient-to-r from-purple-500/10 via-transparent to-purple-500/10 opacity-50" />
+          <div className="absolute -inset-px rounded-2xl bg-linear-to-r from-purple-500/10 via-transparent to-purple-500/10 opacity-50" />
 
           <div className="relative flex items-center justify-between px-6 py-3">
-            {/* Logo */}
             <div className="flex items-center">
               <span className="text-sm font-light tracking-[0.3em] text-white">ANUBRAHMAN</span>
             </div>
 
-            {/* Desktop Navigation */}
             <div ref={containerRef} className="hidden md:flex items-center relative">
               {navItems.map((item, index) => {
                 const isActive = pathname === item.href;
@@ -195,16 +173,9 @@ export default function NavFrosted() {
               />
             </div>
 
-            {/* Subscribe Button */}
-            {/*<button
-              type="button"
-              className="hidden sm:inline-flex items-center rounded-lg border border-purple-500/30 bg-gradient-to-r from-purple-600/80 to-purple-500/80 px-4 py-2 text-xs font-medium text-white transition-all duration-300 hover:shadow-md hover:shadow-purple-500/20 hover:scale-105 active:scale-95"
-            >
-              <span className="tracking-wider uppercase">Subscribe</span>
-            </button>*/}
             <button
               type="button"
-              className="hidden sm:inline-flex items-center rounded-lg border border-purple-500/30 bg-gradient-to-r from-purple-600/80 to-purple-500/80 px-4 py-2 text-xs font-medium text-white transition-all duration-300 hover:shadow-md hover:shadow-purple-500/20 hover:scale-105 active:scale-95 opacity-50 cursor-not-allowed"
+              className="hidden sm:inline-flex items-center rounded-lg border border-purple-500/30 bg-linear-to-r from-purple-600/80 to-purple-500/80 px-4 py-2 text-xs font-medium text-white transition-all duration-300 hover:shadow-md hover:shadow-purple-500/20 hover:scale-105 active:scale-95 opacity-50 cursor-not-allowed"
               disabled
             >
               <svg
@@ -222,6 +193,7 @@ export default function NavFrosted() {
               </svg>
               <span className="tracking-wider uppercase">Subscribe</span>
             </button>
+
             <button
               type="button"
               onClick={() => setIsMobileMenuOpen(true)}
@@ -237,8 +209,7 @@ export default function NavFrosted() {
       </div>
 
       {isMobileMenuOpen && (
-        <div className="fixed inset-0 z-[100] md:hidden">
-          {/* Backdrop with blur */}
+        <div className="fixed inset-0 z-100 md:hidden">
           <div
             className="absolute inset-0 bg-black/60 backdrop-blur-xl"
             onClick={closeMenu}
@@ -253,18 +224,10 @@ export default function NavFrosted() {
             aria-label="Mobile navigation menu"
             className="absolute inset-y-0 right-0 w-full max-w-xs"
           >
-            {/* Animated slide-in panel with frosted glass */}
-            <div
-              className="relative h-full bg-gradient-to-br from-black/95 via-purple-950/30 to-black/95 backdrop-blur-3xl border-l border-white/10 shadow-2xl shadow-purple-500/10"
-              style={{
-                animation: 'slideInRight 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
-              }}
-            >
-              {/* Ambient glow effects */}
+            <div className="relative h-full bg-linear-to-br from-black/95 via-purple-950/30 to-black/95 backdrop-blur-3xl border-l border-white/10 shadow-2xl shadow-purple-500/10 animate-slide-in-right">
               <div className="absolute top-20 right-10 w-64 h-64 bg-purple-600/20 rounded-full blur-[100px] animate-ambient-pulse" />
               <div className="absolute bottom-40 left-10 w-48 h-48 bg-purple-500/15 rounded-full blur-[80px] animate-ambient-pulse-delayed" />
 
-              {/* Content Container */}
               <div className="relative h-full flex flex-col">
                 <div className="flex items-center justify-between px-6 pt-6 pb-4 border-b border-white/5">
                   <div className="flex flex-col">
@@ -295,17 +258,17 @@ export default function NavFrosted() {
                         key={item.key}
                         href={item.href}
                         onClick={closeMenu}
-                        className={`group relative w-full flex items-center space-x-3 rounded-lg border backdrop-blur-2xl px-4 py-3 text-left transition-all duration-500 hover:border-purple-500/30 hover:bg-gradient-to-r hover:from-purple-600/15 hover:to-purple-500/5 hover:scale-[1.01] hover:shadow-md hover:shadow-purple-500/5 active:scale-[0.99] ${
+                        className={`group relative w-full flex items-center space-x-3 rounded-lg border backdrop-blur-2xl px-4 py-3 text-left transition-all duration-500 hover:border-purple-500/30 hover:bg-linear-to-r hover:from-purple-600/15 hover:to-purple-500/5 hover:scale-[1.01] hover:shadow-md hover:shadow-purple-500/5 active:scale-[0.99] animate-fade-in-up ${
                           isActive
-                            ? 'border-purple-500/30 bg-gradient-to-r from-purple-600/20 to-purple-500/10'
-                            : 'border-white/5 bg-white/[0.02]'
+                            ? 'border-purple-500/30 bg-linear-to-r from-purple-600/20 to-purple-500/10'
+                            : 'border-white/5 bg-white/2'
                         }`}
                         style={{
-                          animation: `fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) ${index * 0.1}s both`,
+                          animationDelay: `${index * 0.1}s`,
                         }}
                       >
                         <div
-                          className={`relative flex items-center justify-center w-8 h-8 rounded-md bg-gradient-to-br border transition-all duration-500 group-hover:scale-105 group-hover:shadow-md group-hover:shadow-purple-500/20 ${
+                          className={`relative flex items-center justify-center w-8 h-8 rounded-md bg-linear-to-br border transition-all duration-500 group-hover:scale-105 group-hover:shadow-md group-hover:shadow-purple-500/20 ${
                             isActive
                               ? 'from-purple-600/30 to-purple-500/20 border-purple-500/40'
                               : 'from-purple-600/20 to-purple-500/10 border-purple-500/20'
@@ -317,7 +280,6 @@ export default function NavFrosted() {
                             }`}
                           />
                         </div>
-
                         <div className="flex-1">
                           <span
                             className={`block text-sm font-light tracking-wide uppercase transition-colors duration-500 group-hover:text-white ${
@@ -327,8 +289,6 @@ export default function NavFrosted() {
                             {item.label}
                           </span>
                         </div>
-
-                        {/* Arrow indicator */}
                         <div
                           className={`transition-all duration-500 group-hover:opacity-100 group-hover:translate-x-0.5 ${
                             isActive ? 'opacity-100' : 'opacity-0'
@@ -339,7 +299,6 @@ export default function NavFrosted() {
                             fill="none"
                             viewBox="0 0 24 24"
                             stroke="currentColor"
-                            aria-hidden="true"
                           >
                             <path
                               strokeLinecap="round"
@@ -355,18 +314,10 @@ export default function NavFrosted() {
                 </div>
 
                 <div className="px-5 pb-6 pt-3 border-t border-white/5 space-y-3">
-                  {/*<button
-                    type="button"
-                    onClick={closeMenu}
-                    className="w-full relative overflow-hidden rounded-lg border border-purple-500/30 bg-gradient-to-r from-purple-600/90 to-purple-500/90 px-5 py-3 text-xs font-medium text-white transition-all duration-500 hover:shadow-lg hover:shadow-purple-500/25 hover:scale-[1.01] active:scale-[0.99]"
-                  >
-                    <span className="relative z-10 tracking-wider uppercase">Subscribe Now</span>
-                    <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-purple-400 opacity-0 transition-opacity duration-500 hover:opacity-100" />
-                  </button>*/}
                   <button
                     type="button"
                     onClick={closeMenu}
-                    className="w-full relative overflow-hidden rounded-lg border border-purple-500/30 bg-gradient-to-r from-purple-600/90 to-purple-500/90 px-5 py-3 text-xs font-medium text-white transition-all duration-500 opacity-50 cursor-not-allowed"
+                    className="w-full relative overflow-hidden rounded-lg border border-purple-500/30 bg-linear-to-r from-purple-600/90 to-purple-500/90 px-5 py-3 text-xs font-medium text-white transition-all duration-500 opacity-50 cursor-not-allowed"
                     disabled
                   >
                     <div className="relative z-10 flex items-center justify-center">
@@ -386,8 +337,6 @@ export default function NavFrosted() {
                       <span className="tracking-wider uppercase">Subscribe Now</span>
                     </div>
                   </button>
-
-                  {/* Tagline */}
                   <p className="text-center text-[10px] text-zinc-500 tracking-wide">
                     Engineering infinity: Core to Cosmos
                   </p>
@@ -397,30 +346,6 @@ export default function NavFrosted() {
           </div>
         </div>
       )}
-
-      <style jsx global>{`
-        @keyframes slideInRight {
-          from {
-            transform: translateX(100%);
-            opacity: 0;
-          }
-          to {
-            transform: translateX(0);
-            opacity: 1;
-          }
-        }
-
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-      `}</style>
     </>
   );
 }
