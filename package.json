@@ -18,8 +18,7 @@
   "private": true,
   "scripts": {
     "build": "bun run cache:posts && next build",
-    "dev": "bun --bun run cache:posts && next dev",
-    "lint": "bun run next lint",
+    "dev": "bun run cache:posts && next dev",
     "start": "bun run next start",
     "format": "prettier --write .",
     "format:check": "prettier --check .",

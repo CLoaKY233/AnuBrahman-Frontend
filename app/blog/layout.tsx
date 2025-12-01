@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 import NavFrosted from '@/components/nav-frosted';
-import BlogFooter from '@/components/blog/blog-footer';
+import Footer from '@/components/footer';
 
 export const metadata: Metadata = {
   title: 'Blog | AnuBrahman',
@@ -13,7 +13,7 @@ export default function BlogLayout({ children }: { children: ReactNode }) {
     <main className="relative min-h-screen overflow-x-hidden text-white selection:bg-purple-500/30">
       <NavFrosted />
       {children}
-      <BlogFooter />
+      <Footer />
     </main>
   );
 }

@@ -5,6 +5,8 @@ import MetricsStrip from '@/components/home/metrics-strip';
 import CategoriesGrid from '@/components/home/categories-grid';
 import Testimonials from '@/components/home/testimonials';
 import { getFeaturedPostsFromCache } from '@/lib/notion';
+import Footer from '@/components/footer';
+import Link from 'next/link';
 
 export default function HomePage() {
   // Fetch featured posts at build time
@@ -46,22 +48,37 @@ export default function HomePage() {
               cutting-edge insights into aerospace innovation and cosmic discovery.
             </p>
 
-            {/* Premium CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 pt-6">
-              <button
-                type="button"
-                className="group relative overflow-hidden rounded-lg border border-purple-500/30 bg-linear-to-r from-purple-600/90 to-purple-500/90 px-8 py-3.5 text-sm font-medium text-white transition-all duration-500 hover:shadow-lg hover:shadow-purple-500/25 hover:scale-105 active:scale-95"
-              >
-                <span className="relative z-10 tracking-wider uppercase">Explore Articles</span>
-                <div className="absolute inset-0 bg-linear-to-r from-purple-500 to-purple-400 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-              </button>
+            <div className="pt-6">
+              <Link href="/blog">
+                <button
+                  type="button"
+                  className="group relative overflow-hidden rounded-full border border-purple-500/20 bg-linear-to-r from-purple-600/10 via-purple-500/10 to-purple-600/10 backdrop-blur-xl px-10 py-4 text-sm font-medium text-white transition-all duration-700 hover:border-purple-400/40 hover:shadow-2xl hover:shadow-purple-500/20 active:scale-95"
+                >
+                  {/* Animated background gradient */}
+                  <div className="absolute inset-0 bg-linear-to-r from-purple-600 via-purple-500 to-purple-600 opacity-0 transition-opacity duration-700 group-hover:opacity-90" />
 
-              <button
-                type="button"
-                className="group relative rounded-lg border border-white/20 bg-white/5 backdrop-blur-2xl px-8 py-3.5 text-sm font-medium text-zinc-200 transition-all duration-500 hover:bg-white/10 hover:border-purple-500/30 hover:text-white hover:scale-105 active:scale-95"
-              >
-                <span className="tracking-wider uppercase">Join Community</span>
-              </button>
+                  {/* Shimmer effect */}
+                  <div className="absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-white/20 to-transparent transition-transform duration-1000 group-hover:translate-x-full" />
+
+                  {/* Button content */}
+                  <span className="relative z-10 flex items-center gap-3 tracking-wider uppercase">
+                    Explore Articles
+                    <svg
+                      className="w-4 h-4 transition-transform duration-500 group-hover:translate-x-1"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M13 7l5 5m0 0l-5 5m5-5H6"
+                      />
+                    </svg>
+                  </span>
+                </button>
+              </Link>
             </div>
           </div>
         </section>
@@ -119,24 +136,18 @@ export default function HomePage() {
               Begin your journey into aerospace education and connect with passionate space
               exploration enthusiasts.
             </p>
-            <button
+            {/*<button
               type="button"
               className="inline-flex items-center rounded-lg border border-purple-500/40 bg-linear-to-r from-purple-600/90 to-purple-500/90 px-8 py-3.5 text-sm font-medium text-white transition-all duration-500 hover:shadow-lg hover:shadow-purple-500/25 hover:scale-105 active:scale-95"
             >
               <span className="tracking-wider uppercase">Start Your Journey</span>
-            </button>
+            </button>*/}
           </div>
         </div>
       </section>
 
       {/* Minimal Footer */}
-      <footer className="relative mx-auto max-w-6xl px-6 pb-16 lg:px-8">
-        <div className="border-t border-white/10 pt-8 text-center">
-          <p className="text-xs text-zinc-500 font-light tracking-wide">
-            © {new Date().getFullYear()} ANUBRAHMAN — All rights reserved.
-          </p>
-        </div>
-      </footer>
+      <Footer />
     </main>
   );
 }
