@@ -1,6 +1,5 @@
 'use client';
 
-import { cn } from '@/lib/utils';
 import Image from 'next/image';
 import React from 'react';
 import {
@@ -13,33 +12,38 @@ import {
 } from '@/components/ui/table';
 
 const components = {
-  h1: ({ children }: { children?: React.ReactNode }) => (
-    <h1 className="mb-4 font-bold text-4xl">{children}</h1>
-  ),
-  p: ({ children }: { children?: React.ReactNode }) => <p className="mb-4">{children}</p>,
-  a: ({ children, href }: { children?: React.ReactNode; href?: string }) => (
-    <a href={href} className="text-blue-500 hover:underline">
-      {children}
-    </a>
-  ),
-  ul: ({ children }: { children?: React.ReactNode }) => (
-    <ul className="mb-4 list-disc pl-5">{children}</ul>
-  ),
-  ol: ({ children }: { children?: React.ReactNode }) => (
-    <ol className="mb-4 list-decimal pl-5">{children}</ol>
-  ),
-  li: ({ children }: { children?: React.ReactNode }) => <li className="mb-2">{children}</li>,
-  blockquote: ({ children }: { children?: React.ReactNode }) => (
-    <blockquote className="mb-4 border-neutral-300 border-l-2 py-2 pl-4 italic">
-      {children}
-    </blockquote>
-  ),
-
-  pre: ({ className, ...props }: React.HTMLAttributes<HTMLPreElement>) => {
-    return <pre className={cn('bg-transparent p-0', className)} {...props} />;
+  // Inline code
+  code: ({ className, children, ...props }: any) => {
+    // If no className, it's inline code
+    if (!className) {
+      return (
+        <code
+          className="bg-white/10 text-purple-300 px-1.5 py-0.5 rounded text-sm font-mono"
+          {...props}
+        >
+          {children}
+        </code>
+      );
+    }
+    // Block code - rehype-highlight adds the className
+    return (
+      <code className={className} {...props}>
+        {children}
+      </code>
+    );
   },
 
-  // Fixed: Properly handle blob URLs with cleanup
+  pre: ({ children, ...props }: any) => {
+    return (
+      <pre
+        className="bg-white/5 border border-white/10 rounded-lg p-4 overflow-x-auto my-6"
+        {...props}
+      >
+        {children}
+      </pre>
+    );
+  },
+
   img: ({ src, alt }: { src?: string | Blob; alt?: string }) => {
     const imageUrl = React.useMemo(() => {
       if (!src) return '';
@@ -60,47 +64,30 @@ const components = {
       <Image
         src={imageUrl}
         alt={alt || ''}
-        className="mb-4 h-auto w-full rounded-md"
-        width={1000}
-        height={1000}
+        className="rounded-xl border border-white/10"
+        width={1200}
+        height={675}
       />
     );
   },
 
-  h2: ({ children }: { children?: React.ReactNode }) => (
-    <h2 className="mb-3 mt-6 font-bold text-2xl">{children}</h2>
-  ),
-  h3: ({ children }: { children?: React.ReactNode }) => (
-    <h3 className="mb-2 mt-4 font-bold text-xl">{children}</h3>
-  ),
-  h4: ({ children }: { children?: React.ReactNode }) => (
-    <h4 className="mb-2 mt-4 font-bold text-lg">{children}</h4>
-  ),
-  h5: ({ children }: { children?: React.ReactNode }) => (
-    <h5 className="mb-2 mt-3 font-bold text-base">{children}</h5>
-  ),
-  h6: ({ children }: { children?: React.ReactNode }) => (
-    <h6 className="mb-2 mt-3 font-bold text-sm">{children}</h6>
-  ),
   table: ({ children }: { children?: React.ReactNode }) => (
-    <Table className="my-4 rounded-md border border-border">{children}</Table>
+    <Table className="my-6 rounded-md border border-white/10">{children}</Table>
   ),
   thead: ({ children }: { children?: React.ReactNode }) => (
-    <TableHeader className="bg-muted first:rounded-t-md">{children}</TableHeader>
+    <TableHeader className="bg-white/5">{children}</TableHeader>
   ),
   tbody: ({ children }: { children?: React.ReactNode }) => (
-    <TableBody className="[&>tr:nth-child(even)]:bg-muted/50">{children}</TableBody>
+    <TableBody className="[&>tr:nth-child(even)]:bg-white/5">{children}</TableBody>
   ),
   tr: ({ children }: { children?: React.ReactNode }) => (
-    <TableRow className="border-border group">{children}</TableRow>
+    <TableRow className="border-white/10 group">{children}</TableRow>
   ),
   td: ({ children }: { children?: React.ReactNode }) => (
-    <TableCell className="border-r border-border last:border-r-0 group-last:first:rounded-bl-md group-last:last:rounded-br-md">
-      {children}
-    </TableCell>
+    <TableCell className="border-r border-white/10 last:border-r-0">{children}</TableCell>
   ),
   th: ({ children }: { children?: React.ReactNode }) => (
-    <TableHead className="border-r border-border last:border-r-0 first:rounded-tl-md last:rounded-tr-md font-bold">
+    <TableHead className="border-r border-white/10 last:border-r-0 font-bold text-white">
       {children}
     </TableHead>
   ),

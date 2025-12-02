@@ -1,6 +1,6 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
-
+@plugin "@tailwindcss/typography";
 @custom-variant dark (&:is(.dark *));
 
 :root {
@@ -261,4 +261,115 @@
 
 .animate-fade-in-up {
   animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+/* Syntax Highlighting - VS Code Dark Theme */
+.hljs {
+  background: transparent !important;
+  padding: 0 !important;
+  color: #d4d4d4;
+}
+
+.hljs-keyword,
+.hljs-operator,
+.hljs-pattern-match {
+  color: #569cd6;
+}
+
+.hljs-function,
+.hljs-pattern-match .hljs-constructor {
+  color: #dcdcaa;
+}
+
+.hljs-function .hljs-params {
+  color: #9cdcfe;
+}
+
+.hljs-function .hljs-params .hljs-typing {
+  color: #4ec9b0;
+}
+
+.hljs-module-access .hljs-module {
+  color: #4ec9b0;
+}
+
+.hljs-constructor {
+  color: #4ec9b0;
+}
+
+.hljs-constructor .hljs-string {
+  color: #ce9178;
+}
+
+.hljs-comment,
+.hljs-quote {
+  color: #6a9955;
+  font-style: italic;
+}
+
+.hljs-doctag,
+.hljs-formula {
+  color: #608b4e;
+}
+
+.hljs-section,
+.hljs-name,
+.hljs-selector-tag,
+.hljs-deletion,
+.hljs-subst {
+  color: #ce9178;
+}
+
+.hljs-literal {
+  color: #569cd6;
+}
+
+.hljs-string,
+.hljs-regexp,
+.hljs-addition,
+.hljs-attribute,
+.hljs-meta-string {
+  color: #ce9178;
+}
+
+.hljs-built_in,
+.hljs-class .hljs-title,
+.hljs-type {
+  color: #4ec9b0;
+}
+
+.hljs-attr,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-selector-attr,
+.hljs-selector-pseudo {
+  color: #9cdcfe;
+}
+
+.hljs-symbol,
+.hljs-bullet,
+.hljs-link,
+.hljs-meta,
+.hljs-selector-id,
+.hljs-title {
+  color: #569cd6;
+}
+
+.hljs-number {
+  color: #b5cea8;
+}
+
+.hljs-tag {
+  color: #808080;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+.hljs-link {
+  text-decoration: underline;
 }
