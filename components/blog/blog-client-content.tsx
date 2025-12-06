@@ -119,6 +119,24 @@ export default function BlogClientContent({ posts }: BlogClientContentProps) {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [viewMode, setViewMode] = useState<CardViewMode>('detailed');
 
+  const normalize = (value?: string) => (value || '').toLowerCase();
+
+  const matchesQuery = (post: Post, query: string) => {
+    if (!query.trim()) return true;
+    const q = normalize(query);
+    const fields = [
+      normalize(post.title),
+      normalize(post.description),
+      normalize(post.content),
+      normalize(post.category),
+      ...(post.tags?.map(normalize) ?? []),
+    ].filter(Boolean);
+
+    // Simple fuzzy-ish match: every token must appear in any field
+    const tokens = q.split(/\s+/).filter(Boolean);
+    return tokens.every((token) => fields.some((field) => field.includes(token)));
+  };
+
   // Extract unique categories
   const categories = useMemo(() => {
     // FIX: Filter out any undefined/null categories before creating the Set
@@ -128,11 +146,9 @@ export default function BlogClientContent({ posts }: BlogClientContentProps) {
 
   const filteredPosts = useMemo(() => {
     return posts.filter((post) => {
-      const matchesSearch =
-        post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        post.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        post.tags?.some((tag) => tag.toLowerCase().includes(searchQuery.toLowerCase()));
-      const matchesCategory = selectedCategory === 'All' || post.category === selectedCategory;
+      const matchesSearch = matchesQuery(post, searchQuery);
+      const matchesCategory =
+        selectedCategory === 'All' || normalize(post.category) === normalize(selectedCategory);
       return matchesSearch && matchesCategory;
     });
   }, [posts, searchQuery, selectedCategory]);
@@ -240,12 +256,12 @@ export default function BlogClientContent({ posts }: BlogClientContentProps) {
               </div>
 
               {/* Category pills */}
-              <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+              <div className="flex flex-wrap items-center gap-2 sm:gap-2.5">
                 {categories.map((category) => (
                   <button
                     key={category}
                     onClick={() => setSelectedCategory(category)}
-                    className={`group relative overflow-hidden px-3 sm:px-4 py-2 text-xs sm:text-sm font-semibold rounded-full border transition-all duration-200 backdrop-blur ${
+                    className={`group relative overflow-hidden px-3 sm:px-3.5 py-1.5 text-[11px] sm:text-xs font-semibold rounded-full border transition-all duration-200 backdrop-blur ${
                       selectedCategory === category
                         ? 'bg-purple-600/70 border-purple-300/70 text-white shadow-lg shadow-purple-500/30'
                         : 'bg-white/5 border-white/10 text-zinc-200 hover:bg-white/10 hover:border-white/20'

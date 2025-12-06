@@ -1,10 +1,8 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ArrowUp, Copy, Link as LinkIcon, Share2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-
-const clamp = (value: number, min = 0, max = 1) => Math.min(Math.max(value, min), max);
 
 type RevealProps<T extends keyof JSX.IntrinsicElements | React.JSXElementConstructor<any>> = {
   as?: T;
@@ -73,66 +71,6 @@ export function Reveal<T extends keyof JSX.IntrinsicElements | React.JSXElementC
   );
 }
 
-type ReadingProgressProps = {
-  targetId: string;
-  className?: string;
-};
-
-/**
- * Lightweight scroll progress tracker using rAF + passive scroll listener.
- */
-export function ReadingProgress({ targetId, className }: ReadingProgressProps) {
-  const [progress, setProgress] = useState(0);
-
-  useEffect(() => {
-    const target = document.getElementById(targetId);
-    if (!target) return;
-
-    let frame = 0;
-    const update = () => {
-      const rect = target.getBoundingClientRect();
-      const start = window.scrollY + rect.top;
-      const total = target.scrollHeight - window.innerHeight + rect.top;
-      const pct = clamp((window.scrollY - start) / Math.max(total - start, 1));
-      setProgress(pct);
-    };
-
-    const onScroll = () => {
-      if (frame) cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(update);
-    };
-
-    update();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll);
-
-    return () => {
-      if (frame) cancelAnimationFrame(frame);
-      window.removeEventListener('scroll', onScroll);
-      window.removeEventListener('resize', onScroll);
-    };
-  }, [targetId]);
-
-  return (
-    <div
-      className={cn(
-        'fixed inset-x-0 top-0 z-40 h-1.5 bg-black/40 backdrop-blur-md',
-        'border-b border-white/5',
-        className
-      )}
-      role="progressbar"
-      aria-valuenow={Math.round(progress * 100)}
-      aria-valuemin={0}
-      aria-valuemax={100}
-    >
-      <div
-        className="h-full origin-left bg-linear-to-r from-purple-500 via-indigo-400 to-cyan-300 transition-transform duration-200"
-        style={{ transform: `scaleX(${progress})` }}
-      />
-    </div>
-  );
-}
-
 type ArticleActionRailProps = {
   title: string;
   slug: string;
@@ -181,7 +119,7 @@ export function ArticleActionRail({ title, slug }: ArticleActionRailProps) {
       <button
         type="button"
         onClick={handleShare}
-        className="pointer-events-auto inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-2 text-xs font-semibold text-white shadow-lg shadow-black/20 transition-all duration-200 hover:-translate-y-0.5 hover:border-white/20 hover:bg-white/10 hover:shadow-black/30"
+        className="pointer-events-auto inline-flex items-center justify-between gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-2 text-xs font-semibold text-white shadow-lg shadow-black/10 transition-all duration-150 hover:border-white/20 hover:bg-white/10 min-w-[116px]"
       >
         <Share2 className="h-4 w-4 text-purple-200" />
         <span>Share</span>
@@ -189,7 +127,7 @@ export function ArticleActionRail({ title, slug }: ArticleActionRailProps) {
       <button
         type="button"
         onClick={handleCopy}
-        className="pointer-events-auto inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-2 text-xs font-semibold text-white shadow-lg shadow-black/20 transition-all duration-200 hover:-translate-y-0.5 hover:border-white/20 hover:bg-white/10 hover:shadow-black/30"
+        className="pointer-events-auto inline-flex items-center justify-between gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-2 text-xs font-semibold text-white shadow-lg shadow-black/10 transition-all duration-150 hover:border-white/20 hover:bg-white/10 min-w-[116px]"
       >
         {copied ? <LinkIcon className="h-4 w-4 text-emerald-300" /> : <Copy className="h-4 w-4 text-purple-200" />}
         <span>{copied ? 'Copied' : 'Copy link'}</span>
@@ -197,7 +135,7 @@ export function ArticleActionRail({ title, slug }: ArticleActionRailProps) {
       <button
         type="button"
         onClick={scrollTop}
-        className="pointer-events-auto inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-2 text-xs font-semibold text-white shadow-lg shadow-black/20 transition-all duration-200 hover:-translate-y-0.5 hover:border-white/20 hover:bg-white/10 hover:shadow-black/30"
+        className="pointer-events-auto inline-flex items-center justify-between gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-2 text-xs font-semibold text-white shadow-lg shadow-black/10 transition-all duration-150 hover:border-white/20 hover:bg-white/10 min-w-[116px]"
       >
         <ArrowUp className="h-4 w-4 text-purple-200" />
         <span>Top</span>

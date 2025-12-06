@@ -13,7 +13,7 @@ import { ArrowLeft, BookOpen, Calendar, Clock, Link as LinkIcon, Sparkles, User 
 import Link from 'next/link';
 import { extractHeadings } from '@/lib/post-helpers';
 import TableOfContents from '@/components/blog/table-of-contents';
-import { ArticleActionRail, ReadingProgress, Reveal } from '@/components/blog/article-ux';
+import { ArticleActionRail, Reveal } from '@/components/blog/article-ux';
 
 interface PostPageProps {
   params: Promise<{ slug: string }>;
@@ -135,7 +135,6 @@ export default async function PostPage({ params }: PostPageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <ReadingProgress targetId="article-body" className="top-[72px] sm:top-[76px]" />
       <ArticleActionRail title={post.title} slug={post.slug} />
 
       <article className="relative isolate overflow-hidden">
@@ -376,7 +375,7 @@ export default async function PostPage({ params }: PostPageProps) {
               )}
             </div>
 
-            <div className="space-y-6">
+            <div className="space-y-6 lg:sticky lg:top-24 lg:self-start">
               <Reveal className="rounded-2xl border border-white/10 bg-white/5 p-5 shadow-xl shadow-black/30">
                 <h3 className="text-xs font-semibold uppercase tracking-[0.3em] text-zinc-400">
                   Article dossier
