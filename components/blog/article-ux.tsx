@@ -99,13 +99,23 @@ export function ArticleActionRail({ title, slug }: ArticleActionRailProps) {
   };
 
   const handleShare = async () => {
-    try {
-      if (navigator.share) {
-        await navigator.share({ title, url: shareUrl });
-      } else {
-        await handleCopy();
+    const payload = { title, url: shareUrl };
+
+    // Prefer native share when available
+    if (navigator.share) {
+      try {
+        await navigator.share(payload);
+        return;
+      } catch (err) {
+        // fall through to social fallback/copy
       }
-    } catch (err) {
+    }
+
+    // Fallback: open Twitter intent; if blocked, copy link
+    const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(shareUrl)}`;
+    const opened = window.open(tweetUrl, '_blank', 'noopener,noreferrer');
+
+    if (!opened) {
       await handleCopy();
     }
   };

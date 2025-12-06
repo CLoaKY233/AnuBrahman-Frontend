@@ -154,10 +154,7 @@ export default async function PostPage({ params }: PostPageProps) {
                 <span>Back to all articles</span>
               </Link>
 
-              <div className="inline-flex items-center gap-2 rounded-full border border-purple-400/25 bg-purple-500/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.25em] text-purple-100">
-                <Sparkles className="h-3.5 w-3.5" />
-                <span>Premium read</span>
-              </div>
+             
             </div>
           </Reveal>
 
@@ -218,19 +215,7 @@ export default async function PostPage({ params }: PostPageProps) {
                   </div>
                 </div>
 
-                {highlightedSections.length > 0 && (
-                  <div className="flex flex-wrap gap-2 border-t border-white/10 pt-4">
-                    {highlightedSections.map((section) => (
-                      <span
-                        key={section.id}
-                        className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-semibold text-zinc-200 transition-all duration-200 hover:border-white/25 hover:bg-white/10"
-                      >
-                        <span className="h-2 w-2 rounded-full bg-purple-300" />
-                        {section.text}
-                      </span>
-                    ))}
-                  </div>
-                )}
+                
               </Reveal>
 
               {post.coverImage && (
@@ -270,7 +255,7 @@ export default async function PostPage({ params }: PostPageProps) {
               <Reveal>
                 <section
                   id="article-body"
-                  className="article-prose prose prose-invert prose-headings:text-white prose-a:text-purple-100 prose-a:underline-offset-4"
+                  className="article-prose prose prose-invert prose-headings:text-white prose-a:text-purple-100 prose-a:underline-offset-4 max-w-none"
                 >
                   <ReactMarkdown
                     components={markdownComponents}
