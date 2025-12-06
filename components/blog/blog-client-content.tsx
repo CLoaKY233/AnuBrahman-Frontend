@@ -155,6 +155,7 @@ export default function BlogClientContent({ posts }: BlogClientContentProps) {
     setSelectedCategory('All');
   };
 
+
   return (
     <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-28 sm:pt-32 lg:pt-36">
       <div className="pointer-events-none absolute inset-x-0 top-6 h-64 bg-linear-to-b from-purple-900/30 via-black/40 to-transparent blur-3xl" />
@@ -205,60 +206,40 @@ export default function BlogClientContent({ posts }: BlogClientContentProps) {
         <div className="mx-auto w-full max-w-6xl">
           <Reveal className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-5 sm:p-6 shadow-lg shadow-black/30 backdrop-blur space-y-5">
             <div className="absolute inset-0 bg-linear-to-r from-white/5 via-transparent to-purple-500/10 opacity-60" />
-            <div className="relative grid gap-4">
-              <div className="flex flex-wrap items-center justify-between gap-3">
-                <div className="flex items-center gap-2 text-sm font-semibold text-white">
-                  <span>Search & Filters</span>
-                  <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[11px] uppercase tracking-[0.2em] text-zinc-400">
-                    Live
-                  </span>
-                  <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[11px] uppercase tracking-[0.2em] text-zinc-400">
-                    Tags aware
-                  </span>
-                </div>
-                <div className="flex items-center gap-2 text-xs sm:text-sm text-zinc-300">
-                  <span className="text-zinc-400">Card density</span>
-                  <div className="flex items-center gap-2">
-                    <button
-                      type="button"
-                      onClick={() => setViewMode('detailed')}
-                      className={`rounded-full px-3 py-1.5 border text-xs font-semibold transition-all duration-200 ${
-                        viewMode === 'detailed'
-                          ? 'border-purple-400/70 bg-purple-600/50 text-white shadow-lg shadow-purple-500/25'
-                          : 'border-white/10 bg-white/5 text-zinc-300 hover:border-white/20 hover:bg-white/10'
-                      }`}
-                    >
-                      Detailed
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setViewMode('compact')}
-                      className={`rounded-full px-3 py-1.5 border text-xs font-semibold transition-all duration-200 ${
-                        viewMode === 'compact'
-                          ? 'border-purple-400/70 bg-purple-600/50 text-white shadow-lg shadow-purple-500/25'
-                          : 'border-white/10 bg-white/5 text-zinc-300 hover:border-white/20 hover:bg-white/10'
-                      }`}
-                    >
-                      Compact
-                    </button>
+            <div className="relative grid gap-5">
+              {/* Header */}
+              <div className="flex flex-wrap items-center gap-2 text-sm font-semibold text-white">
+                <span>Search & Filters</span>
+                <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[11px] uppercase tracking-[0.2em] text-zinc-300">
+                  Live
+                </span>
+                <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[11px] uppercase tracking-[0.2em] text-zinc-300">
+                  Tags aware
+                </span>
+              </div>
+              <p className="text-xs text-zinc-400">
+                Find any article quickly. Refine by category, instant search by title/description/tags.
+              </p>
+
+              {/* Search bar */}
+              <div className="relative flex flex-col gap-2">
+                <div className="relative flex items-center">
+                  <div className="pointer-events-none absolute left-0 pl-3 sm:pl-4 flex items-center">
+                    <Search className="h-4 w-4 sm:h-5 sm:w-5 text-zinc-400 transition-colors duration-200 group-focus-within:text-purple-400" />
                   </div>
+                  <input
+                    type="search"
+                    placeholder="Search articles, tags, topics..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-full rounded-xl bg-black/20 border border-white/10 pl-9 sm:pl-12 pr-3 sm:pr-4 py-3 sm:py-3.5 text-sm placeholder-zinc-500 text-white transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-purple-500/60 focus:border-purple-500/50"
+                  />
+                  <div className="pointer-events-none absolute inset-0 rounded-xl border border-white/5" />
                 </div>
+                <p className="text-xs text-zinc-500">Search is instant. Filter by title, description, or tags.</p>
               </div>
 
-              <div className="relative flex items-center">
-                <div className="pointer-events-none absolute left-0 pl-3 sm:pl-4 flex items-center">
-                  <Search className="h-4 w-4 sm:h-5 sm:w-5 text-zinc-400 transition-colors duration-200 group-focus-within:text-purple-400" />
-                </div>
-                <input
-                  type="search"
-                  placeholder="Search articles, tags, topics..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full rounded-xl bg-black/20 border border-white/10 pl-9 sm:pl-12 pr-3 sm:pr-4 py-3 sm:py-3.5 text-sm placeholder-zinc-500 text-white transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-purple-500/60 focus:border-purple-500/50"
-                />
-                <div className="pointer-events-none absolute inset-0 rounded-xl border border-white/5" />
-              </div>
-
+              {/* Category pills */}
               <div className="flex flex-wrap items-center gap-2 sm:gap-3">
                 {categories.map((category) => (
                   <button
@@ -277,32 +258,68 @@ export default function BlogClientContent({ posts }: BlogClientContentProps) {
                 ))}
               </div>
 
-              <div className="flex flex-wrap items-center gap-3 text-xs text-zinc-400">
-                <span className="rounded-full bg-white/5 px-3 py-1">Filter title, description, tags</span>
-                <span className="rounded-full bg-white/5 px-3 py-1">
-                  {selectedCategory === 'All' ? 'All categories' : `Category: ${selectedCategory}`}
-                </span>
+              {/* Active filters */}
+              <div className="flex flex-wrap items-center gap-2 text-xs sm:text-sm text-zinc-400">
                 {searchQuery && (
                   <span className="rounded-full bg-purple-600/30 text-white px-3 py-1">
                     Query: “{searchQuery}”
                   </span>
                 )}
-              </div>
-
-              <div className="flex flex-wrap items-center justify-between gap-3 text-xs sm:text-sm text-zinc-400">
-                <span>
-                  Showing <strong className="text-white font-medium">{filteredPosts.length}</strong> of{' '}
-                  <strong className="text-white font-medium">{posts.length}</strong> articles
-                </span>
-                {(searchQuery || selectedCategory !== 'All') && (
-                  <button
-                    onClick={handleClearFilters}
-                    className="inline-flex items-center gap-2 rounded-full border border-white/10 px-3 py-1.5 text-xs font-semibold text-purple-200 transition-colors hover:border-white/20 hover:bg-white/5"
-                  >
-                    Clear filters
-                  </button>
+                {selectedCategory !== 'All' && (
+                  <span className="rounded-full bg-white/5 px-3 py-1">
+                    Category: {selectedCategory}
+                  </span>
                 )}
               </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* Density + results toolbar (closer to cards) */}
+      <section className="relative -mt-4">
+        <div className="mx-auto w-full max-w-6xl">
+          <Reveal className="sticky top-20 z-20 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-white/10 bg-black/50 px-4 py-3 shadow-lg shadow-black/30 backdrop-blur">
+            <div className="flex flex-wrap items-center gap-2 text-xs sm:text-sm text-zinc-300">
+              <span className="text-zinc-400">Card density</span>
+              <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 p-1">
+                <button
+                  type="button"
+                  onClick={() => setViewMode('detailed')}
+                  className={`rounded-full px-3 py-1.5 text-xs font-semibold transition-all duration-200 ${
+                    viewMode === 'detailed'
+                      ? 'bg-purple-600/70 text-white shadow-lg shadow-purple-500/25'
+                      : 'text-zinc-300 hover:bg-white/10'
+                  }`}
+                >
+                  Detailed
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setViewMode('compact')}
+                  className={`rounded-full px-3 py-1.5 text-xs font-semibold transition-all duration-200 ${
+                    viewMode === 'compact'
+                      ? 'bg-purple-600/70 text-white shadow-lg shadow-purple-500/25'
+                      : 'text-zinc-300 hover:bg-white/10'
+                  }`}
+                >
+                  Compact
+                </button>
+              </div>
+            </div>
+            <div className="flex items-center gap-3 text-xs sm:text-sm text-zinc-300">
+              <span>
+                Showing <strong className="text-white font-medium">{filteredPosts.length}</strong> of{' '}
+                <strong className="text-white font-medium">{posts.length}</strong> articles
+              </span>
+              {(searchQuery || selectedCategory !== 'All') && (
+                <button
+                  onClick={handleClearFilters}
+                  className="inline-flex items-center gap-2 rounded-full border border-white/10 px-3 py-1.5 text-xs font-semibold text-purple-200 transition-colors hover:border-white/20 hover:bg-white/5"
+                >
+                  Clear
+                </button>
+              )}
             </div>
           </Reveal>
         </div>
