@@ -59,4 +59,3 @@ export function extractHeadings(markdown: string, minLevel = 2, maxLevel = 4): H
 
   return headings;
 }
-

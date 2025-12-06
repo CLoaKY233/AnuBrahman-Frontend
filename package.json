@@ -17,12 +17,13 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "build": "bun run cache:posts && next build",
+    "build": "bun run validate:notion && bun run cache:posts && next build",
     "dev": "bun run cache:posts && next dev",
     "start": "bun run next start",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "cache:posts": "bun run scripts/cache-posts.ts"
+    "cache:posts": "bun run scripts/cache-posts.ts",
+    "validate:notion": "bun run scripts/validate-notion.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

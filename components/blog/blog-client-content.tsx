@@ -7,12 +7,12 @@ import { Search, Clock, User, Calendar, ChevronRight } from 'lucide-react';
 import { Post } from '@/lib/notion';
 import { calculateReadingTime, getWordCount } from '@/lib/utils'; // FIX: Correct import path
 import { Reveal } from '@/components/blog/article-ux';
+import { BLOG_CARD_STYLES } from '@/lib/styles';
+import type { CardViewMode } from './types';
 
 interface BlogClientContentProps {
   posts: Post[];
 }
-
-type CardViewMode = 'detailed' | 'compact';
 
 const BlogCard = memo(({ post, viewMode }: { post: Post; viewMode: CardViewMode }) => {
   const wordCount = post.content ? getWordCount(post.content) : 0;
@@ -27,7 +27,7 @@ const BlogCard = memo(({ post, viewMode }: { post: Post; viewMode: CardViewMode 
   return (
     <Link href={`/blog/${post.slug}`}>
       <article
-        className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-lg transition-all duration-300 hover:-translate-y-1.5 hover:border-purple-400/40 hover:bg-white/10 hover:shadow-2xl hover:shadow-purple-500/20 cursor-pointer"
+        className={`${BLOG_CARD_STYLES.container} relative flex h-full flex-col overflow-hidden backdrop-blur-lg transition-all duration-300 hover:-translate-y-1.5 hover:border-purple-400/40 hover:bg-white/10 hover:shadow-2xl hover:shadow-purple-500/20 cursor-pointer`}
         role="article"
         aria-label={`Blog post: ${post.title}`}
       >
@@ -62,12 +62,8 @@ const BlogCard = memo(({ post, viewMode }: { post: Post; viewMode: CardViewMode 
         {/* Content */}
         <div className="relative flex flex-1 flex-col space-y-4 p-4 sm:p-5">
           <div className="space-y-2">
-            <h3 className="text-lg sm:text-xl font-semibold leading-tight text-white line-clamp-2">
-              {post.title}
-            </h3>
-            {!isCompact && (
-              <p className="text-sm text-zinc-300 leading-relaxed line-clamp-3">{post.description}</p>
-            )}
+            <h3 className={BLOG_CARD_STYLES.title}>{post.title}</h3>
+            {!isCompact && <p className={BLOG_CARD_STYLES.description}>{post.description}</p>}
           </div>
 
           <div className="flex flex-wrap items-center gap-3 text-[12px] text-zinc-400">
@@ -90,10 +86,7 @@ const BlogCard = memo(({ post, viewMode }: { post: Post; viewMode: CardViewMode 
           {!isCompact && post.tags && post.tags.length > 0 && (
             <div className="flex flex-wrap gap-1.5 sm:gap-2">
               {post.tags.slice(0, 4).map((tag) => (
-                <span
-                  key={tag}
-                  className="inline-flex items-center gap-1 rounded-full border border-white/15 bg-white/5 px-2.5 py-1 text-[11px] font-semibold text-zinc-200"
-                >
+                <span key={tag} className={BLOG_CARD_STYLES.tags}>
                   #{tag}
                 </span>
               ))}
@@ -160,7 +153,10 @@ export default function BlogClientContent({ posts }: BlogClientContentProps) {
   }, [posts]);
 
   const averageReadTime = useMemo(() => {
-    const totalWords = posts.reduce((acc, post) => acc + (post.content ? getWordCount(post.content) : 0), 0);
+    const totalWords = posts.reduce(
+      (acc, post) => acc + (post.content ? getWordCount(post.content) : 0),
+      0
+    );
     if (!posts.length) return '—';
     const avgWords = Math.max(1, Math.round(totalWords / posts.length));
     return calculateReadingTime(avgWords);
@@ -170,7 +166,6 @@ export default function BlogClientContent({ posts }: BlogClientContentProps) {
     setSearchQuery('');
     setSelectedCategory('All');
   };
-
 
   return (
     <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-28 sm:pt-32 lg:pt-36">
@@ -188,7 +183,8 @@ export default function BlogClientContent({ posts }: BlogClientContentProps) {
               Aerospace & Physics Dispatch
             </h1>
             <p className="max-w-3xl text-base text-zinc-300 sm:text-lg">
-              Deep-dives, mission logs, and practical breakdowns for modern aerospace teams and curious explorers. Built for clarity, speed, and focus.
+              Deep-dives, mission logs, and practical breakdowns for modern aerospace teams and
+              curious explorers. Built for clarity, speed, and focus.
             </p>
           </div>
         </Reveal>
@@ -201,7 +197,9 @@ export default function BlogClientContent({ posts }: BlogClientContentProps) {
           </div>
           <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
             <p className="text-xs uppercase tracking-[0.2em] text-zinc-400">Categories</p>
-            <p className="text-2xl font-semibold text-white">{Math.max(categories.length - 1, 0)}</p>
+            <p className="text-2xl font-semibold text-white">
+              {Math.max(categories.length - 1, 0)}
+            </p>
             <p className="text-xs text-zinc-400">Curated focuses</p>
           </div>
           <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
@@ -234,7 +232,8 @@ export default function BlogClientContent({ posts }: BlogClientContentProps) {
                 </span>
               </div>
               <p className="text-xs text-zinc-400">
-                Find any article quickly. Refine by category, instant search by title/description/tags.
+                Find any article quickly. Refine by category, instant search by
+                title/description/tags.
               </p>
 
               {/* Search bar */}
@@ -252,7 +251,9 @@ export default function BlogClientContent({ posts }: BlogClientContentProps) {
                   />
                   <div className="pointer-events-none absolute inset-0 rounded-xl border border-white/5" />
                 </div>
-                <p className="text-xs text-zinc-500">Search is instant. Filter by title, description, or tags.</p>
+                <p className="text-xs text-zinc-500">
+                  Search is instant. Filter by title, description, or tags.
+                </p>
               </div>
 
               {/* Category pills */}
@@ -325,8 +326,8 @@ export default function BlogClientContent({ posts }: BlogClientContentProps) {
             </div>
             <div className="flex items-center gap-3 text-xs sm:text-sm text-zinc-300">
               <span>
-                Showing <strong className="text-white font-medium">{filteredPosts.length}</strong> of{' '}
-                <strong className="text-white font-medium">{posts.length}</strong> articles
+                Showing <strong className="text-white font-medium">{filteredPosts.length}</strong>{' '}
+                of <strong className="text-white font-medium">{posts.length}</strong> articles
               </span>
               {(searchQuery || selectedCategory !== 'All') && (
                 <button

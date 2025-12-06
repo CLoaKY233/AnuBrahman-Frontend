@@ -4,13 +4,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { ChevronDown, List } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { HeadingItem } from '@/lib/post-helpers';
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 
 type HeadingNode = HeadingItem & { children: HeadingNode[] };
@@ -168,7 +162,12 @@ export default function TableOfContents({ headings }: TableOfContentsProps) {
             </button>
 
             {hasChildren && expanded && (
-              <div className={cn('space-y-1 border-l border-white/5', depth === 0 ? 'ml-3 pl-3' : 'ml-4 pl-3')}>
+              <div
+                className={cn(
+                  'space-y-1 border-l border-white/5',
+                  depth === 0 ? 'ml-3 pl-3' : 'ml-4 pl-3'
+                )}
+              >
                 {renderNodes(node.children, depth + 1)}
               </div>
             )}
@@ -219,4 +218,3 @@ export default function TableOfContents({ headings }: TableOfContentsProps) {
     </>
   );
 }
-

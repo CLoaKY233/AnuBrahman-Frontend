@@ -1,5 +1,4 @@
 import { getPostsFromCache } from '@/lib/notion';
-import { format } from 'date-fns';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
@@ -9,11 +8,13 @@ import { calculateReadingTime, getWordCount } from '@/lib/utils';
 import { getMarkdownComponents } from '@/components/blog/mdx-component';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
-import { ArrowLeft, BookOpen, Calendar, Clock, Link as LinkIcon, Sparkles, User } from 'lucide-react';
+import { ArrowLeft, BookOpen, Clock, Link as LinkIcon, Sparkles, User } from 'lucide-react';
 import Link from 'next/link';
 import { extractHeadings } from '@/lib/post-helpers';
 import TableOfContents from '@/components/blog/table-of-contents';
 import { ArticleActionRail, Reveal } from '@/components/blog/article-ux';
+import { ArticleMetadata } from '@/components/blog/article-metadata';
+import { TYPOGRAPHY } from '@/lib/styles';
 
 interface PostPageProps {
   params: Promise<{ slug: string }>;
@@ -95,7 +96,6 @@ export default async function PostPage({ params }: PostPageProps) {
   const headings = post.content ? extractHeadings(post.content) : [];
   const markdownComponents = getMarkdownComponents();
   const recommendedPosts = posts.filter((p) => p.slug !== slug).slice(0, 3);
-  const highlightedSections = headings.slice(0, 6);
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
   if (!siteUrl) {
@@ -138,9 +138,9 @@ export default async function PostPage({ params }: PostPageProps) {
       <ArticleActionRail title={post.title} slug={post.slug} />
 
       <article className="relative isolate overflow-hidden">
-        <div className="pointer-events-none absolute inset-0">
-          <div className="absolute inset-x-[-10%] top-[-20%] h-[420px] rounded-full bg-linear-to-r from-purple-800/40 via-indigo-700/25 to-blue-700/25 blur-3xl" />
-          <div className="absolute inset-0 premium-noise-texture opacity-[0.04]" />
+        <div className="pointer-events-none absolute inset-0 -z-10">
+          <div className="absolute inset-x-0 top-0 h-[320px] rounded-full bg-linear-to-r from-purple-800/20 via-indigo-700/15 to-blue-700/15 blur-2xl pointer-events-none will-change-transform" />
+          <div className="absolute inset-0 premium-noise-texture opacity-[0.02]" />
         </div>
 
         <div className="relative mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-12 pt-28 sm:pt-32 lg:pt-36 pb-16 lg:pb-24">
@@ -153,8 +153,6 @@ export default async function PostPage({ params }: PostPageProps) {
                 <ArrowLeft className="h-4 w-4" />
                 <span>Back to all articles</span>
               </Link>
-
-             
             </div>
           </Reveal>
 
@@ -169,7 +167,9 @@ export default async function PostPage({ params }: PostPageProps) {
                   )}
                   <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-zinc-300">
                     <BookOpen className="h-4 w-4 text-purple-200" />
-                    <span>{readingTime} • {wordCount.toLocaleString()} words</span>
+                    <span>
+                      {readingTime} • {wordCount.toLocaleString()} words
+                    </span>
                   </div>
                 </div>
 
@@ -181,41 +181,13 @@ export default async function PostPage({ params }: PostPageProps) {
                   {post.description}
                 </p>
 
-                <div className="grid gap-3 rounded-2xl border border-white/10 bg-white/5 p-4 sm:p-5 backdrop-blur-md sm:grid-cols-2 lg:grid-cols-3">
-                  <div className="flex items-center gap-3 rounded-xl bg-white/5 px-3 py-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-linear-to-br from-purple-500 to-indigo-500 text-white shadow-lg shadow-purple-500/20">
-                      <User className="h-4 w-4" />
-                    </div>
-                    <div>
-                      <p className="text-xs uppercase tracking-[0.15em] text-zinc-500">Author</p>
-                      <p className="text-sm font-semibold text-white">{post.author || 'Guest Author'}</p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-3 rounded-xl bg-white/5 px-3 py-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-linear-to-br from-purple-500 to-indigo-500 text-white shadow-lg shadow-purple-500/20">
-                      <Calendar className="h-4 w-4" />
-                    </div>
-                    <div>
-                      <p className="text-xs uppercase tracking-[0.15em] text-zinc-500">Published</p>
-                      <p className="text-sm font-semibold text-white">
-                        {format(new Date(post.date), 'MMMM d, yyyy')}
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-3 rounded-xl bg-white/5 px-3 py-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-linear-to-br from-purple-500 to-indigo-500 text-white shadow-lg shadow-purple-500/20">
-                      <Clock className="h-4 w-4" />
-                    </div>
-                    <div>
-                      <p className="text-xs uppercase tracking-[0.15em] text-zinc-500">Read time</p>
-                      <p className="text-sm font-semibold text-white">{readingTime}</p>
-                    </div>
-                  </div>
-                </div>
-
-                
+                <ArticleMetadata
+                  author={post.author || 'Guest Author'}
+                  date={new Date(post.date)}
+                  readingTime={readingTime}
+                  wordCount={wordCount}
+                  variant="header"
+                />
               </Reveal>
 
               {post.coverImage && (
@@ -230,10 +202,6 @@ export default async function PostPage({ params }: PostPageProps) {
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 896px"
                     />
                     <div className="absolute inset-0 bg-linear-to-t from-black via-black/30 to-transparent" />
-                    <div className="absolute bottom-4 left-4 flex items-center gap-3 rounded-full border border-white/15 bg-black/50 px-3 py-2 text-xs font-semibold text-white backdrop-blur">
-                      <LinkIcon className="h-4 w-4 text-purple-200" />
-                      <span>Cover insight</span>
-                    </div>
                   </div>
                 </Reveal>
               )}
@@ -253,10 +221,7 @@ export default async function PostPage({ params }: PostPageProps) {
               )}
 
               <Reveal>
-                <section
-                  id="article-body"
-                  className="article-prose prose prose-invert prose-headings:text-white prose-a:text-purple-100 prose-a:underline-offset-4 max-w-none"
-                >
+                <section id="article-body" className={TYPOGRAPHY.prose}>
                   <ReactMarkdown
                     components={markdownComponents}
                     remarkPlugins={[remarkGfm]}
@@ -320,7 +285,9 @@ export default async function PostPage({ params }: PostPageProps) {
                     </div>
                     <div>
                       <h3 className="text-lg font-semibold text-white">Next up</h3>
-                      <p className="text-sm text-zinc-400">Handpicked reads to continue the journey</p>
+                      <p className="text-sm text-zinc-400">
+                        Handpicked reads to continue the journey
+                      </p>
                     </div>
                   </div>
 
@@ -341,7 +308,9 @@ export default async function PostPage({ params }: PostPageProps) {
                           <h4 className="mt-3 line-clamp-2 text-base font-semibold text-white group-hover:text-purple-100">
                             {item.title}
                           </h4>
-                          <p className="mt-2 line-clamp-2 text-sm text-zinc-400">{item.description}</p>
+                          <p className="mt-2 line-clamp-2 text-sm text-zinc-400">
+                            {item.description}
+                          </p>
                           <div className="mt-3 flex items-center gap-3 text-xs text-zinc-400">
                             <div className="flex items-center gap-1">
                               <Clock className="h-3.5 w-3.5" />
@@ -361,41 +330,15 @@ export default async function PostPage({ params }: PostPageProps) {
             </div>
 
             <div className="space-y-6 lg:sticky lg:top-24 lg:self-start">
-              <Reveal className="rounded-2xl border border-white/10 bg-white/5 p-5 shadow-xl shadow-black/30">
-                <h3 className="text-xs font-semibold uppercase tracking-[0.3em] text-zinc-400">
-                  Article dossier
-                </h3>
-                <div className="mt-4 space-y-3 text-sm text-zinc-300">
-                  <div className="flex items-center justify-between rounded-lg bg-white/5 px-3 py-2">
-                    <span>Published</span>
-                    <span className="font-semibold text-white">
-                      {format(new Date(post.date), 'dd MMM yyyy')}
-                    </span>
-                  </div>
-                  <div className="flex items-center justify-between rounded-lg bg-white/5 px-3 py-2">
-                    <span>Length</span>
-                    <span className="font-semibold text-white">{wordCount.toLocaleString()} words</span>
-                  </div>
-                  <div className="flex items-center justify-between rounded-lg bg-white/5 px-3 py-2">
-                    <span>Read time</span>
-                    <span className="font-semibold text-white">{readingTime}</span>
-                  </div>
-                  {post.tags && post.tags.length > 0 && (
-                    <div className="rounded-lg bg-white/5 px-3 py-2">
-                      <p className="text-xs uppercase tracking-[0.2em] text-zinc-500">Key tags</p>
-                      <div className="mt-2 flex flex-wrap gap-2">
-                        {post.tags.slice(0, 4).map((tag) => (
-                          <span
-                            key={tag}
-                            className="inline-flex items-center gap-1 rounded-full border border-white/15 bg-white/10 px-2.5 py-1 text-[11px] font-semibold text-zinc-200"
-                          >
-                            #{tag}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
+              <Reveal>
+                <ArticleMetadata
+                  author={post.author || 'Guest Author'}
+                  date={new Date(post.date)}
+                  readingTime={readingTime}
+                  wordCount={wordCount}
+                  tags={post.tags}
+                  variant="sidebar"
+                />
               </Reveal>
 
               <TableOfContents headings={headings} />
