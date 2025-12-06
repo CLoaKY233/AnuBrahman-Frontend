@@ -202,17 +202,49 @@ export default function BlogClientContent({ posts }: BlogClientContentProps) {
 
       {/* Search & Filter */}
       <section className="relative py-8 sm:py-12">
-        <div className="mx-auto w-full max-w-6xl space-y-4 sm:space-y-5">
-          <Reveal className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-4 sm:p-5 shadow-lg shadow-black/30 backdrop-blur">
+        <div className="mx-auto w-full max-w-6xl">
+          <Reveal className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-5 sm:p-6 shadow-lg shadow-black/30 backdrop-blur space-y-5">
             <div className="absolute inset-0 bg-linear-to-r from-white/5 via-transparent to-purple-500/10 opacity-60" />
-            <div className="relative flex flex-col gap-3">
-              <div className="flex items-center justify-between">
-                <div className="text-sm font-semibold text-white">Search & Filters</div>
-                <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] text-zinc-400">
-                  <span className="rounded-full border border-white/10 bg-white/5 px-2 py-1">Live</span>
-                  <span className="rounded-full border border-white/10 bg-white/5 px-2 py-1">Tags aware</span>
+            <div className="relative grid gap-4">
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <div className="flex items-center gap-2 text-sm font-semibold text-white">
+                  <span>Search & Filters</span>
+                  <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[11px] uppercase tracking-[0.2em] text-zinc-400">
+                    Live
+                  </span>
+                  <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[11px] uppercase tracking-[0.2em] text-zinc-400">
+                    Tags aware
+                  </span>
+                </div>
+                <div className="flex items-center gap-2 text-xs sm:text-sm text-zinc-300">
+                  <span className="text-zinc-400">Card density</span>
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setViewMode('detailed')}
+                      className={`rounded-full px-3 py-1.5 border text-xs font-semibold transition-all duration-200 ${
+                        viewMode === 'detailed'
+                          ? 'border-purple-400/70 bg-purple-600/50 text-white shadow-lg shadow-purple-500/25'
+                          : 'border-white/10 bg-white/5 text-zinc-300 hover:border-white/20 hover:bg-white/10'
+                      }`}
+                    >
+                      Detailed
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setViewMode('compact')}
+                      className={`rounded-full px-3 py-1.5 border text-xs font-semibold transition-all duration-200 ${
+                        viewMode === 'compact'
+                          ? 'border-purple-400/70 bg-purple-600/50 text-white shadow-lg shadow-purple-500/25'
+                          : 'border-white/10 bg-white/5 text-zinc-300 hover:border-white/20 hover:bg-white/10'
+                      }`}
+                    >
+                      Compact
+                    </button>
+                  </div>
                 </div>
               </div>
+
               <div className="relative flex items-center">
                 <div className="pointer-events-none absolute left-0 pl-3 sm:pl-4 flex items-center">
                   <Search className="h-4 w-4 sm:h-5 sm:w-5 text-zinc-400 transition-colors duration-200 group-focus-within:text-purple-400" />
@@ -226,6 +258,25 @@ export default function BlogClientContent({ posts }: BlogClientContentProps) {
                 />
                 <div className="pointer-events-none absolute inset-0 rounded-xl border border-white/5" />
               </div>
+
+              <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+                {categories.map((category) => (
+                  <button
+                    key={category}
+                    onClick={() => setSelectedCategory(category)}
+                    className={`group relative overflow-hidden px-3 sm:px-4 py-2 text-xs sm:text-sm font-semibold rounded-full border transition-all duration-200 backdrop-blur ${
+                      selectedCategory === category
+                        ? 'bg-purple-600/70 border-purple-300/70 text-white shadow-lg shadow-purple-500/30'
+                        : 'bg-white/5 border-white/10 text-zinc-200 hover:bg-white/10 hover:border-white/20'
+                    }`}
+                    aria-pressed={selectedCategory === category}
+                  >
+                    <span className="relative z-10 tracking-wide uppercase">{category}</span>
+                    <span className="shine-sweep rounded-full" />
+                  </button>
+                ))}
+              </div>
+
               <div className="flex flex-wrap items-center gap-3 text-xs text-zinc-400">
                 <span className="rounded-full bg-white/5 px-3 py-1">Filter title, description, tags</span>
                 <span className="rounded-full bg-white/5 px-3 py-1">
@@ -237,67 +288,21 @@ export default function BlogClientContent({ posts }: BlogClientContentProps) {
                   </span>
                 )}
               </div>
-            </div>
-          </Reveal>
 
-          <Reveal delay={60} className="flex flex-wrap items-center gap-2 sm:gap-3">
-            {categories.map((category) => (
-              <button
-                key={category}
-                onClick={() => setSelectedCategory(category)}
-                className={`group relative overflow-hidden px-3 sm:px-4 py-2 text-xs sm:text-sm font-semibold rounded-full border transition-all duration-200 backdrop-blur ${
-                  selectedCategory === category
-                    ? 'bg-purple-600/70 border-purple-300/70 text-white shadow-lg shadow-purple-500/30'
-                    : 'bg-white/5 border-white/10 text-zinc-200 hover:bg-white/10 hover:border-white/20'
-                }`}
-                aria-pressed={selectedCategory === category}
-              >
-                <span className="relative z-10 tracking-wide uppercase">{category}</span>
-                <span className="shine-sweep rounded-full" />
-              </button>
-            ))}
-          </Reveal>
-
-          <Reveal delay={120} className="flex flex-wrap items-center justify-between gap-3 text-xs sm:text-sm text-zinc-400">
-            <span>
-              Showing <strong className="text-white font-medium">{filteredPosts.length}</strong> of{' '}
-              <strong className="text-white font-medium">{posts.length}</strong> articles
-            </span>
-            {(searchQuery || selectedCategory !== 'All') && (
-              <button
-                onClick={handleClearFilters}
-                className="inline-flex items-center gap-2 rounded-full border border-white/10 px-3 py-1.5 text-xs font-semibold text-purple-200 transition-colors hover:border-white/20 hover:bg-white/5"
-              >
-                Clear filters
-              </button>
-            )}
-          </Reveal>
-
-          <Reveal delay={140} className="flex flex-wrap items-center gap-2 text-xs sm:text-sm text-zinc-300">
-            <span className="text-zinc-400">Card density</span>
-            <div className="flex items-center gap-2">
-              <button
-                type="button"
-                onClick={() => setViewMode('detailed')}
-                className={`rounded-full px-3 py-1.5 border text-xs font-semibold transition-all duration-200 ${
-                  viewMode === 'detailed'
-                    ? 'border-purple-400/70 bg-purple-600/50 text-white shadow-lg shadow-purple-500/25'
-                    : 'border-white/10 bg-white/5 text-zinc-300 hover:border-white/20 hover:bg-white/10'
-                }`}
-              >
-                Detailed
-              </button>
-              <button
-                type="button"
-                onClick={() => setViewMode('compact')}
-                className={`rounded-full px-3 py-1.5 border text-xs font-semibold transition-all duration-200 ${
-                  viewMode === 'compact'
-                    ? 'border-purple-400/70 bg-purple-600/50 text-white shadow-lg shadow-purple-500/25'
-                    : 'border-white/10 bg-white/5 text-zinc-300 hover:border-white/20 hover:bg-white/10'
-                }`}
-              >
-                Compact
-              </button>
+              <div className="flex flex-wrap items-center justify-between gap-3 text-xs sm:text-sm text-zinc-400">
+                <span>
+                  Showing <strong className="text-white font-medium">{filteredPosts.length}</strong> of{' '}
+                  <strong className="text-white font-medium">{posts.length}</strong> articles
+                </span>
+                {(searchQuery || selectedCategory !== 'All') && (
+                  <button
+                    onClick={handleClearFilters}
+                    className="inline-flex items-center gap-2 rounded-full border border-white/10 px-3 py-1.5 text-xs font-semibold text-purple-200 transition-colors hover:border-white/20 hover:bg-white/5"
+                  >
+                    Clear filters
+                  </button>
+                )}
+              </div>
             </div>
           </Reveal>
         </div>
