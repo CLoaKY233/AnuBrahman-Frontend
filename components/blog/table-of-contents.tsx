@@ -182,7 +182,7 @@ export default function TableOfContents({ headings }: TableOfContentsProps) {
     <>
       {/* Desktop sidebar */}
       <div className="hidden lg:block">
-        <div className="sticky top-28 w-[320px] rounded-xl border border-white/10 bg-white/5 px-4 py-5 text-sm text-zinc-200 shadow-lg shadow-black/20 backdrop-blur">
+        <div className="sticky top-24 w-[320px] max-h-[calc(100vh-120px)] overflow-y-auto rounded-xl border border-white/10 bg-white/5 px-4 py-5 pr-3 text-sm text-zinc-200 shadow-lg shadow-black/20 backdrop-blur [scrollbar-width:thin] [scrollbar-color:#7c3aed_transparent]">
           <div className="mb-3 flex items-center justify-between text-xs font-semibold uppercase tracking-[0.2em] text-zinc-400">
             <span>On this page</span>
             <span className="text-[10px] text-zinc-500">{headings.length} sections</span>
