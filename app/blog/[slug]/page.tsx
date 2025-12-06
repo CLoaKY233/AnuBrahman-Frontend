@@ -139,7 +139,7 @@ export default async function PostPage({ params }: PostPageProps) {
 
       <article className="relative isolate overflow-hidden">
         <div className="pointer-events-none absolute inset-0 -z-10">
-          <div className="absolute inset-x-0 top-0 h-[320px] rounded-full bg-linear-to-r from-purple-800/20 via-indigo-700/15 to-blue-700/15 blur-2xl pointer-events-none will-change-transform" />
+          <div className="absolute inset-x-0 top-0 h-80 rounded-full bg-linear-to-r from-purple-800/20 via-indigo-700/15 to-blue-700/15 blur-2xl pointer-events-none will-change-transform" />
           <div className="absolute inset-0 premium-noise-texture opacity-[0.02]" />
         </div>
 
