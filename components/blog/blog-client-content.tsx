@@ -35,7 +35,7 @@ const BlogCard = memo(({ post, viewMode }: { post: Post; viewMode: CardViewMode 
         <div className="shine-sweep rounded-2xl" />
 
         {/* Image Container */}
-        <div className="relative aspect-[4/3] overflow-hidden transition-transform duration-500 ease-out">
+        <div className="relative aspect-4/3 overflow-hidden transition-transform duration-500 ease-out">
           {post.coverImage && (
             <Image
               src={post.coverImage}
@@ -48,7 +48,7 @@ const BlogCard = memo(({ post, viewMode }: { post: Post; viewMode: CardViewMode 
             />
           )}
 
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent" />
+          <div className="absolute inset-0 bg-linear-to-t from-black via-black/30 to-transparent" />
 
           {post.category && (
             <div className="absolute top-3 left-3 sm:top-4 sm:left-4 z-10">

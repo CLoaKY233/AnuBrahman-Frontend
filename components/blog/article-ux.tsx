@@ -1,10 +1,10 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ArrowUp, Copy, Link as LinkIcon, Share2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-type RevealProps<T extends keyof JSX.IntrinsicElements | React.JSXElementConstructor<any>> = {
+type RevealProps<T extends React.ElementType = 'div'> = {
   as?: T;
   delay?: number;
   className?: string;
@@ -15,14 +15,14 @@ type RevealProps<T extends keyof JSX.IntrinsicElements | React.JSXElementConstru
  * IntersectionObserver-powered reveal that only toggles classes,
  * keeping animation work on the CSS (transform/opacity) side.
  */
-export function Reveal<T extends keyof JSX.IntrinsicElements | React.JSXElementConstructor<any>>({
+export function Reveal<T extends React.ElementType = 'div'>({
   as,
   delay = 0,
   className,
   children,
   ...props
 }: RevealProps<T>) {
-  const Component = (as || 'div') as any;
+  const Component = (as || 'div') as React.ElementType;
   const ref = useRef<HTMLElement | null>(null);
   const [visible, setVisible] = useState(false);
 

@@ -220,7 +220,7 @@ export default async function PostPage({ params }: PostPageProps) {
 
               {post.coverImage && (
                 <Reveal className="overflow-hidden rounded-2xl border border-white/10 shadow-2xl shadow-black/40">
-                  <div className="relative aspect-[16/9] w-full">
+                  <div className="relative aspect-video w-full">
                     <Image
                       src={post.coverImage}
                       alt={post.title}
@@ -229,7 +229,7 @@ export default async function PostPage({ params }: PostPageProps) {
                       priority
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 896px"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent" />
+                    <div className="absolute inset-0 bg-linear-to-t from-black via-black/30 to-transparent" />
                     <div className="absolute bottom-4 left-4 flex items-center gap-3 rounded-full border border-white/15 bg-black/50 px-3 py-2 text-xs font-semibold text-white backdrop-blur">
                       <LinkIcon className="h-4 w-4 text-purple-200" />
                       <span>Cover insight</span>
