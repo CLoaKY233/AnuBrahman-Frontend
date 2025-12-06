@@ -74,6 +74,48 @@ export function getMarkdownComponents() {
     h2: createHeading('h2', 2, slugger),
     h3: createHeading('h3', 3, slugger),
     h4: createHeading('h4', 4, slugger),
+    p: ({ children, ...props }: any) => (
+      <p className="text-[15px] leading-relaxed text-zinc-200" {...props}>
+        {children}
+      </p>
+    ),
+    a: ({ children, ...props }: any) => (
+      <a
+        className="font-semibold text-purple-200 underline decoration-dotted underline-offset-4 transition-colors hover:text-white"
+        {...props}
+      >
+        {children}
+      </a>
+    ),
+    ul: ({ children, ...props }: any) => (
+      <ul className="my-4 list-disc space-y-2 pl-6 text-zinc-200" {...props}>
+        {children}
+      </ul>
+    ),
+    ol: ({ children, ...props }: any) => (
+      <ol className="my-4 list-decimal space-y-2 pl-6 text-zinc-200" {...props}>
+        {children}
+      </ol>
+    ),
+    li: ({ children, ...props }: any) => (
+      <li className="leading-relaxed" {...props}>
+        {children}
+      </li>
+    ),
+    blockquote: ({ children, ...props }: any) => (
+      <blockquote
+        className="my-6 rounded-xl border-l-4 border-purple-400/60 bg-white/5 px-4 py-3 text-zinc-200 shadow-lg shadow-black/20"
+        {...props}
+      >
+        {children}
+      </blockquote>
+    ),
+    hr: (props: any) => <hr className="my-10 border-white/10" {...props} />,
+    sup: ({ children, ...props }: any) => (
+      <sup className="text-xs text-purple-200" {...props}>
+        {children}
+      </sup>
+    ),
     // Inline code
     code: ({ className, children, ...props }: any) => {
       // If no className, it's inline code
@@ -113,12 +155,23 @@ export function getMarkdownComponents() {
         <Image
           src={src}
           alt={alt || ''}
-          className="rounded-xl border border-white/10"
+          className="rounded-xl border border-white/10 shadow-lg shadow-black/30"
           width={1200}
           height={675}
         />
       );
     },
+
+    figure: ({ children, ...props }: any) => (
+      <figure className="my-6 space-y-3" {...props}>
+        {children}
+      </figure>
+    ),
+    figcaption: ({ children, ...props }: any) => (
+      <figcaption className="text-center text-sm text-zinc-400" {...props}>
+        {children}
+      </figcaption>
+    ),
 
     table: ({ children }: { children?: React.ReactNode }) => (
       <Table className="my-6 rounded-md border border-white/10">{children}</Table>
