@@ -90,9 +90,41 @@ export function ArticleActionRail({ title, slug }: ArticleActionRailProps) {
     setShareUrl(window.location.href);
   }, [slug]);
 
+  const copyToClipboard = async (text: string) => {
+    if (navigator?.clipboard?.writeText) {
+      await navigator.clipboard.writeText(text);
+      return;
+    }
+
+    // Fallback for browsers without async clipboard API
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.setAttribute('readonly', '');
+    textarea.style.position = 'absolute';
+    textarea.style.left = '-9999px';
+    document.body.appendChild(textarea);
+
+    const selection = document.getSelection();
+    const selectedRange = selection && selection.rangeCount > 0 ? selection.getRangeAt(0) : null;
+
+    textarea.select();
+    const success = document.execCommand('copy');
+    document.body.removeChild(textarea);
+
+    if (selectedRange && selection) {
+      selection.removeAllRanges();
+      selection.addRange(selectedRange);
+    }
+
+    if (!success) {
+      throw new Error('Copy command failed');
+    }
+  };
+
   const handleCopy = async () => {
+    const url = shareUrl || window.location.href;
     try {
-      await navigator.clipboard.writeText(shareUrl);
+      await copyToClipboard(url);
       setCopied(true);
       setTimeout(() => setCopied(false), 1600);
     } catch (err) {

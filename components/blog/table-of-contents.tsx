@@ -95,6 +95,7 @@ export default function TableOfContents({ headings }: TableOfContentsProps) {
     if (!target) return;
 
     const top = target.getBoundingClientRect().top + window.scrollY - OFFSET_TOP;
+    // Use a null state object; title must be a string
     window.history.replaceState(null, '', `#${id}`);
     window.scrollTo({ top, behavior: 'smooth' });
     setActiveId(id);
@@ -112,8 +113,6 @@ export default function TableOfContents({ headings }: TableOfContentsProps) {
       return next;
     });
   }, []);
-
-  if (!headings.length) return null;
 
   const renderNodes = useCallback(
     (nodes: HeadingNode[], depth = 0) =>
@@ -142,9 +141,20 @@ export default function TableOfContents({ headings }: TableOfContentsProps) {
             >
               {hasChildren ? (
                 <span
+                  role="button"
+                  tabIndex={0}
+                  aria-label={expanded ? 'Collapse section' : 'Expand section'}
+                  aria-expanded={expanded}
                   onClick={(e) => {
                     e.stopPropagation();
                     toggleExpanded(node.id);
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      toggleExpanded(node.id);
+                    }
                   }}
                   className={cn(
                     'flex h-6 w-6 items-center justify-center rounded-md border border-white/10 bg-white/5 text-zinc-400 transition-colors',
@@ -176,6 +186,8 @@ export default function TableOfContents({ headings }: TableOfContentsProps) {
       }),
     [activeId, expandedIds, handleClick, toggleExpanded]
   );
+
+  if (!headings.length) return null;
 
   return (
     <>

@@ -22,8 +22,7 @@
     "start": "bun run next start",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "cache:posts": "bun run scripts/cache-posts.ts",
-    "validate:notion": "bun run scripts/validate-notion.ts"
+    "cache:posts": "bun run scripts/cache-posts.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
