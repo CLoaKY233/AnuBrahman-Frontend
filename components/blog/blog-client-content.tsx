@@ -6,12 +6,15 @@ import Image from 'next/image';
 import { Search, Clock, User, Calendar, ChevronRight } from 'lucide-react';
 import { Post } from '@/lib/notion';
 import { calculateReadingTime, getWordCount } from '@/lib/utils'; // FIX: Correct import path
+import { Reveal } from '@/components/blog/article-ux';
+import { BLOG_CARD_STYLES } from '@/lib/styles';
+import type { CardViewMode } from './types';
 
 interface BlogClientContentProps {
   posts: Post[];
 }
 
-const BlogCard = memo(({ post }: { post: Post }) => {
+const BlogCard = memo(({ post, viewMode }: { post: Post; viewMode: CardViewMode }) => {
   const wordCount = post.content ? getWordCount(post.content) : 0;
   const readingTime = calculateReadingTime(wordCount);
   const formatDate = (dateString: string) => {
@@ -19,130 +22,82 @@ const BlogCard = memo(({ post }: { post: Post }) => {
     return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
   };
 
+  const isCompact = viewMode === 'compact';
+
   return (
     <Link href={`/blog/${post.slug}`}>
       <article
-        className="group relative h-104 sm:h-112 rounded-xl overflow-hidden border border-white/10 bg-black/40 backdrop-blur-sm transition-all duration-300 hover:border-white/20 hover:shadow-xl hover:shadow-black/50 cursor-pointer"
+        className={`${BLOG_CARD_STYLES.container} relative flex h-full flex-col overflow-hidden backdrop-blur-lg transition-all duration-300 hover:-translate-y-1.5 hover:border-purple-400/40 hover:bg-white/10 hover:shadow-2xl hover:shadow-purple-500/20 cursor-pointer`}
         role="article"
         aria-label={`Blog post: ${post.title}`}
       >
+        <div className="absolute inset-0 bg-linear-to-br from-white/5 via-transparent to-white/10 opacity-70" />
+        <div className="shine-sweep rounded-2xl" />
+
         {/* Image Container */}
-        <div className="relative h-1/2 overflow-hidden transition-all duration-500 ease-in-out group-hover:h-full">
+        <div className="relative aspect-4/3 overflow-hidden transition-transform duration-500 ease-out">
           {post.coverImage && (
             <Image
               src={post.coverImage}
               alt={post.title}
               fill
               sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-              className="object-cover transition-all duration-500 ease-in-out group-hover:scale-105 group-hover:blur-sm"
+              className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
               priority={false}
               loading="lazy"
             />
           )}
 
-          <div className="absolute inset-0 bg-linear-to-b from-black/20 via-black/40 to-black/80 transition-all duration-300 group-hover:from-black/50 group-hover:via-black/60 group-hover:to-black/80" />
+          <div className="absolute inset-0 bg-linear-to-t from-black via-black/30 to-transparent" />
 
-          {/* Category Badge */}
           {post.category && (
-            <div className="absolute top-3 left-3 sm:top-4 sm:left-4 z-30 transition-opacity duration-300 group-hover:opacity-0">
-              <span className="inline-block px-3 py-1 text-xs font-medium tracking-wide uppercase rounded-lg bg-purple-500/80 text-white backdrop-blur-sm">
+            <div className="absolute top-3 left-3 sm:top-4 sm:left-4 z-10">
+              <span className="inline-flex items-center gap-1 rounded-full bg-black/60 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-white border border-white/15 backdrop-blur">
                 {post.category}
               </span>
             </div>
           )}
         </div>
 
-        {/* Default Content */}
-        <div className="relative h-1/2 p-4 sm:p-6 flex flex-col justify-between transition-all duration-300 ease-in-out group-hover:opacity-0 group-hover:pointer-events-none">
-          <div className="space-y-2 sm:space-y-3">
-            <h3 className="text-base sm:text-lg font-medium leading-tight text-white line-clamp-2">
-              {post.title}
-            </h3>
-            <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed line-clamp-2">
-              {post.description}
-            </p>
+        {/* Content */}
+        <div className="relative flex flex-1 flex-col space-y-4 p-4 sm:p-5">
+          <div className="space-y-2">
+            <h3 className={BLOG_CARD_STYLES.title}>{post.title}</h3>
+            {!isCompact && <p className={BLOG_CARD_STYLES.description}>{post.description}</p>}
           </div>
 
-          <div className="space-y-3 sm:space-y-4">
-            <div className="flex items-center justify-between text-xs text-zinc-400 border-t border-white/10 pt-3">
-              <div className="flex items-center gap-1.5">
-                <User className="w-3 h-3" />
-                <span className="truncate">{post.author || 'Guest Author'}</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <Clock className="w-3 h-3" />
-                <span>{readingTime}</span>
-              </div>
+          <div className="flex flex-wrap items-center gap-3 text-[12px] text-zinc-400">
+            <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1">
+              <User className="h-3.5 w-3.5 text-purple-200" />
+              <span className="truncate">{post.author || 'Guest Author'}</span>
             </div>
-
-            {post.tags && post.tags.length > 0 && (
-              <div className="flex flex-wrap gap-1.5 sm:gap-2">
-                {post.tags.slice(0, 3).map((tag) => (
-                  <span
-                    key={tag}
-                    className="inline-block px-2 sm:px-2.5 py-0.5 sm:py-1 text-xs font-medium rounded-md bg-white/10 text-zinc-300 border border-white/20"
-                  >
-                    #{tag}
-                  </span>
-                ))}
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Hover Overlay */}
-        <div className="absolute inset-0 p-4 sm:p-6 flex flex-col justify-between opacity-0 pointer-events-none transition-all duration-300 ease-in-out group-hover:opacity-100 group-hover:pointer-events-auto z-20">
-          <div className="space-y-3 sm:space-y-4">
-            {post.category && (
-              <div className="text-xs font-semibold text-purple-300 tracking-wide uppercase">
-                {post.category}
-              </div>
-            )}
-            <h3 className="text-lg sm:text-xl font-semibold leading-tight text-white">
-              {post.title}
-            </h3>
-            <p className="text-xs sm:text-sm text-zinc-200 leading-relaxed line-clamp-4">
-              {post.description}
-            </p>
-          </div>
-
-          <div className="space-y-3 sm:space-y-4">
-            <div className="flex items-end justify-between">
-              <div className="space-y-1.5 sm:space-y-2">
-                <div className="flex items-center gap-2 text-xs sm:text-sm font-medium text-white">
-                  <User className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-purple-300" />
-                  <span className="truncate max-w-[150px] sm:max-w-none">
-                    {post.author || 'Guest Author'}
-                  </span>
-                </div>
-                <div className="flex items-center gap-3 text-xs text-zinc-300">
-                  <div className="flex items-center gap-1">
-                    <Clock className="w-3 h-3" />
-                    <span>{readingTime}</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <Calendar className="w-3 h-3" />
-                    <span>{formatDate(post.date)}</span>
-                  </div>
-                </div>
-              </div>
-              <div className="p-2 rounded-full bg-purple-500/20 border border-purple-400/30 backdrop-blur-sm">
-                <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
-              </div>
+            <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1">
+              <Clock className="h-3.5 w-3.5 text-purple-200" />
+              <span>{readingTime}</span>
             </div>
-
-            {post.tags && post.tags.length > 0 && (
-              <div className="flex flex-wrap gap-1.5 sm:gap-2 pt-2 sm:pt-3 border-t border-white/20">
-                {post.tags.slice(0, 3).map((tag) => (
-                  <span
-                    key={tag}
-                    className="inline-block px-2 sm:px-2.5 py-0.5 sm:py-1 text-xs font-medium rounded-md bg-white/15 text-white border border-white/30 backdrop-blur-sm"
-                  >
-                    #{tag}
-                  </span>
-                ))}
+            {!isCompact && (
+              <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1">
+                <Calendar className="h-3.5 w-3.5 text-purple-200" />
+                <span>{formatDate(post.date)}</span>
               </div>
             )}
+          </div>
+
+          {!isCompact && post.tags && post.tags.length > 0 && (
+            <div className="flex flex-wrap gap-1.5 sm:gap-2">
+              {post.tags.slice(0, 4).map((tag) => (
+                <span key={tag} className={BLOG_CARD_STYLES.tags}>
+                  #{tag}
+                </span>
+              ))}
+            </div>
+          )}
+
+          <div className="mt-auto flex items-center justify-between border-t border-white/10 pt-3">
+            <div className="text-xs text-zinc-400">{isCompact ? 'View article' : 'Read more'}</div>
+            <div className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:border-purple-400/50 group-hover:bg-purple-500/30">
+              <ChevronRight className="h-4 w-4" />
+            </div>
           </div>
         </div>
       </article>
@@ -155,6 +110,25 @@ BlogCard.displayName = 'BlogCard';
 export default function BlogClientContent({ posts }: BlogClientContentProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const [viewMode, setViewMode] = useState<CardViewMode>('detailed');
+
+  const normalize = (value?: string) => (value || '').toLowerCase();
+
+  const matchesQuery = (post: Post, query: string) => {
+    if (!query.trim()) return true;
+    const q = normalize(query);
+    const fields = [
+      normalize(post.title),
+      normalize(post.description),
+      normalize(post.content),
+      normalize(post.category),
+      ...(post.tags?.map(normalize) ?? []),
+    ].filter(Boolean);
+
+    // Simple fuzzy-ish match: every token must appear in any field
+    const tokens = q.split(/\s+/).filter(Boolean);
+    return tokens.every((token) => fields.some((field) => field.includes(token)));
+  };
 
   // Extract unique categories
   const categories = useMemo(() => {
@@ -165,14 +139,28 @@ export default function BlogClientContent({ posts }: BlogClientContentProps) {
 
   const filteredPosts = useMemo(() => {
     return posts.filter((post) => {
-      const matchesSearch =
-        post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        post.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        post.tags?.some((tag) => tag.toLowerCase().includes(searchQuery.toLowerCase()));
-      const matchesCategory = selectedCategory === 'All' || post.category === selectedCategory;
+      const matchesSearch = matchesQuery(post, searchQuery);
+      const matchesCategory =
+        selectedCategory === 'All' || normalize(post.category) === normalize(selectedCategory);
       return matchesSearch && matchesCategory;
     });
   }, [posts, searchQuery, selectedCategory]);
+
+  const tagCount = useMemo(() => {
+    const tagSet = new Set<string>();
+    posts.forEach((post) => post.tags?.forEach((tag) => tagSet.add(tag)));
+    return tagSet.size;
+  }, [posts]);
+
+  const averageReadTime = useMemo(() => {
+    const totalWords = posts.reduce(
+      (acc, post) => acc + (post.content ? getWordCount(post.content) : 0),
+      0
+    );
+    if (!posts.length) return '—';
+    const avgWords = Math.max(1, Math.round(totalWords / posts.length));
+    return calculateReadingTime(avgWords);
+  }, [posts]);
 
   const handleClearFilters = () => {
     setSearchQuery('');
@@ -180,75 +168,177 @@ export default function BlogClientContent({ posts }: BlogClientContentProps) {
   };
 
   return (
-    <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-28 sm:pt-32 lg:pt-36">
+      <div className="pointer-events-none absolute inset-x-0 top-6 h-64 bg-linear-to-b from-purple-900/30 via-black/40 to-transparent blur-3xl" />
+
       {/* Hero Section */}
-      <section className="relative pt-24 pb-8 sm:pt-32 sm:pb-12 md:pt-40 md:pb-16">
-        <div className="flex flex-col items-center text-center max-w-4xl mx-auto space-y-4 sm:space-y-6">
-          <div className="inline-flex items-center rounded-full border border-white/10 bg-white/5 backdrop-blur-xl px-4 py-2 sm:px-5 sm:py-2.5">
-            <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-purple-400 rounded-full mr-2 sm:mr-3 animate-pulse" />
-            <span className="text-[10px] sm:text-xs font-medium tracking-widest text-zinc-300 uppercase">
-              Insights • Research • Discovery
-            </span>
+      <section className="relative overflow-hidden rounded-3xl border border-white/10 bg-linear-to-br from-white/5 via-black/60 to-purple-900/10 px-6 py-10 sm:px-10 sm:py-14 shadow-2xl shadow-black/40">
+        <Reveal className="space-y-4">
+          <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-zinc-300 backdrop-blur">
+            <div className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+            Flight-ready knowledge
           </div>
+          <div className="space-y-3">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white">
+              Aerospace & Physics Dispatch
+            </h1>
+            <p className="max-w-3xl text-base text-zinc-300 sm:text-lg">
+              Deep-dives, mission logs, and practical breakdowns for modern aerospace teams and
+              curious explorers. Built for clarity, speed, and focus.
+            </p>
+          </div>
+        </Reveal>
 
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-none">
-            <span className="block bg-linear-to-r from-white via-purple-200 to-white bg-clip-text text-transparent">
-              Cosmic Insights
-            </span>
-          </h1>
-
-          <p className="text-sm sm:text-base md:text-lg lg:text-xl text-zinc-300 max-w-2xl leading-relaxed px-4">
-            Exploring the latest breakthroughs in aerospace, astrophysics, and space technology
-          </p>
-        </div>
+        <Reveal delay={120} className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
+            <p className="text-xs uppercase tracking-[0.2em] text-zinc-400">Published</p>
+            <p className="text-2xl font-semibold text-white">{posts.length}</p>
+            <p className="text-xs text-zinc-400">In-depth articles</p>
+          </div>
+          <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
+            <p className="text-xs uppercase tracking-[0.2em] text-zinc-400">Categories</p>
+            <p className="text-2xl font-semibold text-white">
+              {Math.max(categories.length - 1, 0)}
+            </p>
+            <p className="text-xs text-zinc-400">Curated focuses</p>
+          </div>
+          <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
+            <p className="text-xs uppercase tracking-[0.2em] text-zinc-400">Tags</p>
+            <p className="text-2xl font-semibold text-white">{tagCount}</p>
+            <p className="text-xs text-zinc-400">Topics covered</p>
+          </div>
+          <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
+            <p className="text-xs uppercase tracking-[0.2em] text-zinc-400">Avg. read</p>
+            <p className="text-2xl font-semibold text-white">{averageReadTime}</p>
+            <p className="text-xs text-zinc-400">Crafted for focus</p>
+          </div>
+        </Reveal>
       </section>
 
       {/* Search & Filter */}
-      <section className="relative py-6 sm:py-8 md:py-12">
-        <div className="space-y-4 sm:space-y-6">
-          <div className="relative group">
-            <div className="absolute inset-y-0 left-0 pl-4 sm:pl-5 flex items-center pointer-events-none">
-              <Search className="h-4 w-4 sm:h-5 sm:w-5 text-zinc-400 transition-colors duration-200 group-focus-within:text-purple-400" />
+      <section className="relative py-8 sm:py-12">
+        <div className="mx-auto w-full max-w-6xl">
+          <Reveal className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-5 sm:p-6 shadow-lg shadow-black/30 backdrop-blur space-y-5">
+            <div className="absolute inset-0 bg-linear-to-r from-white/5 via-transparent to-purple-500/10 opacity-60" />
+            <div className="relative grid gap-5">
+              {/* Header */}
+              <div className="flex flex-wrap items-center gap-2 text-sm font-semibold text-white">
+                <span>Search & Filters</span>
+                <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[11px] uppercase tracking-[0.2em] text-zinc-300">
+                  Live
+                </span>
+                <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[11px] uppercase tracking-[0.2em] text-zinc-300">
+                  Tags aware
+                </span>
+              </div>
+              <p className="text-xs text-zinc-400">
+                Find any article quickly. Refine by category, instant search by
+                title/description/tags.
+              </p>
+
+              {/* Search bar */}
+              <div className="relative flex flex-col gap-2">
+                <div className="relative flex items-center">
+                  <div className="pointer-events-none absolute left-0 pl-3 sm:pl-4 flex items-center">
+                    <Search className="h-4 w-4 sm:h-5 sm:w-5 text-zinc-400 transition-colors duration-200 group-focus-within:text-purple-400" />
+                  </div>
+                  <input
+                    type="search"
+                    placeholder="Search articles, tags, topics..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-full rounded-xl bg-black/20 border border-white/10 pl-9 sm:pl-12 pr-3 sm:pr-4 py-3 sm:py-3.5 text-sm placeholder-zinc-500 text-white transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-purple-500/60 focus:border-purple-500/50"
+                  />
+                  <div className="pointer-events-none absolute inset-0 rounded-xl border border-white/5" />
+                </div>
+                <p className="text-xs text-zinc-500">
+                  Search is instant. Filter by title, description, or tags.
+                </p>
+              </div>
+
+              {/* Category pills */}
+              <div className="flex flex-wrap items-center gap-2 sm:gap-2.5">
+                {categories.map((category) => (
+                  <button
+                    key={category}
+                    onClick={() => setSelectedCategory(category)}
+                    className={`group relative overflow-hidden px-3 sm:px-3.5 py-1.5 text-[11px] sm:text-xs font-semibold rounded-full border transition-all duration-200 backdrop-blur ${
+                      selectedCategory === category
+                        ? 'bg-purple-600/70 border-purple-300/70 text-white shadow-lg shadow-purple-500/30'
+                        : 'bg-white/5 border-white/10 text-zinc-200 hover:bg-white/10 hover:border-white/20'
+                    }`}
+                    aria-pressed={selectedCategory === category}
+                  >
+                    <span className="relative z-10 tracking-wide uppercase">{category}</span>
+                    <span className="shine-sweep rounded-full" />
+                  </button>
+                ))}
+              </div>
+
+              {/* Active filters */}
+              <div className="flex flex-wrap items-center gap-2 text-xs sm:text-sm text-zinc-400">
+                {searchQuery && (
+                  <span className="rounded-full bg-purple-600/30 text-white px-3 py-1">
+                    Query: “{searchQuery}”
+                  </span>
+                )}
+                {selectedCategory !== 'All' && (
+                  <span className="rounded-full bg-white/5 px-3 py-1">
+                    Category: {selectedCategory}
+                  </span>
+                )}
+              </div>
             </div>
-            <input
-              type="search"
-              placeholder="Search articles, tags, topics..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-white/5 border border-white/10 rounded-lg sm:rounded-xl pl-11 sm:pl-14 pr-4 sm:pr-6 py-3 sm:py-4 text-sm placeholder-zinc-500 text-white transition-all duration-200 focus:outline-none focus:ring-1 focus:ring-purple-500/40 focus:border-purple-500/40 focus:bg-white/10 backdrop-blur-xl"
-            />
-          </div>
+          </Reveal>
+        </div>
+      </section>
 
-          <div className="flex flex-wrap gap-2 sm:gap-3">
-            {categories.map((category) => (
-              <button
-                key={category}
-                onClick={() => setSelectedCategory(category)}
-                className={`px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium rounded-lg border transition-all duration-200 backdrop-blur-xl ${
-                  selectedCategory === category
-                    ? 'bg-purple-600/40 border-purple-400/50 text-white'
-                    : 'bg-white/5 border-white/10 text-zinc-300 hover:bg-white/10 hover:border-white/20'
-                }`}
-              >
-                <span className="tracking-wide uppercase">{category}</span>
-              </button>
-            ))}
-          </div>
-
-          <div className="flex items-center justify-between text-xs sm:text-sm text-zinc-400">
-            <span>
-              Showing <strong className="text-white font-medium">{filteredPosts.length}</strong> of{' '}
-              <strong className="text-white font-medium">{posts.length}</strong> articles
-            </span>
-            {(searchQuery || selectedCategory !== 'All') && (
-              <button
-                onClick={handleClearFilters}
-                className="text-purple-400 hover:text-purple-300 underline underline-offset-2 transition-colors duration-200"
-              >
-                Clear filters
-              </button>
-            )}
-          </div>
+      {/* Density + results toolbar (closer to cards) */}
+      <section className="relative -mt-4">
+        <div className="mx-auto w-full max-w-6xl">
+          <Reveal className="sticky top-20 z-20 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-white/10 bg-black/50 px-4 py-3 shadow-lg shadow-black/30 backdrop-blur">
+            <div className="flex flex-wrap items-center gap-2 text-xs sm:text-sm text-zinc-300">
+              <span className="text-zinc-400">Card density</span>
+              <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 p-1">
+                <button
+                  type="button"
+                  onClick={() => setViewMode('detailed')}
+                  className={`rounded-full px-3 py-1.5 text-xs font-semibold transition-all duration-200 ${
+                    viewMode === 'detailed'
+                      ? 'bg-purple-600/70 text-white shadow-lg shadow-purple-500/25'
+                      : 'text-zinc-300 hover:bg-white/10'
+                  }`}
+                >
+                  Detailed
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setViewMode('compact')}
+                  className={`rounded-full px-3 py-1.5 text-xs font-semibold transition-all duration-200 ${
+                    viewMode === 'compact'
+                      ? 'bg-purple-600/70 text-white shadow-lg shadow-purple-500/25'
+                      : 'text-zinc-300 hover:bg-white/10'
+                  }`}
+                >
+                  Compact
+                </button>
+              </div>
+            </div>
+            <div className="flex items-center gap-3 text-xs sm:text-sm text-zinc-300">
+              <span>
+                Showing <strong className="text-white font-medium">{filteredPosts.length}</strong>{' '}
+                of <strong className="text-white font-medium">{posts.length}</strong> articles
+              </span>
+              {(searchQuery || selectedCategory !== 'All') && (
+                <button
+                  onClick={handleClearFilters}
+                  className="inline-flex items-center gap-2 rounded-full border border-white/10 px-3 py-1.5 text-xs font-semibold text-purple-200 transition-colors hover:border-white/20 hover:bg-white/5"
+                >
+                  Clear
+                </button>
+              )}
+            </div>
+          </Reveal>
         </div>
       </section>
 
@@ -256,12 +346,14 @@ export default function BlogClientContent({ posts }: BlogClientContentProps) {
       <section className="relative py-8 sm:py-12">
         {filteredPosts.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
-            {filteredPosts.map((post) => (
-              <BlogCard key={post.id} post={post} />
+            {filteredPosts.map((post, index) => (
+              <Reveal key={post.id} delay={index * 60}>
+                <BlogCard post={post} viewMode={viewMode} />
+              </Reveal>
             ))}
           </div>
         ) : (
-          <div className="text-center py-16 sm:py-24 px-4">
+          <Reveal className="text-center py-16 sm:py-24 px-4">
             <div className="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-white/5 border border-white/10 mb-4 sm:mb-6">
               <Search className="w-8 h-8 sm:w-10 sm:h-10 text-zinc-500" />
             </div>
@@ -269,16 +361,15 @@ export default function BlogClientContent({ posts }: BlogClientContentProps) {
               No articles found
             </h3>
             <p className="text-sm sm:text-base lg:text-lg text-zinc-400 mb-6 sm:mb-8">
-              {/* FIX: Used &apos; for apostrophe to fix JSX warning */}
               Try adjusting your search or filters to find what you&apos;re looking for.
             </p>
             <button
               onClick={handleClearFilters}
-              className="px-6 sm:px-8 py-2.5 sm:py-3 text-sm font-medium text-white bg-purple-600/80 border border-purple-400/50 rounded-lg hover:bg-purple-600 transition-all duration-200"
+              className="px-6 sm:px-8 py-2.5 sm:py-3 text-sm font-semibold text-white bg-purple-600/80 border border-purple-400/50 rounded-lg hover:bg-purple-600 transition-all duration-200"
             >
               Clear all filters
             </button>
-          </div>
+          </Reveal>
         )}
       </section>
 

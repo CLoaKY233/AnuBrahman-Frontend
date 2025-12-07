@@ -116,12 +116,149 @@
 }
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
   * {
     @apply border-border outline-ring/50;
   }
   body {
     @apply bg-black text-foreground;
   }
+}
+
+/* ---------------------------
+   Experience & animation helpers
+   --------------------------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(12px);
+  transition:
+    opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms),
+    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms);
+}
+
+.reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    transition: none;
+  }
+}
+
+/* ---------------------------
+   Article typography refinements
+   --------------------------- */
+@layer base {
+  .article-prose {
+    line-height: 1.75;
+    letter-spacing: 0.003em;
+  }
+
+  .article-prose p {
+    @apply text-zinc-200;
+  }
+
+  .article-prose h1,
+  .article-prose h2,
+  .article-prose h3,
+  .article-prose h4 {
+    scroll-margin-top: 110px;
+  }
+
+  .article-prose a {
+    @apply text-purple-200 underline decoration-dotted underline-offset-4 transition-colors;
+  }
+
+  .article-prose strong {
+    @apply text-white font-semibold;
+  }
+
+  .article-prose em {
+    @apply text-purple-100;
+  }
+
+  .article-prose ul,
+  .article-prose ol {
+    @apply my-4 space-y-2 pl-6 text-zinc-200;
+  }
+
+  .article-prose li {
+    @apply leading-relaxed;
+  }
+
+  .article-prose blockquote {
+    @apply my-6 rounded-xl border-l-4 border-purple-400/60 bg-white/5 px-4 py-3 text-zinc-200 shadow-lg shadow-black/20;
+  }
+
+  .article-prose hr {
+    @apply my-8 border-white/10;
+  }
+
+  .article-prose sup a {
+    @apply text-xs text-purple-200 no-underline;
+  }
+
+  .article-prose table {
+    @apply w-full text-sm;
+  }
+
+  .article-prose figcaption {
+    @apply mt-2 text-sm text-zinc-400 text-center;
+  }
+}
+
+/* ---------------------------
+   Subtle sheen for glass surfaces
+   --------------------------- */
+@keyframes shine-sweep {
+  0% {
+    transform: translateX(-120%);
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.65;
+  }
+  100% {
+    transform: translateX(120%);
+    opacity: 0;
+  }
+}
+
+.shine-sweep {
+  position: absolute;
+  inset: -1px;
+  background: linear-gradient(
+    115deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.06) 40%,
+    rgba(255, 255, 255, 0.18) 50%,
+    rgba(255, 255, 255, 0.06) 60%,
+    transparent 100%
+  );
+  mix-blend-mode: screen;
+  opacity: 0;
+  pointer-events: none;
+  will-change: opacity, transform;
+  transition: opacity 0.4s ease;
+}
+
+.group:hover .shine-sweep {
+  opacity: 1;
+  animation: shine-sweep 1.8s ease-out 1;
 }
 
 /* ===========================================
