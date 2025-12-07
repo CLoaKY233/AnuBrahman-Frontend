@@ -85,10 +85,19 @@ type ArticleActionRailProps = {
 export function ArticleActionRail({ title, slug }: ArticleActionRailProps) {
   const [copied, setCopied] = useState(false);
   const [shareUrl, setShareUrl] = useState<string>('');
+  const [reduceMotion, setReduceMotion] = useState(false);
 
   useEffect(() => {
     setShareUrl(window.location.href);
   }, [slug]);
+
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const update = () => setReduceMotion(mq.matches);
+    update();
+    mq.addEventListener('change', update);
+    return () => mq.removeEventListener('change', update);
+  }, []);
 
   const copyToClipboard = async (text: string) => {
     if (navigator?.clipboard?.writeText) {
@@ -155,7 +164,7 @@ export function ArticleActionRail({ title, slug }: ArticleActionRailProps) {
   };
 
   const scrollTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
   };
 
   return (

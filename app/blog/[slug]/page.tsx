@@ -139,8 +139,7 @@ export default async function PostPage({ params }: PostPageProps) {
 
       <article className="relative isolate overflow-hidden">
         <div className="pointer-events-none absolute inset-0 -z-10">
-          <div className="absolute inset-x-0 top-0 h-80 rounded-full bg-linear-to-r from-purple-800/20 via-indigo-700/15 to-blue-700/15 blur-2xl pointer-events-none will-change-transform" />
-          <div className="absolute inset-0 premium-noise-texture opacity-[0.02]" />
+          <div className="absolute inset-x-8 top-6 h-64 rounded-[120px] bg-linear-to-r from-purple-900/20 via-indigo-800/12 to-blue-800/12 blur-xl" />
         </div>
 
         <div className="relative mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-12 pt-28 sm:pt-32 lg:pt-36 pb-16 lg:pb-24">
@@ -220,19 +219,17 @@ export default async function PostPage({ params }: PostPageProps) {
                 </Reveal>
               )}
 
-              <Reveal>
-                <section id="article-body" className={TYPOGRAPHY.prose}>
-                  <ReactMarkdown
-                    components={markdownComponents}
-                    remarkPlugins={[remarkGfm]}
-                    rehypePlugins={[rehypeRaw]}
-                  >
-                    {post.content}
-                  </ReactMarkdown>
-                </section>
-              </Reveal>
+              <section id="article-body" className={TYPOGRAPHY.prose}>
+                <ReactMarkdown
+                  components={markdownComponents}
+                  remarkPlugins={[remarkGfm]}
+                  rehypePlugins={[rehypeRaw]}
+                >
+                  {post.content}
+                </ReactMarkdown>
+              </section>
 
-              <Reveal className="grid gap-4 rounded-2xl border border-white/10 bg-white/5 p-4 sm:grid-cols-2 sm:gap-6 sm:p-6">
+              <div className="grid gap-4 rounded-2xl border border-white/10 bg-white/5 p-4 sm:grid-cols-2 sm:gap-6 sm:p-6">
                 <div className="flex flex-col gap-2">
                   <p className="text-xs uppercase tracking-[0.25em] text-zinc-500">Footnotes</p>
                   <p className="text-sm text-zinc-300">
@@ -247,9 +244,9 @@ export default async function PostPage({ params }: PostPageProps) {
                     backticks or fenced blocks.
                   </p>
                 </div>
-              </Reveal>
+              </div>
 
-              <Reveal className="rounded-2xl border border-white/10 bg-linear-to-r from-purple-600/15 via-black/60 to-indigo-700/20 p-6 shadow-2xl shadow-black/40">
+              <div className="rounded-2xl border border-white/10 bg-linear-to-r from-purple-600/15 via-black/60 to-indigo-700/20 p-6 shadow-2xl shadow-black/40">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                   <div className="space-y-2">
                     <h3 className="text-xl font-semibold text-white">Enjoying the read?</h3>
@@ -275,7 +272,7 @@ export default async function PostPage({ params }: PostPageProps) {
                     </Link>
                   </div>
                 </div>
-              </Reveal>
+              </div>
 
               {recommendedPosts.length > 0 && (
                 <Reveal className="space-y-4">

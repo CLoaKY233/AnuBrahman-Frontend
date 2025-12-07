@@ -129,7 +129,7 @@ export default function NavFrosted() {
       <div className="fixed inset-x-0 top-0 z-50 px-4 pt-4">
         <nav
           aria-label="Primary navigation"
-          className="relative mx-auto max-w-6xl rounded-2xl border border-white/10 bg-black/40 backdrop-blur-3xl transition-all duration-500 hover:bg-black/50"
+          className="relative mx-auto max-w-6xl rounded-2xl border border-white/10 bg-black/40 backdrop-blur-xl transition-all duration-500 hover:bg-black/50"
         >
           <div className="absolute -inset-px rounded-2xl bg-linear-to-r from-purple-500/10 via-transparent to-purple-500/10 opacity-50" />
 
@@ -211,7 +211,7 @@ export default function NavFrosted() {
       {isMobileMenuOpen && (
         <div className="fixed inset-0 z-100 md:hidden">
           <div
-            className="absolute inset-0 bg-black/60 backdrop-blur-xl"
+            className="absolute inset-0 bg-black/60 backdrop-blur-lg"
             onClick={closeMenu}
             aria-hidden="true"
           />
@@ -224,7 +224,7 @@ export default function NavFrosted() {
             aria-label="Mobile navigation menu"
             className="absolute inset-y-0 right-0 w-full max-w-xs"
           >
-            <div className="relative h-full bg-linear-to-br from-black/95 via-purple-950/30 to-black/95 backdrop-blur-3xl border-l border-white/10 shadow-2xl shadow-purple-500/10 animate-slide-in-right">
+            <div className="relative h-full bg-linear-to-br from-black/95 via-purple-950/30 to-black/95 backdrop-blur-2xl border-l border-white/10 shadow-2xl shadow-purple-500/10 animate-slide-in-right">
               <div className="absolute top-20 right-10 w-64 h-64 bg-purple-600/20 rounded-full blur-[100px] animate-ambient-pulse" />
               <div className="absolute bottom-40 left-10 w-48 h-48 bg-purple-500/15 rounded-full blur-[80px] animate-ambient-pulse-delayed" />
 

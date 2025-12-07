@@ -21,6 +21,15 @@ export default function TableOfContents({ headings }: TableOfContentsProps) {
     () => new Set(headings.map((h) => h.id))
   );
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const [reduceMotion, setReduceMotion] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const update = () => setReduceMotion(mq.matches);
+    update();
+    mq.addEventListener('change', update);
+    return () => mq.removeEventListener('change', update);
+  }, []);
 
   const { tree, parentMap, ids } = useMemo(() => {
     const stack: HeadingNode[] = [];
@@ -95,12 +104,13 @@ export default function TableOfContents({ headings }: TableOfContentsProps) {
     if (!target) return;
 
     const top = target.getBoundingClientRect().top + window.scrollY - OFFSET_TOP;
-    // Use a null state object; title must be a string
-    window.history.replaceState(null, '', `#${id}`);
-    window.scrollTo({ top, behavior: 'smooth' });
+    if (!reduceMotion) {
+      window.history.replaceState(null, '', `#${id}`);
+    }
+    window.scrollTo({ top, behavior: reduceMotion ? 'auto' : 'smooth' });
     setActiveId(id);
     setIsMobileOpen(false);
-  }, []);
+  }, [reduceMotion]);
 
   const toggleExpanded = useCallback((id: string) => {
     setExpandedIds((prev) => {
