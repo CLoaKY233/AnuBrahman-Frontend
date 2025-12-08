@@ -6,7 +6,9 @@ import ReactMarkdown from 'react-markdown';
 import { Badge } from '@/components/ui/badge';
 import { calculateReadingTime, getWordCount } from '@/lib/utils';
 import { getMarkdownComponents } from '@/components/blog/mdx-component';
+import remarkMath from 'remark-math';
 import remarkGfm from 'remark-gfm';
+import rehypeKatex from 'rehype-katex';
 import rehypeRaw from 'rehype-raw';
 import { ArrowLeft, BookOpen, Clock, Link as LinkIcon, Sparkles, User } from 'lucide-react';
 import Link from 'next/link';
@@ -222,8 +224,8 @@ export default async function PostPage({ params }: PostPageProps) {
               <section id="article-body" className={TYPOGRAPHY.prose}>
                 <ReactMarkdown
                   components={markdownComponents}
-                  remarkPlugins={[remarkGfm]}
-                  rehypePlugins={[rehypeRaw]}
+                  remarkPlugins={[remarkMath, remarkGfm]}
+                  rehypePlugins={[rehypeRaw, rehypeKatex]}
                 >
                   {post.content}
                 </ReactMarkdown>
