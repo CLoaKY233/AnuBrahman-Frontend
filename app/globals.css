@@ -1,5 +1,6 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
+@import 'katex/dist/katex.min.css';
 @plugin "@tailwindcss/typography";
 @custom-variant dark (&:is(.dark *));
 
@@ -218,6 +219,25 @@
 
   .article-prose figcaption {
     @apply mt-2 text-sm text-zinc-400 text-center;
+  }
+
+  .article-prose .katex {
+    color: #e4e4e7;
+  }
+
+  .article-prose .katex-display {
+    display: block;
+    overflow-x: auto;
+    @apply my-6 rounded-xl border border-white/10 bg-white/5 px-4 py-3;
+  }
+
+  .article-prose .katex-display > .katex {
+    display: inline-block;
+    min-width: max-content;
+  }
+
+  .article-prose .katex-inline {
+    @apply rounded-md bg-white/5 px-1.5 py-0.5 border border-white/10;
   }
 }
 
