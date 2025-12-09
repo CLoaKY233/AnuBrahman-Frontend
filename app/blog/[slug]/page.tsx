@@ -10,6 +10,8 @@ import remarkMath from 'remark-math';
 import remarkGfm from 'remark-gfm';
 import rehypeKatex from 'rehype-katex';
 import rehypeRaw from 'rehype-raw';
+import remarkMath from 'remark-math';
+import rehypeKatex from 'rehype-katex';
 import { ArrowLeft, BookOpen, Clock, Link as LinkIcon, Sparkles, User } from 'lucide-react';
 import Link from 'next/link';
 import { extractHeadings } from '@/lib/post-helpers';
@@ -158,7 +160,7 @@ export default async function PostPage({ params }: PostPageProps) {
           </Reveal>
 
           <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-14 xl:gap-16">
-            <div className="space-y-10">
+            <div className="space-y-10 min-w-0">
               <Reveal className="space-y-6">
                 <div className="flex flex-wrap items-center gap-3">
                   {post.category && (
@@ -221,7 +223,10 @@ export default async function PostPage({ params }: PostPageProps) {
                 </Reveal>
               )}
 
-              <section id="article-body" className={TYPOGRAPHY.prose}>
+              <section
+                id="article-body"
+                className={`${TYPOGRAPHY.prose} prose-sm sm:prose-base lg:prose-lg break-words w-full min-w-0`}
+              >
                 <ReactMarkdown
                   components={markdownComponents}
                   remarkPlugins={[remarkMath, remarkGfm]}

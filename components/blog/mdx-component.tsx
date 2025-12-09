@@ -155,9 +155,10 @@ export function getMarkdownComponents() {
         <Image
           src={src}
           alt={alt || ''}
-          className="rounded-xl border border-white/10 shadow-lg shadow-black/30"
+          className="rounded-xl border border-white/10 shadow-lg shadow-black/30 w-full h-auto object-cover"
           width={1200}
           height={675}
+          sizes="(max-width: 768px) 100vw, (max-width: 1280px) 80vw, 900px"
         />
       );
     },

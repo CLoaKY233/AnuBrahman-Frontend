@@ -167,6 +167,22 @@
   .article-prose {
     line-height: 1.75;
     letter-spacing: 0.003em;
+    max-width: 100%;
+  }
+
+  .article-prose * {
+    overflow-wrap: break-word;
+  }
+
+  .article-prose pre {
+    max-width: 100%;
+  }
+
+  .article-prose img,
+  .article-prose video,
+  .article-prose figure {
+    width: 100%;
+    height: auto;
   }
 
   .article-prose p {
@@ -223,21 +239,45 @@
 
   .article-prose .katex {
     color: #e4e4e7;
+    font-size: 0.95em;
   }
 
   .article-prose .katex-display {
     display: block;
     overflow-x: auto;
+    overflow-y: hidden;
     @apply my-6 rounded-xl border border-white/10 bg-white/5 px-4 py-3;
   }
 
   .article-prose .katex-display > .katex {
     display: inline-block;
     min-width: max-content;
+    margin: 0 auto;
+  }
+
+  /* Keep the new scrollbar styles */
+  .article-prose .katex-display::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  .article-prose .katex-display::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 9999px;
   }
 
   .article-prose .katex-inline {
     @apply rounded-md bg-white/5 px-1.5 py-0.5 border border-white/10;
+  }
+
+  @media (max-width: 640px) {
+    .article-prose {
+      font-size: 0.95rem;
+    }
+
+    .article-prose .katex-display {
+      margin-inline: -0.5rem;
+      padding-inline: 0.75rem;
+    }
   }
 }
 

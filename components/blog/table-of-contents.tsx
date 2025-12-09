@@ -99,18 +99,21 @@ export default function TableOfContents({ headings }: TableOfContentsProps) {
     });
   }, [activeId, parentMap]);
 
-  const handleClick = useCallback((id: string) => {
-    const target = document.getElementById(id);
-    if (!target) return;
+  const handleClick = useCallback(
+    (id: string) => {
+      const target = document.getElementById(id);
+      if (!target) return;
 
-    const top = target.getBoundingClientRect().top + window.scrollY - OFFSET_TOP;
-    if (!reduceMotion) {
-      window.history.replaceState(null, '', `#${id}`);
-    }
-    window.scrollTo({ top, behavior: reduceMotion ? 'auto' : 'smooth' });
-    setActiveId(id);
-    setIsMobileOpen(false);
-  }, [reduceMotion]);
+      const top = target.getBoundingClientRect().top + window.scrollY - OFFSET_TOP;
+      if (!reduceMotion) {
+        window.history.replaceState(null, '', `#${id}`);
+      }
+      window.scrollTo({ top, behavior: reduceMotion ? 'auto' : 'smooth' });
+      setActiveId(id);
+      setIsMobileOpen(false);
+    },
+    [reduceMotion]
+  );
 
   const toggleExpanded = useCallback((id: string) => {
     setExpandedIds((prev) => {

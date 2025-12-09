@@ -48,10 +48,6 @@ interface NotionDateProperty {
   date: { start: string; end?: string } | null;
 }
 
-interface NotionPeopleProperty {
-  people: Array<{ name: string; id: string }>;
-}
-
 interface NotionUrlProperty {
   url: string | null;
 }
@@ -66,7 +62,7 @@ interface NotionPageProperties {
   'Cover Image'?: NotionUrlProperty;
   'Featured Image'?: NotionUrlProperty;
   'Published Date'?: NotionDateProperty;
-  Author?: NotionPeopleProperty;
+  Author?: NotionRichTextProperty;
   Category?: NotionSelectProperty;
   Tags?: NotionMultiSelectProperty;
   Status?: NotionSelectProperty;
@@ -222,6 +218,12 @@ export async function getPostFromNotion(pageId: string): Promise<Post | null> {
     // Extract featured checkbox (default to false if not set)
     const featured = properties.Featured?.checkbox ?? false;
 
+    // Extract author from rich text (stored as a plain string)
+    const authorText = properties.Author?.rich_text
+      ?.map((segment) => segment.plain_text)
+      .join(' ')
+      .trim();
+
     const post: Post = {
       id: page.id,
       title: titleText,
@@ -230,7 +232,7 @@ export async function getPostFromNotion(pageId: string): Promise<Post | null> {
       description,
       date: properties['Published Date']?.date?.start || new Date().toISOString(),
       content: contentString,
-      author: properties.Author?.people[0]?.name,
+      author: authorText || undefined,
       tags: properties.Tags?.multi_select?.map((tag) => tag.name) || [],
       category: properties.Category?.select?.name,
       featured,
