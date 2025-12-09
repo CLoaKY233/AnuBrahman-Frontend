@@ -180,10 +180,6 @@ export default async function PostPage({ params }: PostPageProps) {
                   {post.title}
                 </h1>
 
-                <p className="max-w-3xl text-base text-zinc-300 sm:text-lg lg:text-xl">
-                  {post.summary}
-                </p>
-
                 <ArticleMetadata
                   author={post.author || 'Guest Author'}
                   date={new Date(post.date)}
@@ -209,6 +205,17 @@ export default async function PostPage({ params }: PostPageProps) {
                 </Reveal>
               )}
 
+              {post.summary && (
+                <Reveal className="rounded-2xl border border-white/10 bg-white/5 p-5 sm:p-6 lg:p-7 space-y-3">
+                  <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-purple-100">
+                    Summary
+                  </div>
+                  <p className="text-[15px] leading-relaxed text-zinc-200 sm:text-base lg:text-lg">
+                    {post.summary}
+                  </p>
+                </Reveal>
+              )}
+
               {post.tags && post.tags.length > 0 && (
                 <Reveal className="flex flex-wrap items-center gap-2 rounded-2xl border border-white/10 bg-white/5 p-4">
                   {post.tags.map((tag) => (
@@ -225,7 +232,7 @@ export default async function PostPage({ params }: PostPageProps) {
 
               <section
                 id="article-body"
-                className={`${TYPOGRAPHY.prose} prose-sm sm:prose-base lg:prose-lg break-words w-full min-w-0`}
+                className={`${TYPOGRAPHY.prose} prose-base sm:prose-lg lg:prose-xl prose-p:text-[1.02rem] sm:prose-p:text-[1.05rem] lg:prose-p:text-[1.08rem] prose-p:leading-relaxed break-words w-full min-w-0`}
               >
                 <ReactMarkdown
                   components={markdownComponents}
