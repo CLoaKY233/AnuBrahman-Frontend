@@ -44,13 +44,13 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
 
   return {
     title: post.title,
-    description: post.description,
+    description: post.summary,
     alternates: {
       canonical: `${baseUrl}/blog/${post.slug}`,
     },
     openGraph: {
       title: post.title,
-      description: post.description,
+      description: post.summary,
       type: 'article',
       url: `${baseUrl}/blog/${post.slug}`,
       publishedTime: new Date(post.date).toISOString(),
@@ -68,7 +68,7 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
     twitter: {
       card: 'summary_large_image',
       title: post.title,
-      description: post.description,
+      description: post.summary,
       images: [
         {
           url: post.coverImage || `${baseUrl}/opengraph-image.png`,
@@ -112,7 +112,7 @@ export default async function PostPage({ params }: PostPageProps) {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
     headline: post.title,
-    description: post.description,
+    description: post.summary,
     image: post.coverImage || `${baseUrl}/opengraph-image.png`,
     datePublished: new Date(post.date).toISOString(),
     author: {
@@ -181,7 +181,7 @@ export default async function PostPage({ params }: PostPageProps) {
                 </h1>
 
                 <p className="max-w-3xl text-base text-zinc-300 sm:text-lg lg:text-xl">
-                  {post.description}
+                  {post.summary}
                 </p>
 
                 <ArticleMetadata
@@ -313,7 +313,7 @@ export default async function PostPage({ params }: PostPageProps) {
                             {item.title}
                           </h4>
                           <p className="mt-2 line-clamp-2 text-sm text-zinc-400">
-                            {item.description}
+                            {item.summary}
                           </p>
                           <div className="mt-3 flex items-center gap-3 text-xs text-zinc-400">
                             <div className="flex items-center gap-1">

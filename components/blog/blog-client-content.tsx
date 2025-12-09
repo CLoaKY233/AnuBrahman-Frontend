@@ -63,7 +63,7 @@ const BlogCard = memo(({ post, viewMode }: { post: Post; viewMode: CardViewMode 
         <div className="relative flex flex-1 flex-col space-y-4 p-4 sm:p-5">
           <div className="space-y-2">
             <h3 className={BLOG_CARD_STYLES.title}>{post.title}</h3>
-            {!isCompact && <p className={BLOG_CARD_STYLES.description}>{post.description}</p>}
+            {!isCompact && <p className={BLOG_CARD_STYLES.description}>{post.summary}</p>}
           </div>
 
           <div className="flex flex-wrap items-center gap-3 text-[12px] text-zinc-400">
@@ -119,7 +119,7 @@ export default function BlogClientContent({ posts }: BlogClientContentProps) {
     const q = normalize(query);
     const fields = [
       normalize(post.title),
-      normalize(post.description),
+      normalize(post.summary),
       normalize(post.content),
       normalize(post.category),
       ...(post.tags?.map(normalize) ?? []),
