@@ -6,9 +6,7 @@ import ReactMarkdown from 'react-markdown';
 import { Badge } from '@/components/ui/badge';
 import { calculateReadingTime, getWordCount } from '@/lib/utils';
 import { getMarkdownComponents } from '@/components/blog/mdx-component';
-import remarkMath from 'remark-math';
 import remarkGfm from 'remark-gfm';
-import rehypeKatex from 'rehype-katex';
 import rehypeRaw from 'rehype-raw';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
@@ -232,7 +230,7 @@ export default async function PostPage({ params }: PostPageProps) {
 
               <section
                 id="article-body"
-                className={`${TYPOGRAPHY.prose} prose-base sm:prose-lg lg:prose-xl prose-p:text-[1.02rem] sm:prose-p:text-[1.05rem] lg:prose-p:text-[1.08rem] prose-p:leading-relaxed break-words w-full min-w-0`}
+                className={`${TYPOGRAPHY.prose} prose-base sm:prose-lg lg:prose-xl prose-p:text-[1.02rem] sm:prose-p:text-[1.05rem] lg:prose-p:text-[1.08rem] prose-p:leading-relaxed wrap-break-words w-full min-w-0`}
               >
                 <ReactMarkdown
                   components={markdownComponents}
@@ -319,9 +317,7 @@ export default async function PostPage({ params }: PostPageProps) {
                           <h4 className="mt-3 line-clamp-2 text-base font-semibold text-white group-hover:text-purple-100">
                             {item.title}
                           </h4>
-                          <p className="mt-2 line-clamp-2 text-sm text-zinc-400">
-                            {item.summary}
-                          </p>
+                          <p className="mt-2 line-clamp-2 text-sm text-zinc-400">{item.summary}</p>
                           <div className="mt-3 flex items-center gap-3 text-xs text-zinc-400">
                             <div className="flex items-center gap-1">
                               <Clock className="h-3.5 w-3.5" />
