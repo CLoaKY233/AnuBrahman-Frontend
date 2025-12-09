@@ -19,7 +19,7 @@ export interface Post {
   title: string;
   slug: string;
   coverImage?: string;
-  description: string;
+  summary: string;
   date: string;
   content: string;
   author?: string;
@@ -48,10 +48,6 @@ interface NotionDateProperty {
   date: { start: string; end?: string } | null;
 }
 
-interface NotionPeopleProperty {
-  people: Array<{ name: string; id: string }>;
-}
-
 interface NotionUrlProperty {
   url: string | null;
 }
@@ -65,8 +61,9 @@ interface NotionPageProperties {
   Slug?: NotionRichTextProperty;
   'Cover Image'?: NotionUrlProperty;
   'Featured Image'?: NotionUrlProperty;
+  Summary?: NotionRichTextProperty;
   'Published Date'?: NotionDateProperty;
-  Author?: NotionPeopleProperty;
+  Author?: NotionRichTextProperty;
   Category?: NotionSelectProperty;
   Tags?: NotionMultiSelectProperty;
   Status?: NotionSelectProperty;
@@ -93,11 +90,15 @@ export function getPostsFromCache(): Post[] {
   if (fs.existsSync(cachePath)) {
     try {
       const cache = fs.readFileSync(cachePath, 'utf-8');
-      const posts = JSON.parse(cache) as Post[];
-      return posts.filter(
-        (post) =>
-          post.id && post.title && post.slug && post.description && post.date && post.content
-      );
+      const posts = JSON.parse(cache) as Array<Post & { description?: string }>;
+      return posts
+        .map((post) => ({
+          ...post,
+          summary: post.summary || post.description || '',
+        }))
+        .filter(
+          (post) => post.id && post.title && post.slug && post.summary && post.date && post.content
+        );
     } catch (error) {
       console.error('Error reading posts cache:', error);
       return [];
@@ -189,11 +190,6 @@ export async function getPostFromNotion(pageId: string): Promise<Post | null> {
     const mdBlocks = await n2m.pageToMarkdown(pageId);
     const { parent: contentString } = n2m.toMarkdownString(mdBlocks);
 
-    // Get first paragraph for description (excluding empty lines)
-    const paragraphs = contentString.split('\n').filter((line: string) => line.trim().length > 0);
-    const firstParagraph = paragraphs[0] || '';
-    const description = firstParagraph.slice(0, 160) + (firstParagraph.length > 160 ? '...' : '');
-
     const properties = page.properties as NotionPageProperties;
 
     // Extract title with fallback
@@ -222,15 +218,28 @@ export async function getPostFromNotion(pageId: string): Promise<Post | null> {
     // Extract featured checkbox (default to false if not set)
     const featured = properties.Featured?.checkbox ?? false;
 
+    // Extract author from rich text (stored as a plain string)
+    const authorText = properties.Author?.rich_text
+      ?.map((segment) => segment.plain_text)
+      .join(' ')
+      .trim();
+
+    // Extract summary from dedicated property (plain text)
+    const summaryText =
+      properties.Summary?.rich_text
+        ?.map((segment) => segment.plain_text)
+        .join(' ')
+        .trim() || '';
+
     const post: Post = {
       id: page.id,
       title: titleText,
       slug,
       coverImage,
-      description,
+      summary: summaryText,
       date: properties['Published Date']?.date?.start || new Date().toISOString(),
       content: contentString,
-      author: properties.Author?.people[0]?.name,
+      author: authorText || undefined,
       tags: properties.Tags?.multi_select?.map((tag) => tag.name) || [],
       category: properties.Category?.select?.name,
       featured,

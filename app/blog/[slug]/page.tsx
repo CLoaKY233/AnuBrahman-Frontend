@@ -6,10 +6,10 @@ import ReactMarkdown from 'react-markdown';
 import { Badge } from '@/components/ui/badge';
 import { calculateReadingTime, getWordCount } from '@/lib/utils';
 import { getMarkdownComponents } from '@/components/blog/mdx-component';
-import remarkMath from 'remark-math';
 import remarkGfm from 'remark-gfm';
-import rehypeKatex from 'rehype-katex';
 import rehypeRaw from 'rehype-raw';
+import remarkMath from 'remark-math';
+import rehypeKatex from 'rehype-katex';
 import { ArrowLeft, BookOpen, Clock, Link as LinkIcon, Sparkles, User } from 'lucide-react';
 import Link from 'next/link';
 import { extractHeadings } from '@/lib/post-helpers';
@@ -42,13 +42,13 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
 
   return {
     title: post.title,
-    description: post.description,
+    description: post.summary,
     alternates: {
       canonical: `${baseUrl}/blog/${post.slug}`,
     },
     openGraph: {
       title: post.title,
-      description: post.description,
+      description: post.summary,
       type: 'article',
       url: `${baseUrl}/blog/${post.slug}`,
       publishedTime: new Date(post.date).toISOString(),
@@ -66,7 +66,7 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
     twitter: {
       card: 'summary_large_image',
       title: post.title,
-      description: post.description,
+      description: post.summary,
       images: [
         {
           url: post.coverImage || `${baseUrl}/opengraph-image.png`,
@@ -110,7 +110,7 @@ export default async function PostPage({ params }: PostPageProps) {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
     headline: post.title,
-    description: post.description,
+    description: post.summary,
     image: post.coverImage || `${baseUrl}/opengraph-image.png`,
     datePublished: new Date(post.date).toISOString(),
     author: {
@@ -158,7 +158,7 @@ export default async function PostPage({ params }: PostPageProps) {
           </Reveal>
 
           <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-14 xl:gap-16">
-            <div className="space-y-10">
+            <div className="space-y-10 min-w-0">
               <Reveal className="space-y-6">
                 <div className="flex flex-wrap items-center gap-3">
                   {post.category && (
@@ -177,10 +177,6 @@ export default async function PostPage({ params }: PostPageProps) {
                 <h1 className="max-w-4xl text-4xl font-bold leading-[1.05] tracking-tight text-white sm:text-5xl lg:text-6xl">
                   {post.title}
                 </h1>
-
-                <p className="max-w-3xl text-base text-zinc-300 sm:text-lg lg:text-xl">
-                  {post.description}
-                </p>
 
                 <ArticleMetadata
                   author={post.author || 'Guest Author'}
@@ -207,6 +203,17 @@ export default async function PostPage({ params }: PostPageProps) {
                 </Reveal>
               )}
 
+              {post.summary && (
+                <Reveal className="rounded-2xl border border-white/10 bg-white/5 p-5 sm:p-6 lg:p-7 space-y-3">
+                  <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-purple-100">
+                    Summary
+                  </div>
+                  <p className="text-[15px] leading-relaxed text-zinc-200 sm:text-base lg:text-lg">
+                    {post.summary}
+                  </p>
+                </Reveal>
+              )}
+
               {post.tags && post.tags.length > 0 && (
                 <Reveal className="flex flex-wrap items-center gap-2 rounded-2xl border border-white/10 bg-white/5 p-4">
                   {post.tags.map((tag) => (
@@ -221,7 +228,10 @@ export default async function PostPage({ params }: PostPageProps) {
                 </Reveal>
               )}
 
-              <section id="article-body" className={TYPOGRAPHY.prose}>
+              <section
+                id="article-body"
+                className={`${TYPOGRAPHY.prose} prose-base sm:prose-lg lg:prose-xl prose-p:text-[1.02rem] sm:prose-p:text-[1.05rem] lg:prose-p:text-[1.08rem] prose-p:leading-relaxed wrap-break-words w-full min-w-0`}
+              >
                 <ReactMarkdown
                   components={markdownComponents}
                   remarkPlugins={[remarkMath, remarkGfm]}
@@ -307,9 +317,7 @@ export default async function PostPage({ params }: PostPageProps) {
                           <h4 className="mt-3 line-clamp-2 text-base font-semibold text-white group-hover:text-purple-100">
                             {item.title}
                           </h4>
-                          <p className="mt-2 line-clamp-2 text-sm text-zinc-400">
-                            {item.description}
-                          </p>
+                          <p className="mt-2 line-clamp-2 text-sm text-zinc-400">{item.summary}</p>
                           <div className="mt-3 flex items-center gap-3 text-xs text-zinc-400">
                             <div className="flex items-center gap-1">
                               <Clock className="h-3.5 w-3.5" />
