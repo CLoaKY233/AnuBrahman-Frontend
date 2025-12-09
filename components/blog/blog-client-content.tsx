@@ -23,36 +23,37 @@ const BlogCard = memo(({ post, viewMode }: { post: Post; viewMode: CardViewMode 
   };
 
   const isCompact = viewMode === 'compact';
+  const hasTags = !isCompact && post.tags && post.tags.length > 0;
+  const textBlockHeight = isCompact ? 'min-h-[64px]' : 'min-h-[132px]';
 
   return (
     <Link href={`/blog/${post.slug}`}>
       <article
-        className={`${BLOG_CARD_STYLES.container} relative flex h-full flex-col overflow-hidden backdrop-blur-lg transition-all duration-300 hover:-translate-y-1.5 hover:border-purple-400/40 hover:bg-white/10 hover:shadow-2xl hover:shadow-purple-500/20 cursor-pointer`}
+        className={`${BLOG_CARD_STYLES.container} cursor-pointer flex h-full flex-col overflow-hidden`}
         role="article"
         aria-label={`Blog post: ${post.title}`}
       >
-        <div className="absolute inset-0 bg-linear-to-br from-white/5 via-transparent to-white/10 opacity-70" />
-        <div className="shine-sweep rounded-2xl" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/[0.03] via-transparent to-black/40" />
 
         {/* Image Container */}
-        <div className="relative aspect-4/3 overflow-hidden transition-transform duration-500 ease-out">
+        <div className="relative m-3 sm:m-4 aspect-[4/3] overflow-hidden rounded-2xl border border-white/10 bg-black/20">
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-black/25 to-transparent" />
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_12%,rgba(0,0,0,0.4),transparent_28%),radial-gradient(circle_at_88%_14%,rgba(0,0,0,0.35),transparent_30%)]" />
           {post.coverImage && (
             <Image
               src={post.coverImage}
               alt={post.title}
               fill
               sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-              className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+              className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04] group-hover:rotate-[0.35deg]"
               priority={false}
               loading="lazy"
             />
           )}
 
-          <div className="absolute inset-0 bg-linear-to-t from-black via-black/30 to-transparent" />
-
           {post.category && (
             <div className="absolute top-3 left-3 sm:top-4 sm:left-4 z-10">
-              <span className="inline-flex items-center gap-1 rounded-full bg-black/60 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-white border border-white/15 backdrop-blur">
+              <span className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-black/75 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.26em] text-white shadow-[0_12px_30px_-18px_rgba(0,0,0,0.7)] backdrop-blur-sm">
                 {post.category}
               </span>
             </div>
@@ -60,42 +61,46 @@ const BlogCard = memo(({ post, viewMode }: { post: Post; viewMode: CardViewMode 
         </div>
 
         {/* Content */}
-        <div className="relative flex flex-1 flex-col space-y-4 p-4 sm:p-5">
-          <div className="space-y-2">
+        <div className="relative flex flex-1 flex-col gap-4 px-4 pb-5 pt-1 sm:px-5 sm:pb-6">
+          <div className="absolute inset-x-4 top-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
+          <div className={`space-y-3 ${textBlockHeight}`}>
             <h3 className={BLOG_CARD_STYLES.title}>{post.title}</h3>
             {!isCompact && <p className={BLOG_CARD_STYLES.description}>{post.summary}</p>}
           </div>
 
-          <div className="flex flex-wrap items-center gap-3 text-[12px] text-zinc-400">
-            <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1">
-              <User className="h-3.5 w-3.5 text-purple-200" />
+          <div className="flex min-h-[34px] flex-wrap items-center gap-2 text-[12px] text-zinc-300/90">
+            <div className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.05] px-3 py-1 shadow-[0_10px_26px_-18px_rgba(0,0,0,0.6)]">
+              <User className="h-3.5 w-3.5 text-purple-200/90" />
               <span className="truncate">{post.author || 'Guest Author'}</span>
             </div>
-            <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1">
-              <Clock className="h-3.5 w-3.5 text-purple-200" />
+            <div className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.05] px-3 py-1 shadow-[0_10px_26px_-18px_rgba(0,0,0,0.6)]">
+              <Clock className="h-3.5 w-3.5 text-purple-200/90" />
               <span>{readingTime}</span>
             </div>
             {!isCompact && (
-              <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1">
-                <Calendar className="h-3.5 w-3.5 text-purple-200" />
+              <div className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.05] px-3 py-1 shadow-[0_10px_26px_-18px_rgba(0,0,0,0.6)]">
+                <Calendar className="h-3.5 w-3.5 text-purple-200/90" />
                 <span>{formatDate(post.date)}</span>
               </div>
             )}
           </div>
 
-          {!isCompact && post.tags && post.tags.length > 0 && (
-            <div className="flex flex-wrap gap-1.5 sm:gap-2">
-              {post.tags.slice(0, 4).map((tag) => (
-                <span key={tag} className={BLOG_CARD_STYLES.tags}>
-                  #{tag}
-                </span>
-              ))}
-            </div>
-          )}
+          <div className="min-h-[34px]">
+            {hasTags && (
+              <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                {post.tags!.slice(0, 4).map((tag) => (
+                  <span key={tag} className={BLOG_CARD_STYLES.tags}>
+                    #{tag}
+                  </span>
+                ))}
+              </div>
+            )}
+          </div>
 
           <div className="mt-auto flex items-center justify-between border-t border-white/10 pt-3">
             <div className="text-xs text-zinc-400">{isCompact ? 'View article' : 'Read more'}</div>
-            <div className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:border-purple-400/50 group-hover:bg-purple-500/30">
+            <div className="flex items-center gap-2 rounded-full bg-gradient-to-r from-purple-600 to-indigo-500 px-3.5 py-1.5 text-xs font-semibold text-white shadow-lg shadow-purple-500/25 ring-1 ring-white/10 transition-all duration-200 group-hover:translate-x-0.5 group-hover:shadow-purple-500/35">
+              <span>Open</span>
               <ChevronRight className="h-4 w-4" />
             </div>
           </div>

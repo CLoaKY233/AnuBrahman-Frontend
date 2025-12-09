@@ -3,14 +3,16 @@
  */
 export const BLOG_CARD_STYLES = {
   container:
-    'group rounded-2xl border border-white/10 bg-white/5 p-4 transition-all duration-200 hover:-translate-y-1 hover:border-white/20 hover:bg-white/10',
-  title: 'mt-3 line-clamp-2 text-base font-semibold text-white group-hover:text-purple-100',
-  description: 'mt-2 line-clamp-2 text-sm text-zinc-400',
-  meta: 'mt-3 flex items-center gap-3 text-xs text-zinc-400',
-  category: 'flex items-center gap-2 text-[11px] uppercase tracking-[0.18em] text-purple-200',
-  tags: 'inline-flex items-center gap-1 rounded-full border border-white/15 bg-white/5 px-2.5 py-1 text-[11px] font-semibold text-zinc-200',
+    'group relative rounded-3xl border border-white/10 bg-[#0d0d12]/80 shadow-[0_18px_60px_-36px_rgba(0,0,0,0.75)] transition-all duration-250 ease-out hover:-translate-y-1.5 hover:shadow-[0_24px_80px_-40px_rgba(0,0,0,0.78)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400/60',
+  title:
+    'text-lg sm:text-xl font-semibold leading-tight tracking-tight text-white transition-colors duration-200 group-hover:text-purple-50 line-clamp-2',
+  description: 'text-sm text-zinc-300/95 leading-relaxed line-clamp-3',
+  meta: 'flex items-center gap-2 text-[12px] text-zinc-300/90',
+  category: 'flex items-center gap-1.5 text-[11px] uppercase tracking-[0.16em] text-purple-100',
+  tags:
+    'inline-flex items-center gap-1 rounded-full border border-white/15 bg-white/[0.08] px-3 py-1 text-[11px] font-semibold text-white shadow-[0_12px_30px_-18px_rgba(0,0,0,0.65)]',
   actionButton:
-    'inline-flex items-center gap-2 rounded-full bg-purple-600 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-purple-500/30 transition-all duration-200 hover:-translate-y-0.5 hover:bg-purple-500',
+    'inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-purple-600 to-indigo-500 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-purple-500/30 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-purple-500/40',
   secondaryButton:
     'inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm font-semibold text-white transition-all duration-200 hover:-translate-y-0.5 hover:border-white/25',
 } as const;
